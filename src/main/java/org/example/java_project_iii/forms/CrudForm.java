@@ -10,6 +10,69 @@ import java.time.LocalDate;
 
 public class CrudForm extends VBox {
     private String formName;
+    private LocalDate date;
+    private Double amount;
+    private String category;
+    private String budget;
+    private String account;
+    private String type;
+    private String description;
+
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getDescription() {
+        return description;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
 
     public CrudForm(String formName) {
         this.formName = formName;
@@ -26,28 +89,36 @@ public class CrudForm extends VBox {
 
         Label categoryLabel = new Label("Category:");
         ComboBox<String> categoryComboBox = new ComboBox<>();
-        categoryComboBox.getItems().addAll();
+        categoryComboBox.getItems().addAll("Recreation", "Rent", "Lorem Ipsum");
+
+        Label budgetLabel = new Label("Budget:");
+        ComboBox<String> budgetComboBox = new ComboBox<>();
+        budgetComboBox.getItems().addAll("Lorem Ipsum", "Mental Health", "Allowance");
+
+        Label accountLabel = new Label("Account:");
+        ComboBox<String> accountComboBox = new ComboBox<>();
+        accountComboBox.getItems().addAll("RBC Savings", "TD Debt", "CIBC Investments");
 
         Label transactionTypeLabel = new Label("Transaction Type:");
+
+        HBox transactionTypeRadioBox = new HBox();
         RadioButton incomeRadio = new RadioButton("Income");
         RadioButton expenseRadio = new RadioButton("Expense");
         RadioButton savingsRadio = new RadioButton("Savings");
+        transactionTypeRadioBox.getChildren().addAll(incomeRadio, expenseRadio, savingsRadio);
+
         ToggleGroup transactionTypeGroup = new ToggleGroup();
         incomeRadio.setToggleGroup(transactionTypeGroup);
         expenseRadio.setToggleGroup(transactionTypeGroup);
         savingsRadio.setToggleGroup(transactionTypeGroup);
+
+
 
         Label descriptionLabel = new Label("Description:");
         TextField descriptionField = new TextField();
 
         Button confirmButton = new Button("Confirm");
         Button cancelButton = new Button("Cancel");
-
-        GridPane transactionTypePane = new GridPane();
-        transactionTypePane.setHgap(10);
-        transactionTypePane.add(incomeRadio, 0, 0);
-        transactionTypePane.add(expenseRadio, 1, 0);
-        transactionTypePane.add(savingsRadio, 2, 0);
         
         formGrid.setPadding(new Insets(20));
         formGrid.setVgap(20);
@@ -60,13 +131,45 @@ public class CrudForm extends VBox {
         formGrid.add(amountField, 1, 2);
         formGrid.add(categoryLabel, 0, 3);
         formGrid.add(categoryComboBox, 1, 3);
-        formGrid.add(transactionTypeLabel, 0, 4);
-        formGrid.add(transactionTypePane, 1, 4);
-        formGrid.add(descriptionLabel, 0, 5);
-        formGrid.add(descriptionField, 1, 5);
+        formGrid.add(budgetLabel, 0, 4);
+        formGrid.add(budgetComboBox, 1, 4);
+        formGrid.add(accountLabel, 0, 5);
+        formGrid.add(accountComboBox, 1, 5);
+        formGrid.add(transactionTypeLabel, 0, 6);
+        formGrid.add(transactionTypeRadioBox, 0, 7);
+        formGrid.add(descriptionLabel, 0, 8);
+        formGrid.add(descriptionField, 1, 8);
 
-        formGrid.add(confirmButton, 4, 6);
-        formGrid.add(cancelButton, 5, 6);
+        formGrid.add(confirmButton, 4, 9);
+        formGrid.add(cancelButton, 5, 9);
+
+        confirmButton.setOnAction((event) -> {
+            try {
+                this.setDate(datePicker.getValue());
+                this.setAmount(Double.valueOf(amountField.getText()));
+                this.setCategory(categoryComboBox.getValue());
+                this.setBudget(budgetComboBox.getValue());
+                this.setAccount(accountComboBox.getValue());
+                this.setType(transactionTypeGroup.selectedToggleProperty().getName());
+                this.setDescription(descriptionField.getText().trim());
+            } catch (Error e) {
+                System.out.println("FATAL ERROR!!!");
+            }
+        });
+
+        cancelButton.setOnAction((event) -> {
+            try {
+                datePicker.setValue(LocalDate.now());
+                amountField.clear();
+                categoryComboBox.getSelectionModel().clearSelection();
+                budgetComboBox.getSelectionModel().clearSelection();
+                accountComboBox.getSelectionModel().clearSelection();
+                transactionTypeGroup.getSelectedToggle().setSelected(false);
+                descriptionField.clear();
+            } catch (Error e) {
+                System.out.println("FATAL ERROR!!!");
+            }
+        });
 
         formGrid.setBorder(new Border(new BorderStroke( Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
         formGrid.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
@@ -76,7 +179,7 @@ public class CrudForm extends VBox {
         )));
         formNameLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
         formNameLabel.setPadding(new Insets(5));
-        formNameLabel.setTranslateX(50);
+        transactionTypeRadioBox.setSpacing(20);
 
 
         formGrid.setMaxWidth(844);

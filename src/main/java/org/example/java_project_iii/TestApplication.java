@@ -1,6 +1,7 @@
 package org.example.java_project_iii;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -13,9 +14,10 @@ public class TestApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         BorderPane root = new BorderPane();
-        CrudForm loginForm = new CrudForm("Generic Form");
+        CrudForm crudForm = new CrudForm("Generic Form");
 
-        root.setRight(loginForm);
+        crudForm.setAlignment(Pos.CENTER);
+        root.setCenter(crudForm);
 
         Scene scene = new Scene(root, 1280, 720);
         Stage stage = new Stage();
