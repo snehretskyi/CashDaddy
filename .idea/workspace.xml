@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86934318-7725-4e47-adfb-bb2b1c9211d0" name="Changes" comment="Fix merging conflict">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/Java_Project_III.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/Java_Project_III.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/Java_Project_III.test.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/Java_Project_III.test.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/forms/CrudForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/forms/CrudForm.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,20 +57,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.CashDaddy [:HelloApplication.main()].executor": "Run",
-    "Gradle.CashDaddy [:TestApplication.main()].executor": "Run",
-    "Gradle.Java_Project_III [:HelloApplication.main()].executor": "Run",
-    "Gradle.Java_Project_III [:TestApplication.main()].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "CrudForm",
-    "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.CashDaddy [:HelloApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.CashDaddy [:TestApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Java_Project_III [:HelloApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Java_Project_III [:TestApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;CrudForm&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

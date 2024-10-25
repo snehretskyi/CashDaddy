@@ -99,6 +99,10 @@ public class CrudForm extends Form {
         Label dateLabel = new Label("Date:");
         DatePicker datePicker = new DatePicker(LocalDate.now());
 
+        // unfortunately I had to turn off text input for date
+        // exception handling doesn't work as expected if user inputs invalid date (・へ・)
+        datePicker.setEditable(false);
+
         Label amountLabel = new Label("Amount:");
         TextField amountField = new TextField();
 
@@ -160,7 +164,7 @@ public class CrudForm extends Form {
                 // refuse to submit if fields are empty
                 if (amountField.getText().isEmpty() || categoryComboBox.getValue() == null
                         || budgetComboBox.getValue() == null || accountComboBox.getValue() == null
-                        || transactionTypeGroup.selectedToggleProperty().getName().isEmpty()
+                        ||  transactionTypeGroup.getSelectedToggle() == null
                         || descriptionField.getText().isEmpty()) {
                     getErrorText().setText("All fields are required!");
                     animateErrorText(getErrorText());
@@ -180,10 +184,14 @@ public class CrudForm extends Form {
             } catch (DateTimeParseException e) {
                 getErrorText().setText("Wrong date format!");
                 animateErrorText(getErrorText());
+            } catch (NumberFormatException e) {
+                getErrorText().setText("Invalid number entered!");
+                animateErrorText(getErrorText());
             } catch (Exception e) {
                 // generic error handling
                 getErrorText().setText("Fatal Error!");
                 animateErrorText(getErrorText());
+                e.printStackTrace();
             }
         });
 
