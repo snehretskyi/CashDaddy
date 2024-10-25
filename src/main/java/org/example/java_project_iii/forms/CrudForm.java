@@ -6,9 +6,17 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
-public class CrudForm extends VBox {
+/**
+ * Class Description: a form designed to enter and display information to and from Database
+ * Validates input.
+ * @author Stan
+ */
+public class CrudForm extends Form {
     private String formName;
     private LocalDate date;
     private Double amount;
@@ -18,7 +26,7 @@ public class CrudForm extends VBox {
     private String type;
     private String description;
 
-
+    // getters and setters
     public void setDate(LocalDate date) {
         this.date = date;
     }
@@ -74,9 +82,16 @@ public class CrudForm extends VBox {
         return date;
     }
 
+    /**
+     * Constructor
+     * @param formName name of the form, e.g. Update
+     */
     public CrudForm(String formName) {
+        super();
+
         this.formName = formName;
 
+        // creating nodes
         GridPane formGrid = new GridPane();
 
         Label formNameLabel = new Label(this.formName);
@@ -87,6 +102,7 @@ public class CrudForm extends VBox {
         Label amountLabel = new Label("Amount:");
         TextField amountField = new TextField();
 
+        // for now values are hardcoded, later we'll get them from db
         Label categoryLabel = new Label("Category:");
         ComboBox<String> categoryComboBox = new ComboBox<>();
         categoryComboBox.getItems().addAll("Recreation", "Rent", "Lorem Ipsum");
@@ -119,11 +135,6 @@ public class CrudForm extends VBox {
 
         Button confirmButton = new Button("Confirm");
         Button cancelButton = new Button("Cancel");
-        
-        formGrid.setPadding(new Insets(20));
-        formGrid.setVgap(20);
-        formGrid.setHgap(10);
-        formGrid.setAlignment(Pos.CENTER);
 
         formGrid.add(dateLabel, 0, 1);
         formGrid.add(datePicker, 1, 1);
@@ -143,22 +154,43 @@ public class CrudForm extends VBox {
         formGrid.add(confirmButton, 4, 9);
         formGrid.add(cancelButton, 5, 9);
 
+        // logic for buttons
         confirmButton.setOnAction((event) -> {
             try {
-                this.setDate(datePicker.getValue());
-                this.setAmount(Double.valueOf(amountField.getText()));
-                this.setCategory(categoryComboBox.getValue());
-                this.setBudget(budgetComboBox.getValue());
-                this.setAccount(accountComboBox.getValue());
-                this.setType(transactionTypeGroup.selectedToggleProperty().getName());
-                this.setDescription(descriptionField.getText().trim());
-            } catch (Error e) {
-                System.out.println("FATAL ERROR!!!");
+                // refuse to submit if fields are empty
+                if (amountField.getText().isEmpty() || categoryComboBox.getValue() == null
+                        || budgetComboBox.getValue() == null || accountComboBox.getValue() == null
+                        || transactionTypeGroup.selectedToggleProperty().getName().isEmpty()
+                        || descriptionField.getText().isEmpty()) {
+                    getErrorText().setText("All fields are required!");
+                    animateErrorText(getErrorText());
+                } else {
+                    // if not empty, the values of the fields are saved to the instance
+                    // (later should be submitted to db)
+                    getErrorText().setText("");
+                    this.setDate(datePicker.getValue());
+                    this.setAmount(Double.valueOf(amountField.getText()));
+                    this.setCategory(categoryComboBox.getValue());
+                    this.setBudget(budgetComboBox.getValue());
+                    this.setAccount(accountComboBox.getValue());
+                    this.setType(transactionTypeGroup.selectedToggleProperty().getName());
+                    this.setDescription(descriptionField.getText().trim());
+                }
+
+            } catch (DateTimeParseException e) {
+                getErrorText().setText("Wrong date format!");
+                animateErrorText(getErrorText());
+            } catch (Exception e) {
+                // generic error handling
+                getErrorText().setText("Fatal Error!");
+                animateErrorText(getErrorText());
             }
         });
 
         cancelButton.setOnAction((event) -> {
             try {
+                // clears all fields
+                getErrorText().setText("");
                 datePicker.setValue(LocalDate.now());
                 amountField.clear();
                 categoryComboBox.getSelectionModel().clearSelection();
@@ -166,13 +198,20 @@ public class CrudForm extends VBox {
                 accountComboBox.getSelectionModel().clearSelection();
                 transactionTypeGroup.getSelectedToggle().setSelected(false);
                 descriptionField.clear();
-            } catch (Error e) {
-                System.out.println("FATAL ERROR!!!");
+            } catch (Exception e) {
+                // generic error handling
+                getErrorText().setText("Fatal Error!");
+                animateErrorText(getErrorText());
             }
         });
 
+        // styling (˶◕‿◕˶)
         formGrid.setBorder(new Border(new BorderStroke( Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
         formGrid.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
+        formGrid.setPadding(new Insets(20));
+        formGrid.setVgap(20);
+        formGrid.setHgap(10);
+        formGrid.setAlignment(Pos.CENTER);
         formNameLabel.setBorder(new Border(new BorderStroke(
                 Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
                 new BorderWidths(2, 2, 0, 2)
@@ -181,11 +220,11 @@ public class CrudForm extends VBox {
         formNameLabel.setPadding(new Insets(5));
         transactionTypeRadioBox.setSpacing(20);
 
-
+        // TODO: remove this once we add the forms to main scene
         formGrid.setMaxWidth(844);
         formGrid.setMaxHeight(480);
 
 
-        this.getChildren().addAll(formNameLabel, formGrid);
+        this.getChildren().addAll(formNameLabel, formGrid, getErrorText());
     }
 }
