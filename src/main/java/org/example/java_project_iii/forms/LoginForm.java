@@ -1,6 +1,5 @@
-package org.example.java_project_iii.scenes;
+package org.example.java_project_iii.forms;
 
-import javafx.animation.TranslateTransition;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -13,7 +12,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -25,7 +23,7 @@ import java.io.IOException;
  * Validates input, saves result to a file.
  * @author Stan
  */
-public class LoginForm extends VBox {
+public class LoginForm extends Form {
     private boolean loginSuccessful = false;
 
     /**
@@ -46,12 +44,11 @@ public class LoginForm extends VBox {
      * Constructs a new LoginForm, styles included
      */
     public LoginForm() {
+        super();
+
         // creating nodes
         Text welcomeText = new Text("Welcome!");
         Text instructionsText = new Text("Please enter your DB credentials");
-
-        // by default error text is empty
-        Text errorText = new Text();
 
         Label hostLabel = new Label("Host:");
         TextField hostField = new TextField();
@@ -74,8 +71,6 @@ public class LoginForm extends VBox {
         // styling =-)
         welcomeText.setFont(Font.font("Helvetica", FontWeight.BOLD, 64));
         instructionsText.setFont(Font.font("Helvetica", 24));
-        errorText.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
-        errorText.setFill(Color.RED);
 
         submitButton.setPrefSize(120 ,20);
         VBox.setMargin(submitButton, new Insets(10, 0, 0,0));
@@ -89,9 +84,6 @@ public class LoginForm extends VBox {
         this.setAlignment(Pos.CENTER);
         this.setMaxWidth(640);
 
-        // animation :D
-
-
         // logic
         EventHandler submitEvent = new EventHandler() {
             @Override
@@ -103,15 +95,15 @@ public class LoginForm extends VBox {
 
                 // refuse to submit if fields are empty
                 if (host.isEmpty() || dbName.isEmpty() || username.isEmpty() || password.isEmpty()) {
-                    errorText.setText("All fields are required!");
-                    animateErrorText(errorText);
+                    getErrorText().setText("All fields are required!");
+                    animateErrorText(getErrorText());
                 } else {
-                    errorText.setText("");
+                    getErrorText().setText("");
                     try {
                         saveCredentials(host, dbName, username, password);
                     } catch (IOException e) {
-                        errorText.setText("Error saving credentials!");
-                        animateErrorText(errorText);
+                        getErrorText().setText("Error saving credentials!");
+                        animateErrorText(getErrorText());
                     }
                 }
 
@@ -131,7 +123,7 @@ public class LoginForm extends VBox {
 
         submitButton.setOnAction(submitEvent);
 
-        this.getChildren().addAll(welcomeText, instructionsText, errorText,
+        this.getChildren().addAll(welcomeText, instructionsText, getErrorText(),
                hostWrapper, dbNameWrapper, usernameWrapper, passwordWrapper, submitButton);
     }
 
@@ -152,17 +144,5 @@ public class LoginForm extends VBox {
             System.out.println("UH OH! " + e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Method to add a cool animation to the errorText :)
-     * @param errorText the error Text node
-     */
-    private void animateErrorText(Text errorText) {
-        TranslateTransition shakeAnimation = new TranslateTransition(Duration.millis(100), errorText);
-        shakeAnimation.setByX(10);
-        shakeAnimation.setCycleCount(4);
-        shakeAnimation.setAutoReverse(true);
-        shakeAnimation.play();
     }
 }
