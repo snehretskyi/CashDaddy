@@ -1,4 +1,4 @@
-package org.example.java_project_iii;
+package org.example.java_project_iii.scenes;
 
 import javafx.application.Application;
 import javafx.geometry.Side;
@@ -13,12 +13,27 @@ import tabs.DeleteTransaction;
 import tabs.SummaryReport;
 import tabs.UpdateTransaction;
 
-public class Dashboard extends Application {
+/**
+ * Class for dashboard. Uses singleton pattern.
+ * I'm <i>sure</i> there's a better way to create a separate class for scenes, but
+ * last sem it wasn't explained properly.
+ * TODO: check if it can be done better.
+ * @author Riddhi, <sub>modififed by Stan</sub>
+ */
+public class Dashboard {
 
+    private Scene dashboard;
+    private static Dashboard dashboardInstance;
 
-    @Override
-    public void start(Stage stage) throws Exception {
+    // getter
+    public static Dashboard getDashboardInstance() {
+        return dashboardInstance;
+    }
 
+    /**
+     * Private constructor.
+     */
+    private Dashboard() {
         BorderPane root = new BorderPane();
 
         // Build a MenuBar
@@ -35,7 +50,7 @@ public class Dashboard extends Application {
         menu.getMenus().addAll(year, income, expanses, savings);
 
 
-         // Create a TabPane
+        // Create a TabPane
 
         TabPane tabPane = new TabPane();
 
@@ -46,7 +61,7 @@ public class Dashboard extends Application {
         DeleteTransaction deleteTransaction= new DeleteTransaction();
 
 
-         // Add tabs to the TabPane
+        // Add tabs to the TabPane
 
         //addTransaction.getContent().setRotate(90);
         tabPane.getTabs().addAll(addTransaction, updateTransaction, deleteTransaction, summaryReport);
@@ -56,13 +71,18 @@ public class Dashboard extends Application {
         root.setTop(menu);
         root.setCenter(tabPane);
 
-        Scene scene = new Scene(root,1280,720);
-        stage.setTitle("Welcome to CashDaddy!");
-        stage.setScene(scene);
-        stage.show();
+        dashboard = new Scene(root);
     }
 
-    public static void main(String[] args) {
-        launch();
+    /**
+     * Checks if the Dashboard already exists. If yes, returns the scene
+     * @return scene Dashboard scene
+     */
+    public Scene getDashboard() {
+        if (dashboardInstance == null) {
+            dashboardInstance = new Dashboard();
+        }
+
+        return dashboardInstance.getDashboard();
     }
 }
