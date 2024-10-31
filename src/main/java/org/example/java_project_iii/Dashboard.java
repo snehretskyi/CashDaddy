@@ -8,10 +8,8 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import tabs.AddTransaction;
-import tabs.DeleteTransaction;
-import tabs.SummaryReport;
-import tabs.UpdateTransaction;
+import org.example.java_project_iii.forms.CrudForm;
+import tabs.*;
 
 public class Dashboard extends Application {
 
@@ -41,15 +39,20 @@ public class Dashboard extends Application {
 
         //create tabs
         AddTransaction addTransaction = new AddTransaction();
+        AllTransactions allTransactions = new AllTransactions();
         UpdateTransaction updateTransaction = new UpdateTransaction();
         SummaryReport summaryReport = new SummaryReport();
         DeleteTransaction deleteTransaction= new DeleteTransaction();
+
+        //add CurdForm to AddTransaction tab
+        CrudForm crudForm = new CrudForm("Add Transaction");
+        addTransaction.setContent(crudForm);
 
 
          // Add tabs to the TabPane
 
         //addTransaction.getContent().setRotate(90);
-        tabPane.getTabs().addAll(addTransaction, updateTransaction, deleteTransaction, summaryReport);
+        tabPane.getTabs().addAll(addTransaction,allTransactions, updateTransaction, deleteTransaction, summaryReport);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.setSide(Side.TOP);
 
