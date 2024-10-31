@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86934318-7725-4e47-adfb-bb2b1c9211d0" name="Changes" comment="#5 Create login and main dashboard scenes&#10;* Scenes are using singleton pattern">
+    <list default="true" id="86934318-7725-4e47-adfb-bb2b1c9211d0" name="Changes" comment="Fix merging conflict">
+      <change afterPath="$PROJECT_DIR$/src/main/java/tabs/AllTransactions.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/CashDaddy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/CashDaddy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/forms/LoginForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/forms/LoginForm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/scenes/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/scenes/Dashboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/scenes/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/scenes/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/Dashboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tabs/AddTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tabs/AddTransaction.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +42,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="migrateToGradle" />
+        <entry key="$PROJECT_DIR$" value="development" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -74,20 +73,34 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.CashDaddy [:Dashboard.main()].executor": "Run",
     "Gradle.CashDaddy [:HelloApplication.main()].executor": "Run",
     "Gradle.CashDaddy [:TestApplication.main()].executor": "Run",
-    "Gradle.Java_Project_III [:CashDaddy.main()].executor": "Run",
     "Gradle.Java_Project_III [:HelloApplication.main()].executor": "Run",
     "Gradle.Java_Project_III [:TestApplication.main()].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "integration",
+    "git-widget-placeholder": "NavigationBar",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/stan/Documents/Java_Project_III/src/main/java",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Java_Project_III.test" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Java_Project_III.test" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -105,20 +118,11 @@
       <option name="project" value="LOCAL" />
       <updated>1729864038048</updated>
     </task>
-    <task id="LOCAL-00002" summary="#5 Create login and main dashboard scenes&#10;* Scenes are using singleton pattern">
-      <option name="closed" value="true" />
-      <created>1730395207453</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1730395207453</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Fix merging conflict" />
-    <MESSAGE value="#5 Create login and main dashboard scenes&#10;* Scenes are using singleton pattern" />
-    <option name="LAST_COMMIT_MESSAGE" value="#5 Create login and main dashboard scenes&#10;* Scenes are using singleton pattern" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix merging conflict" />
   </component>
 </project>
