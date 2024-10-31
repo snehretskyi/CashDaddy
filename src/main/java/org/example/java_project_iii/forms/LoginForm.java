@@ -4,6 +4,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -12,6 +13,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -25,6 +27,8 @@ import java.io.IOException;
  */
 public class LoginForm extends Form {
     private boolean loginSuccessful = false;
+    private Stage stage;
+    private Scene nextScene;
 
     /**
      * @return true if login was successful, false if no.
@@ -43,8 +47,11 @@ public class LoginForm extends Form {
     /**
      * Constructs a new LoginForm, styles included
      */
-    public LoginForm() {
+    public LoginForm(Stage stage, Scene nextScene) {
         super();
+
+        this.stage = stage;
+        this.nextScene = nextScene;
 
         // creating nodes
         Text welcomeText = new Text("Welcome!");
@@ -85,40 +92,39 @@ public class LoginForm extends Form {
         this.setMaxWidth(640);
 
         // logic
-        EventHandler submitEvent = new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                String host = hostField.getText().trim();
-                String dbName = dbNameField.getText().trim();
-                String username = usernameField.getText().trim();
-                String password = passwordField.getText().trim();
+        EventHandler submitEvent = event -> {
+            String host = hostField.getText().trim();
+            String dbName = dbNameField.getText().trim();
+            String username = usernameField.getText().trim();
+            String password = passwordField.getText().trim();
 
-                // refuse to submit if fields are empty
-                if (host.isEmpty() || dbName.isEmpty() || username.isEmpty() || password.isEmpty()) {
-                    getErrorText().setText("All fields are required!");
+            // refuse to submit if fields are empty
+            if (host.isEmpty() || dbName.isEmpty() || username.isEmpty() || password.isEmpty()) {
+                getErrorText().setText("All fields are required!");
+                animateErrorText(getErrorText());
+            } else {
+                getErrorText().setText("");
+                try {
+                    saveCredentials(host, dbName, username, password);
+
+                    loadNextScene();
+                } catch (IOException e) {
+                    getErrorText().setText("Error saving credentials!");
                     animateErrorText(getErrorText());
-                } else {
-                    getErrorText().setText("");
-                    try {
-                        saveCredentials(host, dbName, username, password);
-                    } catch (IOException e) {
-                        getErrorText().setText("Error saving credentials!");
-                        animateErrorText(getErrorText());
-                    }
                 }
-
-                // some pseudocode for the future
-
-                // test connection to db
-
-                /* if (DATABASE CONNECTION FAILED) {
-                        errorText.setText("Couldn't connect to DB!");
-                        this.setLoginSuccessful(false);
-                    } else {
-                        this.setLoginSuccessful(true)
-                    }
-                 */
             }
+
+            // some pseudocode for the future
+
+            // test connection to db
+
+            /* if (DATABASE CONNECTION FAILED) {
+                    errorText.setText("Couldn't connect to DB!");
+                    this.setLoginSuccessful(false);
+                } else {
+                    this.setLoginSuccessful(true)
+                }
+             */
         };
 
         submitButton.setOnAction(submitEvent);
@@ -144,5 +150,12 @@ public class LoginForm extends Form {
             System.out.println("UH OH! " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Loads next scene that was passed in the constructor
+     */
+    public void loadNextScene() {
+        stage.setScene(this.nextScene);
     }
 }

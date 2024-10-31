@@ -13,6 +13,7 @@ import tabs.DeleteTransaction;
 import tabs.SummaryReport;
 import tabs.UpdateTransaction;
 
+
 /**
  * Class for dashboard. Uses singleton pattern.
  * I'm <i>sure</i> there's a better way to create a separate class for scenes, but
@@ -25,15 +26,34 @@ public class Dashboard {
     private Scene dashboard;
     private static Dashboard dashboardInstance;
 
-    // getter
-    public static Dashboard getDashboardInstance() {
-        return dashboardInstance;
+    private int width;
+    private int height;
+
+    // getters and setters
+    public Scene getDashboardScene() {
+        return dashboard;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     /**
      * Private constructor.
      */
-    private Dashboard() {
+    private Dashboard(int width, int height) {
         BorderPane root = new BorderPane();
 
         // Build a MenuBar
@@ -71,18 +91,26 @@ public class Dashboard {
         root.setTop(menu);
         root.setCenter(tabPane);
 
-        dashboard = new Scene(root);
+        dashboard = new Scene(root, width, height);
     }
 
     /**
-     * Checks if the Dashboard already exists. If yes, returns the scene
-     * @return scene Dashboard scene
+     * As the class needs some arguments (width and height), it's necessary to first set it up
      */
-    public Scene getDashboard() {
+    public static void createDashboard(int width, int height) {
+        dashboardInstance = new Dashboard(width, height);
+    }
+
+    /**
+     * Checks if the Dashboard already exists. If yes, returns the scene. If no return null as it can't construct.
+     * @return scene Login scene
+     */
+    public static Scene getDashboardSceneInstance() {
         if (dashboardInstance == null) {
-            dashboardInstance = new Dashboard();
+            System.out.println("Please ensure you have already created the scene.");
+            return null;
         }
 
-        return dashboardInstance.getDashboard();
+        return dashboardInstance.getDashboardScene();
     }
 }
