@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86934318-7725-4e47-adfb-bb2b1c9211d0" name="Changes" comment="Fix merging conflict">
-      <change afterPath="$PROJECT_DIR$/src/main/java/tabs/AllTransactions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/Dashboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tabs/AddTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tabs/AddTransaction.java" afterDir="false" />
+    <list default="true" id="9f459622-b1b9-4b97-892e-893d973d014f" name="Changes" comment="#5 Create login and main dashboard scenes&#10;* Scenes are using singleton pattern">
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/scenes/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/scenes/Dashboard.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +76,7 @@
     "Gradle.Java_Project_III [:HelloApplication.main()].executor": "Run",
     "Gradle.Java_Project_III [:TestApplication.main()].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "NavigationBar",
+    "git-widget-placeholder": "integration",
     "kotlin-language-version-configured": "true",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",

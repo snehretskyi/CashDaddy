@@ -7,4 +7,6 @@ module org.example.java_project_iii {
 
     opens org.example.java_project_iii to javafx.fxml;
     exports org.example.java_project_iii;
+    exports org.example.java_project_iii.scenes;
+    opens org.example.java_project_iii.scenes to javafx.fxml;
 }
