@@ -50,6 +50,22 @@ public class DBConst {
         public static final String CATEGORIES_COLUMN_BUDGET_ID = "budget_id";
         public static final String CATEGORIES_COLUMN_CATEGORY_TYPE = "category_type";
 
+        /**
+         * TRANSACTION_CATEGORY TABLE
+         */
+        public static final String TABLE_TRANSACTION_CATEGORY = "transaction_category";
+        public static final String TRANSACTION_CATEGORY_COLUMN_TRANSACTION_ID = "transaction_id";
+        public static final String TRANSACTION_CATEGORY_COLUMN_CATEGORY_ID = "category_id";
+
+
+        /**
+         * RECURRING_TRANSACTION TABLE
+         */
+        public static final String TABLE_RECURRING_TRANSACTION = "recurring_transaction";
+        public static final String RECURRING_TRANSACTION_COLUMN_ID = "recurring_transaction_id";
+        public static final String RECURRING_TRANSACTION_COLUMN_TRANSACTION_ID = "transaction_id";
+        public static final String RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS = "interval_days";
+
 
 
 }
