@@ -1,5 +1,6 @@
 package org.example.java_project_iii.forms;
 
+import database.Database;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -7,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -70,7 +72,7 @@ public class LoginForm extends Form {
         VBox usernameWrapper = new VBox(usernameLabel, usernameField);
 
         Label passwordLabel = new Label("Password:");
-        TextField passwordField = new TextField();
+        PasswordField passwordField = new PasswordField();
         VBox passwordWrapper = new VBox(passwordLabel, passwordField);
 
         Button submitButton = new Button("Submit!");
@@ -107,24 +109,20 @@ public class LoginForm extends Form {
                 try {
                     saveCredentials(host, dbName, username, password);
 
-                    loadNextScene();
                 } catch (IOException e) {
                     getErrorText().setText("Error saving credentials!");
                     animateErrorText(getErrorText());
                 }
             }
 
-            // some pseudocode for the future
+            try {
+                Database connection = Database.getInstance();
 
-            // test connection to db
-
-            /* if (DATABASE CONNECTION FAILED) {
-                    errorText.setText("Couldn't connect to DB!");
-                    this.setLoginSuccessful(false);
-                } else {
-                    this.setLoginSuccessful(true)
-                }
-             */
+                loadNextScene();
+            } catch (Exception e) {
+                getErrorText().setText("Wrong DB credentials!");
+                animateErrorText(getErrorText());
+            }
         };
 
         submitButton.setOnAction(submitEvent);
