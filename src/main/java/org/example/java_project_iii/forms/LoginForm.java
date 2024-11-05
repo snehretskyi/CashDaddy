@@ -121,7 +121,6 @@ public class LoginForm extends Form {
                 loadNextScene();
             } catch (Exception e) {
                 getErrorText().setText("Wrong DB credentials!");
-                e.printStackTrace();
                 animateErrorText(getErrorText());
             }
         };
