@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f459622-b1b9-4b97-892e-893d973d014f" name="Changes" comment="Added Create table queries.">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="9f459622-b1b9-4b97-892e-893d973d014f" name="Changes" comment="#35 Removed budget_id column and foreign key reference&#10;- from the categories table">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/database/DBConst.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database/DBConst.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +23,12 @@
       <state>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Java_Project_III" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -132,13 +137,22 @@
       <option name="project" value="LOCAL" />
       <updated>1730818439443</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="#35 Removed budget_id column and foreign key reference&#10;- from the categories table">
+      <option name="closed" value="true" />
+      <created>1730833099020</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1730833099020</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Fix merging conflict" />
     <MESSAGE value="Table constants added in DBConst class" />
     <MESSAGE value="Modified table constants" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modified table constants" />
+    <MESSAGE value="#35 Removed budget_id column and foreign key reference&#10;- from the categories table" />
+    <option name="LAST_COMMIT_MESSAGE" value="#35 Removed budget_id column and foreign key reference&#10;- from the categories table" />
   </component>
 </project>
