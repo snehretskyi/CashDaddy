@@ -112,10 +112,8 @@ public class DBConst {
         public static final String CREATE_TABLE_CATEGORIES =
                 "CREATE TABLE " + TABLE_CATEGORIES + " (" +
                         CATEGORIES_COLUMN_ID + " INT NOT NULL AUTO_INCREMENT, " +
-                        CATEGORIES_COLUMN_BUDGET_ID + " INT, " +
                         CATEGORIES_COLUMN_CATEGORY_TYPE + " VARCHAR(50), " +
-                        "PRIMARY KEY (" + CATEGORIES_COLUMN_ID + "), " +
-                        "FOREIGN KEY (" + CATEGORIES_COLUMN_BUDGET_ID + ") REFERENCES " + TABLE_BUDGETS + "(" + BUDGETS_COLUMN_ID + ") );";
+                        "PRIMARY KEY (" + CATEGORIES_COLUMN_ID + "), " ;
 
         // TRANSACTION_CATEGORY TABLE
         public static final String CREATE_TABLE_TRANSACTION_CATEGORY =
