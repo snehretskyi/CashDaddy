@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f459622-b1b9-4b97-892e-893d973d014f" name="Changes" comment="#5 Create login and main dashboard scenes&#10;* Scenes are using singleton pattern">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/scenes/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/java_project_iii/scenes/Dashboard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/database/DBConst.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +77,7 @@
     "Gradle.Java_Project_III [:HelloApplication.main()].executor": "Run",
     "Gradle.Java_Project_III [:TestApplication.main()].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "integration",
+    "git-widget-placeholder": "DbConst",
     "kotlin-language-version-configured": "true",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
