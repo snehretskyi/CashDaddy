@@ -33,6 +33,14 @@ public class Database {
         }catch (Exception e){
             throw new Exception("Couldn't connect!");
         }
+
+        createTable(DBConst.TABLE_TRANSACTION_TYPES, DBConst.CREATE_TABLE_TRANSACTION_TYPES, connection);
+        createTable(DBConst.TABLE_ACCOUNTS, DBConst.CREATE_TABLE_ACCOUNTS, connection);
+        createTable(DBConst.TABLE_CATEGORIES, DBConst.CREATE_TABLE_CATEGORIES, connection);
+        createTable(DBConst.TABLE_BUDGETS, DBConst.CREATE_TABLE_BUDGETS, connection);
+        createTable(DBConst.TABLE_TRANSACTIONS, DBConst.CREATE_TABLE_TRANSACTIONS, connection);
+        createTable(DBConst.TABLE_TRANSACTION_CATEGORY, DBConst.CREATE_TABLE_TRANSACTION_CATEGORY, connection);
+        createTable(DBConst.TABLE_RECURRING_TRANSACTION, DBConst.CREATE_TABLE_RECURRING_TRANSACTION, connection);
     }
 
     public static Database getInstance() throws Exception {
