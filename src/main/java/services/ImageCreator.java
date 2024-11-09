@@ -3,9 +3,14 @@ package services;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * Class description: Creates an ImageView with the specified width, height, and image path.
+ */
+
 public class ImageCreator {
+
     /**
-     * Creates an ImageView with the specified width, height, and image path.
+     * Method that creates an ImageView
      * @param imagePath The path to the image file (relative to the resources folder)
      * @param width width of the ImageView
      * @param height height of the ImageView

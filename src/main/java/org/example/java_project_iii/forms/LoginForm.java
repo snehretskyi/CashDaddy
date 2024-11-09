@@ -20,11 +20,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import services.ImageCreator;
-
+import services.AnimationHelper;
 import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+
 
 /**
  * Class Description: a login form for entering database credentials.
@@ -62,6 +63,7 @@ public class LoginForm extends Form {
 
         // creating nodes
         Text welcomeText = new Text("Welcome To CashDaddy!!...");
+        Text greetingText = new Text("Glad to see you again!");
         Text instructionsText = new Text("Please enter your DB credentials");
 
         Label hostLabel = new Label("Host:");
@@ -82,15 +84,21 @@ public class LoginForm extends Form {
 
         Button submitButton = new Button("Submit!");
 
-        // Create an ImageView with the loaded image
-        ImageView iconImageView = ImageCreator.createImageView("/Images/headingIcon.png", 350,350);
+        // Create an ImageView
+        ImageView iconImageView = ImageCreator.createImageView("/Images/headerIcon1.png", 250,200);
 
         //Layout setting
-        HBox heading = new HBox(welcomeText, iconImageView);
+        VBox headingVbox = new VBox(welcomeText, greetingText);
+        HBox heading = new HBox(headingVbox, iconImageView);
 
         // styling =-)
         welcomeText.setFont(Font.font("Helvetica", FontWeight.BOLD, 64));
         instructionsText.setFont(Font.font("Helvetica", 24));
+        greetingText.setFont(Font.font("Helvetica", 30));
+
+        //Setting animation
+        AnimationHelper.typewriterAnimation(welcomeText, 100);
+        AnimationHelper.typewriterAnimation(greetingText,150);
 
         submitButton.setPrefSize(120 ,20);
         VBox.setMargin(submitButton, new Insets(10, 0, 0,0));
