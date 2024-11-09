@@ -10,13 +10,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import services.ImageCreator;
 
+import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -56,7 +61,7 @@ public class LoginForm extends Form {
         this.nextScene = nextScene;
 
         // creating nodes
-        Text welcomeText = new Text("Welcome!");
+        Text welcomeText = new Text("Welcome To CashDaddy!!...");
         Text instructionsText = new Text("Please enter your DB credentials");
 
         Label hostLabel = new Label("Host:");
@@ -76,6 +81,12 @@ public class LoginForm extends Form {
         VBox passwordWrapper = new VBox(passwordLabel, passwordField);
 
         Button submitButton = new Button("Submit!");
+
+        // Create an ImageView with the loaded image
+        ImageView iconImageView = ImageCreator.createImageView("/Images/headingIcon.png", 350,350);
+
+        //Layout setting
+        HBox heading = new HBox(welcomeText, iconImageView);
 
         // styling =-)
         welcomeText.setFont(Font.font("Helvetica", FontWeight.BOLD, 64));
@@ -127,7 +138,7 @@ public class LoginForm extends Form {
 
         submitButton.setOnAction(submitEvent);
 
-        this.getChildren().addAll(welcomeText, instructionsText, getErrorText(),
+        this.getChildren().addAll(heading, instructionsText, getErrorText(),
                hostWrapper, dbNameWrapper, usernameWrapper, passwordWrapper, submitButton);
     }
 
