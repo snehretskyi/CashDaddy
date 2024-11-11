@@ -1,6 +1,9 @@
 package org.example.java_project_iii.forms;
 
 import database.Database;
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -10,16 +13,24 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+import javafx.util.Duration;
+import services.ImageCreator;
+import services.AnimationHelper;
+import javax.swing.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+
 
 /**
  * Class Description: a login form for entering database credentials.
@@ -56,42 +67,78 @@ public class LoginForm extends Form {
         this.nextScene = nextScene;
 
         // creating nodes
-        Text welcomeText = new Text("Welcome!");
+        Text welcomeText = new Text("Welcome To CashDaddy!!...");
+        Text greetingText = new Text("Glad to see you again!");
         Text instructionsText = new Text("Please enter your DB credentials");
 
         Label hostLabel = new Label("Host:");
         TextField hostField = new TextField();
-        VBox hostWrapper = new VBox(hostLabel, hostField);
 
         Label dbNameLabel = new Label("DB Name:");
         TextField dbNameField = new TextField();
-        VBox dbNameWrapper = new VBox(dbNameLabel, dbNameField);
 
         Label usernameLabel = new Label("Username:");
         TextField usernameField = new TextField();
-        VBox usernameWrapper = new VBox(usernameLabel, usernameField);
 
         Label passwordLabel = new Label("Password:");
         PasswordField passwordField = new PasswordField();
-        VBox passwordWrapper = new VBox(passwordLabel, passwordField);
 
         Button submitButton = new Button("Submit!");
 
+        // Create an ImageView
+        ImageView iconImageView = ImageCreator.createImageView("/Images/piggybank1.gif", 270,230);
+
+        //Layout
+        VBox headingVbox = new VBox(welcomeText, greetingText);
+        HBox headingHBox = new HBox(headingVbox, iconImageView);
+        VBox instructionVBox = new VBox(instructionsText,getErrorText());
+        VBox hostWrapper = new VBox(hostLabel, hostField);
+        VBox dbNameWrapper = new VBox(dbNameLabel, dbNameField);
+        VBox usernameWrapper = new VBox(usernameLabel, usernameField);
+        VBox passwordWrapper = new VBox(passwordLabel, passwordField);
+        VBox credentialVBox = new VBox(hostWrapper, dbNameWrapper, usernameWrapper, passwordWrapper);
+
         // styling =-)
-        welcomeText.setFont(Font.font("Helvetica", FontWeight.BOLD, 64));
+
+        //heading styles
+        welcomeText.setFont(Font.font("Helvetica", FontWeight.BOLD, 50));
+        greetingText.setFont(Font.font("Helvetica", 28));
+        headingHBox.setAlignment(Pos.TOP_CENTER);
+        headingVbox.setPrefWidth(1200);
+        headingVbox.setPadding(new Insets(80, 0, 0, 0));
+        headingHBox.setPadding(new Insets(0 ,80, 0,180));
+        headingHBox.setStyle("-fx-background-color: #c3eafa;");
+
+        //Setting animation
+        greetingText.setVisible(false);
+        Timeline welcomeAnimation = AnimationHelper.typewriterAnimation(welcomeText, 100);
+        Timeline greetingAnimation =  AnimationHelper.typewriterAnimation(greetingText,150);
+        AnimationHelper.applySwingRotation( iconImageView, 2000);
+
+        //sequential transition
+        SequentialTransition sequentialTransition = new SequentialTransition(welcomeAnimation, greetingAnimation);
+        sequentialTransition.play();
+
+        //Instruction and error message styles
         instructionsText.setFont(Font.font("Helvetica", 24));
+        instructionVBox.setAlignment(Pos.CENTER);
+        instructionVBox.setSpacing(10);
+        VBox.setMargin(instructionVBox, new Insets(20,0,0,0));
 
-        submitButton.setPrefSize(120 ,20);
-        VBox.setMargin(submitButton, new Insets(10, 0, 0,0));
+        //Credintial styles
+        credentialVBox.setMaxWidth(1100);
+        credentialVBox.setSpacing(20);
+        VBox.setMargin(credentialVBox, new Insets(0,200,0,200));
 
-        hostWrapper.setAlignment(Pos.BASELINE_LEFT);
-        dbNameWrapper.setAlignment(Pos.BASELINE_LEFT);
-        usernameWrapper.setAlignment(Pos.BASELINE_LEFT);
-        passwordWrapper.setAlignment(Pos.BASELINE_LEFT);
+        //Submit button styles
+        submitButton.setPrefSize(160 ,20);
+        VBox.setMargin(submitButton, new Insets(40, 0, 0,0));
 
-        this.setSpacing(10);
-        this.setAlignment(Pos.CENTER);
-        this.setMaxWidth(640);
+        this.setSpacing(5);
+        this.setAlignment(Pos.TOP_CENTER);
+        this.setWidth(1280);
+        this.setStyle("-fx-background-color: #f0f9fc;-fx-border-color: #000000; -fx-border-width: 2; -fx-border-style: solid;");
+
 
         // logic
         EventHandler submitEvent = event -> {
@@ -127,8 +174,7 @@ public class LoginForm extends Form {
 
         submitButton.setOnAction(submitEvent);
 
-        this.getChildren().addAll(welcomeText, instructionsText, getErrorText(),
-               hostWrapper, dbNameWrapper, usernameWrapper, passwordWrapper, submitButton);
+        this.getChildren().addAll(headingHBox, instructionVBox, credentialVBox, submitButton);
     }
 
     /**
