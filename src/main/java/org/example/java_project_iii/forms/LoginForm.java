@@ -1,19 +1,21 @@
-package org.example.java_project_iii.scenes;
+package org.example.java_project_iii.forms;
 
-import javafx.animation.TranslateTransition;
+import database.Database;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
+import javafx.stage.Stage;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -25,8 +27,10 @@ import java.io.IOException;
  * Validates input, saves result to a file.
  * @author Stan
  */
-public class LoginForm extends VBox {
+public class LoginForm extends Form {
     private boolean loginSuccessful = false;
+    private Stage stage;
+    private Scene nextScene;
 
     /**
      * @return true if login was successful, false if no.
@@ -45,13 +49,15 @@ public class LoginForm extends VBox {
     /**
      * Constructs a new LoginForm, styles included
      */
-    public LoginForm() {
+    public LoginForm(Stage stage, Scene nextScene) {
+        super();
+
+        this.stage = stage;
+        this.nextScene = nextScene;
+
         // creating nodes
         Text welcomeText = new Text("Welcome!");
         Text instructionsText = new Text("Please enter your DB credentials");
-
-        // by default error text is empty
-        Text errorText = new Text();
 
         Label hostLabel = new Label("Host:");
         TextField hostField = new TextField();
@@ -66,7 +72,7 @@ public class LoginForm extends VBox {
         VBox usernameWrapper = new VBox(usernameLabel, usernameField);
 
         Label passwordLabel = new Label("Password:");
-        TextField passwordField = new TextField();
+        PasswordField passwordField = new PasswordField();
         VBox passwordWrapper = new VBox(passwordLabel, passwordField);
 
         Button submitButton = new Button("Submit!");
@@ -74,8 +80,6 @@ public class LoginForm extends VBox {
         // styling =-)
         welcomeText.setFont(Font.font("Helvetica", FontWeight.BOLD, 64));
         instructionsText.setFont(Font.font("Helvetica", 24));
-        errorText.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
-        errorText.setFill(Color.RED);
 
         submitButton.setPrefSize(120 ,20);
         VBox.setMargin(submitButton, new Insets(10, 0, 0,0));
@@ -89,49 +93,41 @@ public class LoginForm extends VBox {
         this.setAlignment(Pos.CENTER);
         this.setMaxWidth(640);
 
-        // animation :D
-
-
         // logic
-        EventHandler submitEvent = new EventHandler() {
-            @Override
-            public void handle(Event event) {
-                String host = hostField.getText().trim();
-                String dbName = dbNameField.getText().trim();
-                String username = usernameField.getText().trim();
-                String password = passwordField.getText().trim();
+        EventHandler submitEvent = event -> {
+            String host = hostField.getText().trim();
+            String dbName = dbNameField.getText().trim();
+            String username = usernameField.getText().trim();
+            String password = passwordField.getText().trim();
 
-                // refuse to submit if fields are empty
-                if (host.isEmpty() || dbName.isEmpty() || username.isEmpty() || password.isEmpty()) {
-                    errorText.setText("All fields are required!");
-                    animateErrorText(errorText);
-                } else {
-                    errorText.setText("");
-                    try {
-                        saveCredentials(host, dbName, username, password);
-                    } catch (IOException e) {
-                        errorText.setText("Error saving credentials!");
-                        animateErrorText(errorText);
-                    }
+            // refuse to submit if fields are empty
+            if (host.isEmpty() || dbName.isEmpty() || username.isEmpty() || password.isEmpty()) {
+                getErrorText().setText("All fields are required!");
+                animateErrorText(getErrorText());
+            } else {
+                getErrorText().setText("");
+                try {
+                    saveCredentials(host, dbName, username, password);
+
+                } catch (IOException e) {
+                    getErrorText().setText("Error saving credentials!");
+                    animateErrorText(getErrorText());
                 }
+            }
 
-                // some pseudocode for the future
+            try {
+                Database connection = Database.getInstance();
 
-                // test connection to db
-
-                /* if (DATABASE CONNECTION FAILED) {
-                        errorText.setText("Couldn't connect to DB!");
-                        this.setLoginSuccessful(false);
-                    } else {
-                        this.setLoginSuccessful(true)
-                    }
-                 */
+                loadNextScene();
+            } catch (Exception e) {
+                getErrorText().setText("Wrong DB credentials!");
+                animateErrorText(getErrorText());
             }
         };
 
         submitButton.setOnAction(submitEvent);
 
-        this.getChildren().addAll(welcomeText, instructionsText, errorText,
+        this.getChildren().addAll(welcomeText, instructionsText, getErrorText(),
                hostWrapper, dbNameWrapper, usernameWrapper, passwordWrapper, submitButton);
     }
 
@@ -155,14 +151,9 @@ public class LoginForm extends VBox {
     }
 
     /**
-     * Method to add a cool animation to the errorText :)
-     * @param errorText the error Text node
+     * Loads next scene that was passed in the constructor
      */
-    private void animateErrorText(Text errorText) {
-        TranslateTransition shakeAnimation = new TranslateTransition(Duration.millis(100), errorText);
-        shakeAnimation.setByX(10);
-        shakeAnimation.setCycleCount(4);
-        shakeAnimation.setAutoReverse(true);
-        shakeAnimation.play();
+    public void loadNextScene() {
+        stage.setScene(this.nextScene);
     }
 }
