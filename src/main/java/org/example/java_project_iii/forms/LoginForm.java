@@ -108,7 +108,6 @@ public class LoginForm extends Form {
         headingVbox.setPadding(new Insets(80, 0, 0, 0));
         headingHBox.setPadding(new Insets(0 ,80, 0,180));
         headingHBox.setStyle("-fx-background-color: #c3eafa;");
-        HBox.setMargin(headingHBox, new Insets(0, 0, 100,0));
 
         //Setting animation
         greetingText.setVisible(false);
@@ -116,6 +115,7 @@ public class LoginForm extends Form {
         Timeline greetingAnimation =  AnimationHelper.typewriterAnimation(greetingText,150);
         AnimationHelper.applySwingRotation( iconImageView, 2000);
 
+        //sequential transition
         SequentialTransition sequentialTransition = new SequentialTransition(welcomeAnimation, greetingAnimation);
         sequentialTransition.play();
 
@@ -128,14 +128,13 @@ public class LoginForm extends Form {
         //Credintial styles
         credentialVBox.setMaxWidth(1100);
         credentialVBox.setSpacing(20);
-        credentialVBox.setPadding(new Insets(0,100,40,100));
-        credentialVBox.setAlignment(Pos.BASELINE_LEFT);
+        VBox.setMargin(credentialVBox, new Insets(0,200,0,200));
 
         //Submit button styles
         submitButton.setPrefSize(160 ,20);
-        VBox.setMargin(submitButton, new Insets(10, 0, 0,0));
+        VBox.setMargin(submitButton, new Insets(40, 0, 0,0));
 
-        this.setSpacing(10);
+        this.setSpacing(5);
         this.setAlignment(Pos.TOP_CENTER);
         this.setWidth(1280);
         this.setStyle("-fx-background-color: #f0f9fc;-fx-border-color: #000000; -fx-border-width: 2; -fx-border-style: solid;");

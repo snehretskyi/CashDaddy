@@ -67,7 +67,6 @@ public class AnimationHelper {
             rotateTransition.setAutoReverse(true);
 
             // Set the time duration in total
-            rotateTransition.setRate(1.0);
             rotateTransition.setDuration(Duration.millis(durationInMillis));
 
             rotateTransition.play();
