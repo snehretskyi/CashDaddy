@@ -5,9 +5,8 @@ public class CategoriesPOJO {
     private int budget_id;
     private String category_type;
 
-    public CategoriesPOJO(int category_id, int budget_id, String category_type) {
+    public CategoriesPOJO(int category_id, String category_type) {
         this.category_id = category_id;
-        this.budget_id = budget_id;
         this.category_type = category_type;
     }
 

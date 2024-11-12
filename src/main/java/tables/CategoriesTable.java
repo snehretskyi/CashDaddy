@@ -42,7 +42,6 @@ public class CategoriesTable implements CategoriesDAO {
             while (data.next()) {
                 categories.add(new CategoriesPOJO(
                         data.getInt(CATEGORIES_COLUMN_ID),
-                        data.getInt(CATEGORIES_COLUMN_BUDGET_ID),
                         data.getString(CATEGORIES_COLUMN_CATEGORY_TYPE)));
             }
         } catch (SQLException e) {
@@ -63,7 +62,6 @@ public class CategoriesTable implements CategoriesDAO {
             if(data.next()){
                 CategoriesPOJO category = new CategoriesPOJO(
                         data.getInt(CATEGORIES_COLUMN_ID),
-                        data.getInt(CATEGORIES_COLUMN_BUDGET_ID),
                         data.getString(CATEGORIES_COLUMN_CATEGORY_TYPE)
                 );
                 return null;
