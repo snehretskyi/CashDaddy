@@ -46,8 +46,8 @@ public class TransactionsTable implements TransactionsDAO {
                 TRANSACTIONS_COLUMN_ID + " = " + transaction_id;
         TransactionsPOJO transaction = new TransactionsPOJO();
         try {
-            Statement getItem = db.getConnection().createStatement();
-            ResultSet data = getItem.executeQuery(query);
+            Statement getTransaction = db.getConnection().createStatement();
+            ResultSet data = getTransaction.executeQuery(query);
             data.next();
             transactions.add(new TransactionsPOJO(data.getInt(TRANSACTIONS_COLUMN_ID),
                     data.getInt(TRANSACTIONS_COLUMN_ACCOUNT_ID),
