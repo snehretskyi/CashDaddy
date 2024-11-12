@@ -43,8 +43,8 @@ public class AccountsTable implements AccountDAO {
         String query = "SELECT * FROM " + TABLE_ACCOUNTS +
                 " WHERE " + ACCOUNTS_COLUMN_ID + " = " + id;
         try{
-            Statement getCoin = db.getConnection().createStatement();
-            ResultSet data = getCoin.executeQuery(query);
+            Statement getAccount = db.getConnection().createStatement();
+            ResultSet data = getAccount.executeQuery(query);
             if(data.next()){
                 AccountPOJO account = new AccountPOJO(
                         data.getInt(ACCOUNTS_COLUMN_ID),
