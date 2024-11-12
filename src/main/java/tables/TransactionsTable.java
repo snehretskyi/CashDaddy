@@ -2,6 +2,7 @@ package tables;
 
 import dao.TransactionsDAO;
 import database.Database;
+import pojo.Transaction_categoryPOJO;
 import pojo.TransactionsPOJO;
 
 import java.sql.ResultSet;
@@ -82,14 +83,25 @@ public class TransactionsTable implements TransactionsDAO {
     public void addTransaction(TransactionsPOJO transactions) {
         String query = "INSERT INTO " + TABLE_TRANSACTIONS +
                 "(" + TRANSACTIONS_COLUMN_AMOUNT + ", " +
+                TRANSACTIONS_COLUMN_ACCOUNT_ID + ", " +
                 TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID + "," +
                 TRANSACTIONS_COLUMN_TRANSACTION_DATE + "," +
                 TRANSACTIONS_COLUMN_DESCRIPTION + ") VALUES ('" +
-                transactions.getAmount() + "','" + transactions.getTransaction_type_id() + "','" +
+                transactions.getAmount() + "','" + transactions.getTransaction_account_id() + "','" + transactions.getTransaction_type_id() + "','" +
                 transactions.getTransaction_date() + "','" + transactions.getTransaction_description() +
                 "')";
         try {
             getDb().getConnection().createStatement().execute(query);
+
+            // get automatically generated id, update pojo with it
+            Statement getAutoId = getDb().getConnection().createStatement();
+            ResultSet resultSet =  getAutoId.executeQuery("SELECT LAST_INSERT_ID()");
+            if (resultSet.next()) {
+                // get first result
+                int generatedId = resultSet.getInt(1);
+                System.out.println(generatedId);
+                transactions.setTransaction_id(generatedId);
+            }
             System.out.println("Inserted Record");
         } catch (SQLException e) {
             e.printStackTrace();

@@ -6,18 +6,13 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import pojo.AccountPOJO;
-import pojo.BudgetPOJO;
-import pojo.CategoriesPOJO;
-import pojo.Transaction_typePOJO;
-import tables.AccountsTable;
-import tables.BudgetTable;
-import tables.CategoriesTable;
-import tables.Transaction_typeTable;
+import pojo.*;
+import tables.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.sql.Date;
 
 /**
  * Class Description: a form designed to enter and display information to and from Database
@@ -103,6 +98,8 @@ public class CreateForm extends Form {
         BudgetTable budgetTable = new BudgetTable();
         AccountsTable accountsTable = new AccountsTable();
         Transaction_typeTable transactionTypeTable = new Transaction_typeTable();
+        TransactionsTable transactionsTable = new TransactionsTable();
+        Transaction_categoryTable transactionCategoryTable = new Transaction_categoryTable();
 
         // creating nodes
         GridPane formGrid = new GridPane();
@@ -142,6 +139,8 @@ public class CreateForm extends Form {
 
         transactionTypes.forEach((Transaction_typePOJO transactionType) -> {
             RadioButton transactionTypeRadio = new RadioButton(transactionType.toString());
+            // set pojo associated with the button
+            transactionTypeRadio.setUserData(transactionType);
             transactionTypeRadioBox.getChildren().add(transactionTypeRadio);
             transactionTypeRadio.setToggleGroup(transactionTypeGroup);
         });
@@ -179,7 +178,20 @@ public class CreateForm extends Form {
                         ||  transactionTypeGroup.getSelectedToggle() == null
                         || descriptionField.getText().isEmpty()) {
                     getErrorText().setText("All fields are required!");
+                    System.out.println(accountComboBox.getSelectionModel().getSelectedItem().getAccount_id());
                     animateErrorText(getErrorText());
+                } else {
+                    int selectedTransactionType = ((Transaction_typePOJO) transactionTypeGroup.getSelectedToggle().getUserData()).getTransaction_type_id();
+                    TransactionsPOJO transaction = new TransactionsPOJO(0,
+                            accountComboBox.getSelectionModel().getSelectedItem().getAccount_id(),
+                            Double.parseDouble(amountField.getText()),
+                            selectedTransactionType,
+                            Date.valueOf(datePicker.getValue()),
+                            descriptionField.getText());
+                    transactionsTable.addTransaction(transaction);
+
+                    Transaction_categoryPOJO transactionCategoryJunction = new Transaction_categoryPOJO(transaction.getTransaction_id(), categoryComboBox.getSelectionModel().getSelectedItem().getCategory_id());
+                    transactionCategoryTable.addTransaction_category(transactionCategoryJunction);
                 }
 
             } catch (DateTimeParseException e) {
@@ -228,10 +240,6 @@ public class CreateForm extends Form {
         formNameLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
         formNameLabel.setPadding(new Insets(5));
         transactionTypeRadioBox.setSpacing(20);
-
-        // TODO: remove this once we add the forms to main scene
-        formGrid.setMaxWidth(844);
-        formGrid.setMaxHeight(480);
 
 
         this.getChildren().addAll(formNameLabel, formGrid, getErrorText());

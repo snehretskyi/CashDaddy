@@ -32,7 +32,7 @@ public class DBConst {
         public static final String TRANSACTIONS_COLUMN_AMOUNT = "amount";
         public static final String TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID = "transaction_type_id";
         public static final String TRANSACTIONS_COLUMN_TRANSACTION_DATE = "transaction_date";
-        public static final String TRANSACTIONS_COLUMN_DESCRIPTION = "transaction_description";
+        public static final String TRANSACTIONS_COLUMN_DESCRIPTION = "description";
 
         /**
          * TRANSACTION_TYPE TABLE

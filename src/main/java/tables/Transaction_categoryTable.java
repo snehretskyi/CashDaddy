@@ -3,6 +3,7 @@ package tables;
 import dao.Transaction_categoryDAO;
 import database.Database;
 import pojo.Transaction_categoryPOJO;
+import pojo.TransactionsPOJO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -70,6 +71,24 @@ public class Transaction_categoryTable implements Transaction_categoryDAO {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void addTransaction_category(Transaction_categoryPOJO transaction_categoryPOJO) {
+        String query = "INSERT INTO " + TABLE_TRANSACTION_CATEGORY +
+                "(" + TRANSACTION_CATEGORY_COLUMN_TRANSACTION_ID +
+                ", " + TRANSACTION_CATEGORY_COLUMN_CATEGORY_ID + ") VALUES (" +
+                transaction_categoryPOJO.getTransaction_id() + ", "
+                + transaction_categoryPOJO.getCategory_id() +
+                ")";
+        try {
+            getDb().getConnection().createStatement().execute(query);
+            System.out.println("Inserted Record");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
