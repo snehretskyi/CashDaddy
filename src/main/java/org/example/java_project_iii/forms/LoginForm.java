@@ -24,6 +24,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.example.java_project_iii.scenes.Dashboard;
 import services.ImageCreator;
 import services.AnimationHelper;
 import javax.swing.*;
@@ -60,11 +61,10 @@ public class LoginForm extends Form {
     /**
      * Constructs a new LoginForm, styles included
      */
-    public LoginForm(Stage stage, Scene nextScene) {
+    public LoginForm(Stage stage) {
         super();
 
         this.stage = stage;
-        this.nextScene = nextScene;
 
         // creating nodes
         Text welcomeText = new Text("Welcome To CashDaddy!!...");
@@ -199,7 +199,9 @@ public class LoginForm extends Form {
     /**
      * Loads next scene that was passed in the constructor
      */
-    public void loadNextScene() {
-        stage.setScene(this.nextScene);
+    public void loadNextScene() throws Exception {
+        Dashboard.createDashboard(1280, 720);
+        nextScene = Dashboard.getDashboardSceneInstance();
+        stage.setScene(nextScene);
     }
 }

@@ -15,6 +15,7 @@ import org.example.java_project_iii.forms.LoginForm;
 public class Login {
 
     private Scene loginScene;
+    private static LoginForm loginForm;
     private static Login loginInstance;
     private Stage stage;
     private Scene nextScene;
@@ -22,6 +23,10 @@ public class Login {
     private int height;
 
     // getters and setters
+    public static LoginForm getLoginForm() {
+        return loginForm;
+    }
+
     public Scene getNextScene() {
         return nextScene;
     }
@@ -61,11 +66,11 @@ public class Login {
     /**
      * Private constructor.
      */
-    private Login(Stage stage, Scene nextScene, int width, int height) {
+    private Login(Stage stage, int width, int height) {
 
         BorderPane root = new BorderPane();
 
-        LoginForm loginForm = new LoginForm(stage, nextScene);
+        loginForm = new LoginForm(stage);
 
         root.setCenter(loginForm);
 
@@ -75,8 +80,8 @@ public class Login {
     /**
      * As the class needs some arguments (width and height), it's necessary to first set it up
      */
-    public static void createLoginScene(Stage stage, Scene nextScene, int width, int height) {
-        loginInstance = new Login(stage, nextScene, width, height);
+    public static void createLoginScene(Stage stage, int width, int height) {
+        loginInstance = new Login(stage, width, height);
     }
 
     /**

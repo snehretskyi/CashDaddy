@@ -6,11 +6,18 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import pojo.AccountPOJO;
+import pojo.BudgetPOJO;
 import pojo.CategoriesPOJO;
+import pojo.Transaction_typePOJO;
+import tables.AccountsTable;
+import tables.BudgetTable;
 import tables.CategoriesTable;
+import tables.Transaction_typeTable;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 
 /**
  * Class Description: a form designed to enter and display information to and from Database
@@ -93,6 +100,9 @@ public class CreateForm extends Form {
         this.formName = formName;
 
         CategoriesTable categoriesTable = new CategoriesTable();
+        BudgetTable budgetTable = new BudgetTable();
+        AccountsTable accountsTable = new AccountsTable();
+        Transaction_typeTable transactionTypeTable = new Transaction_typeTable();
 
         // creating nodes
         GridPane formGrid = new GridPane();
@@ -115,27 +125,26 @@ public class CreateForm extends Form {
         categoryComboBox.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
 
         Label budgetLabel = new Label("Budget:");
-        ComboBox<String> budgetComboBox = new ComboBox<>();
-        budgetComboBox.getItems().addAll("Lorem Ipsum", "Mental Health", "Allowance");
+        ComboBox<BudgetPOJO> budgetComboBox = new ComboBox<>();
+        budgetComboBox.setItems(FXCollections.observableArrayList(budgetTable.getAllBudgets()));
+
 
         Label accountLabel = new Label("Account:");
-        ComboBox<String> accountComboBox = new ComboBox<>();
-        accountComboBox.getItems().addAll("RBC Savings", "TD Debt", "CIBC Investments");
+        ComboBox<AccountPOJO> accountComboBox = new ComboBox<>();
+        accountComboBox.setItems(FXCollections.observableArrayList(accountsTable.getAllAccounts()));
+
 
         Label transactionTypeLabel = new Label("Transaction Type:");
 
         HBox transactionTypeRadioBox = new HBox();
-        RadioButton incomeRadio = new RadioButton("Income");
-        RadioButton expenseRadio = new RadioButton("Expense");
-        RadioButton savingsRadio = new RadioButton("Savings");
-        transactionTypeRadioBox.getChildren().addAll(incomeRadio, expenseRadio, savingsRadio);
-
         ToggleGroup transactionTypeGroup = new ToggleGroup();
-        incomeRadio.setToggleGroup(transactionTypeGroup);
-        expenseRadio.setToggleGroup(transactionTypeGroup);
-        savingsRadio.setToggleGroup(transactionTypeGroup);
+        ArrayList<Transaction_typePOJO> transactionTypes = transactionTypeTable.getAllTransaction_types();
 
-
+        transactionTypes.forEach((Transaction_typePOJO transactionType) -> {
+            RadioButton transactionTypeRadio = new RadioButton(transactionType.toString());
+            transactionTypeRadioBox.getChildren().add(transactionTypeRadio);
+            transactionTypeRadio.setToggleGroup(transactionTypeGroup);
+        });
 
         Label descriptionLabel = new Label("Description:");
         TextField descriptionField = new TextField();
@@ -171,16 +180,6 @@ public class CreateForm extends Form {
                         || descriptionField.getText().isEmpty()) {
                     getErrorText().setText("All fields are required!");
                     animateErrorText(getErrorText());
-                } else {
-                    // if not empty, the values of the fields are saved to the instance
-                    // (later should be submitted to db)
-                    getErrorText().setText("");
-                    this.setDate(datePicker.getValue());
-                    this.setAmount(Double.valueOf(amountField.getText()));
-                    this.setBudget(budgetComboBox.getValue());
-                    this.setAccount(accountComboBox.getValue());
-                    this.setType(transactionTypeGroup.selectedToggleProperty().getName());
-                    this.setDescription(descriptionField.getText().trim());
                 }
 
             } catch (DateTimeParseException e) {
