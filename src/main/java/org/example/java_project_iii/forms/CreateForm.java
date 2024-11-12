@@ -1,13 +1,14 @@
 package org.example.java_project_iii.forms;
 
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import pojo.CategoriesPOJO;
+import tables.CategoriesTable;
 
-import java.io.IOException;
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -16,7 +17,7 @@ import java.time.format.DateTimeParseException;
  * Validates input.
  * @author Stan
  */
-public class CrudForm extends Form {
+public class CreateForm extends Form {
     private String formName;
     private LocalDate date;
     private Double amount;
@@ -86,10 +87,12 @@ public class CrudForm extends Form {
      * Constructor
      * @param formName name of the form, e.g. Update
      */
-    public CrudForm(String formName) {
+    public CreateForm(String formName) throws Exception {
         super();
 
         this.formName = formName;
+
+        CategoriesTable categoriesTable = new CategoriesTable();
 
         // creating nodes
         GridPane formGrid = new GridPane();
@@ -108,8 +111,8 @@ public class CrudForm extends Form {
 
         // for now values are hardcoded, later we'll get them from db
         Label categoryLabel = new Label("Category:");
-        ComboBox<String> categoryComboBox = new ComboBox<>();
-        categoryComboBox.getItems().addAll("Recreation", "Rent", "Lorem Ipsum");
+        ComboBox<CategoriesPOJO> categoryComboBox = new ComboBox<>();
+        categoryComboBox.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
 
         Label budgetLabel = new Label("Budget:");
         ComboBox<String> budgetComboBox = new ComboBox<>();
@@ -174,7 +177,6 @@ public class CrudForm extends Form {
                     getErrorText().setText("");
                     this.setDate(datePicker.getValue());
                     this.setAmount(Double.valueOf(amountField.getText()));
-                    this.setCategory(categoryComboBox.getValue());
                     this.setBudget(budgetComboBox.getValue());
                     this.setAccount(accountComboBox.getValue());
                     this.setType(transactionTypeGroup.selectedToggleProperty().getName());

@@ -1,14 +1,12 @@
 package org.example.java_project_iii.scenes;
 
-import javafx.application.Application;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-import org.example.java_project_iii.forms.CrudForm;
+import org.example.java_project_iii.forms.CreateForm;
 import tabs.*;
 
 
@@ -51,7 +49,7 @@ public class Dashboard {
     /**
      * Private constructor.
      */
-    private Dashboard(int width, int height) {
+    private Dashboard(int width, int height) throws Exception {
         BorderPane root = new BorderPane();
 
         // Build a MenuBar
@@ -80,8 +78,8 @@ public class Dashboard {
         DeleteTransaction deleteTransaction= new DeleteTransaction();
 
         //add CurdForm to AddTransaction tab
-        CrudForm crudForm = new CrudForm("Add Transaction");
-        addTransaction.setContent(crudForm);
+        CreateForm createForm = new CreateForm("Add Transaction");
+        addTransaction.setContent(createForm);
 
 
         // Add tabs to the TabPane
@@ -101,7 +99,7 @@ public class Dashboard {
     /**
      * As the class needs some arguments (width and height), it's necessary to first set it up
      */
-    public static void createDashboard(int width, int height) {
+    public static void createDashboard(int width, int height) throws Exception {
         dashboardInstance = new Dashboard(width, height);
     }
 
