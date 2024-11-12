@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class TransactionsPOJO {
     private int transaction_id;
-    private int account_id;
+    private int transaction_account_id;
     private double amount;
     private int transaction_type_id;
     private Date transaction_date;
@@ -12,7 +12,7 @@ public class TransactionsPOJO {
 
     public TransactionsPOJO(int transaction_id, int account_id, double amount, int transaction_type_id, Date transaction_date, String transaction_description) {
         this.transaction_id = transaction_id;
-        this.account_id = account_id;
+        this.transaction_account_id = account_id;
         this.amount = amount;
         this.transaction_type_id = transaction_type_id;
         this.transaction_date = transaction_date;
@@ -36,12 +36,12 @@ public class TransactionsPOJO {
         this.transaction_id = transaction_id;
     }
 
-    public int getAccount_id() {
-        return account_id;
+    public int getTransaction_account_id() {
+        return transaction_account_id;
     }
 
-    public void setAccount_id(int account_id) {
-        this.account_id = account_id;
+    public void setTransaction_account_id(int transaction_account_id) {
+        this.transaction_account_id = transaction_account_id;
     }
 
     public double getAmount() {
