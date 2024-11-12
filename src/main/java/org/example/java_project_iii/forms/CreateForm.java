@@ -21,69 +21,6 @@ import java.sql.Date;
  */
 public class CreateForm extends Form {
     private String formName;
-    private LocalDate date;
-    private Double amount;
-    private String category;
-    private String budget;
-    private String account;
-    private String type;
-    private String description;
-
-    // getters and setters
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public void setBudget(String budget) {
-        this.budget = budget;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public String getDescription() {
-        return description;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public String getBudget() {
-        return budget;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
 
     /**
      * Constructor
@@ -118,8 +55,9 @@ public class CreateForm extends Form {
 
         // for now values are hardcoded, later we'll get them from db
         Label categoryLabel = new Label("Category:");
-        ComboBox<CategoriesPOJO> categoryComboBox = new ComboBox<>();
-        categoryComboBox.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
+        ListView<CategoriesPOJO> categoryListView = new ListView<>();
+        categoryListView.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
+        categoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         Label budgetLabel = new Label("Budget:");
         ComboBox<BudgetPOJO> budgetComboBox = new ComboBox<>();
@@ -156,7 +94,7 @@ public class CreateForm extends Form {
         formGrid.add(amountLabel, 0, 2);
         formGrid.add(amountField, 1, 2);
         formGrid.add(categoryLabel, 0, 3);
-        formGrid.add(categoryComboBox, 1, 3);
+        formGrid.add(categoryListView, 1, 3);
         formGrid.add(budgetLabel, 0, 4);
         formGrid.add(budgetComboBox, 1, 4);
         formGrid.add(accountLabel, 0, 5);
@@ -173,7 +111,8 @@ public class CreateForm extends Form {
         confirmButton.setOnAction((event) -> {
             try {
                 // refuse to submit if fields are empty
-                if (amountField.getText().isEmpty() || categoryComboBox.getValue() == null
+                if (amountField.getText().isEmpty()
+                        || categoryListView.getSelectionModel().getSelectedItem() == null
                         || budgetComboBox.getValue() == null || accountComboBox.getValue() == null
                         ||  transactionTypeGroup.getSelectedToggle() == null
                         || descriptionField.getText().isEmpty()) {
@@ -190,8 +129,13 @@ public class CreateForm extends Form {
                             descriptionField.getText());
                     transactionsTable.addTransaction(transaction);
 
-                    Transaction_categoryPOJO transactionCategoryJunction = new Transaction_categoryPOJO(transaction.getTransaction_id(), categoryComboBox.getSelectionModel().getSelectedItem().getCategory_id());
-                    transactionCategoryTable.addTransaction_category(transactionCategoryJunction);
+                    ArrayList<CategoriesPOJO> selectedCategories = new ArrayList<>(categoryListView.getSelectionModel().getSelectedItems());
+
+                    selectedCategories.forEach((CategoriesPOJO category) -> {
+                        Transaction_categoryPOJO transactionCategoryJunction = new Transaction_categoryPOJO(transaction.getTransaction_id(), category.getCategory_id());
+                        transactionCategoryTable.addTransaction_category(transactionCategoryJunction);
+                    });
+
                 }
 
             } catch (DateTimeParseException e) {
@@ -214,7 +158,7 @@ public class CreateForm extends Form {
                 getErrorText().setText("");
                 datePicker.setValue(LocalDate.now());
                 amountField.clear();
-                categoryComboBox.getSelectionModel().clearSelection();
+                categoryListView.getSelectionModel().clearSelection();
                 budgetComboBox.getSelectionModel().clearSelection();
                 accountComboBox.getSelectionModel().clearSelection();
                 transactionTypeGroup.getSelectedToggle().setSelected(false);
