@@ -21,7 +21,7 @@ public class CategoriesTable implements CategoriesDAO {
     @Override
     public ArrayList<CategoriesPOJO> getAllCategories() {
         String query = "SELECT * FROM " + TABLE_CATEGORIES;
-        categories = new ArrayList<CategoriesPOJO>();
+        categories = new ArrayList<>();
         try {
             Statement getCategories = db.getConnection().createStatement();
             ResultSet data = getCategories.executeQuery(query);
