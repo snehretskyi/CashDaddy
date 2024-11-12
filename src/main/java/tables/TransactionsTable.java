@@ -12,8 +12,21 @@ import java.util.ArrayList;
 import static database.DBConst.*;
 
 public class TransactionsTable implements TransactionsDAO {
-    Database db = Database.getInstance();
+    Database db;
     ArrayList<TransactionsPOJO> transactions;
+
+    public Database getDb() throws Exception {
+        try {
+            if(db == null){
+                db = Database.getInstance();
+            }
+            return db;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     public TransactionsTable() throws Exception {
     }
@@ -23,7 +36,7 @@ public class TransactionsTable implements TransactionsDAO {
         String query = "SELECT * FROM " + TABLE_TRANSACTIONS;
         transactions = new ArrayList<TransactionsPOJO>();
         try {
-            Statement getItems = db.getConnection().createStatement();
+            Statement getItems = getDb().getConnection().createStatement();
             ResultSet data = getItems.executeQuery(query);
             //data.next() makes data the first record, then the next record etc.
             while(data.next()) {
@@ -36,6 +49,8 @@ public class TransactionsTable implements TransactionsDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return transactions;
     }
@@ -46,7 +61,7 @@ public class TransactionsTable implements TransactionsDAO {
                 TRANSACTIONS_COLUMN_ID + " = " + transaction_id;
         TransactionsPOJO transaction = new TransactionsPOJO();
         try {
-            Statement getTransaction = db.getConnection().createStatement();
+            Statement getTransaction = getDb().getConnection().createStatement();
             ResultSet data = getTransaction.executeQuery(query);
             data.next();
             transactions.add(new TransactionsPOJO(data.getInt(TRANSACTIONS_COLUMN_ID),
@@ -57,6 +72,8 @@ public class TransactionsTable implements TransactionsDAO {
                     data.getString(TRANSACTIONS_COLUMN_DESCRIPTION)));
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return transaction;
     }
@@ -72,10 +89,12 @@ public class TransactionsTable implements TransactionsDAO {
                 transactions.getTransaction_date() + "','" + transactions.getTransaction_description() +
                 "')";
         try {
-            db.getConnection().createStatement().execute(query);
+            getDb().getConnection().createStatement().execute(query);
             System.out.println("Inserted Record");
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -88,10 +107,12 @@ public class TransactionsTable implements TransactionsDAO {
                 TRANSACTIONS_COLUMN_DESCRIPTION + " " + transactions.getTransaction_description() +
                 " WHERE " + TRANSACTIONS_COLUMN_ID + " = " + transactions.getTransaction_id();
         try {
-            Statement updateItem = db.getConnection().createStatement();
+            Statement updateItem = getDb().getConnection().createStatement();
             updateItem.executeQuery(query);
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -100,10 +121,12 @@ public class TransactionsTable implements TransactionsDAO {
         String query  = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " +
                 TRANSACTIONS_COLUMN_ID + " = " + id;
         try {
-            db.getConnection().createStatement().execute(query);
+            getDb().getConnection().createStatement().execute(query);
             System.out.println("Deleted record");
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

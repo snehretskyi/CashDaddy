@@ -12,8 +12,21 @@ import java.util.ArrayList;
 import static database.DBConst.*;
 
 public class Transaction_categoryTable implements Transaction_categoryDAO {
-    Database db = Database.getInstance();
+    Database db;
     ArrayList<Transaction_categoryPOJO> transaction_categories;
+
+    public Database getDb() throws Exception {
+        try {
+            if(db == null){
+                db = Database.getInstance();
+            }
+            return db;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     public Transaction_categoryTable() throws Exception {
     }
@@ -23,7 +36,7 @@ public class Transaction_categoryTable implements Transaction_categoryDAO {
         String query = "SELECT * FROM " + TABLE_TRANSACTION_CATEGORY;
         transaction_categories = new ArrayList<>();
         try {
-            Statement getCategories = db.getConnection().createStatement();
+            Statement getCategories = getDb().getConnection().createStatement();
             ResultSet data = getCategories.executeQuery(query);
             //data.next() makes data the first record, then the next record etc.
             while (data.next()) {
@@ -33,6 +46,8 @@ public class Transaction_categoryTable implements Transaction_categoryDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return transaction_categories;
     }
@@ -42,7 +57,7 @@ public class Transaction_categoryTable implements Transaction_categoryDAO {
         String query = "SELECT * FROM " + TABLE_TRANSACTION_CATEGORY +
                 " WHERE " + TRANSACTION_CATEGORY_COLUMN_CATEGORY_ID + " = " + id;
         try{
-            Statement getCategory = db.getConnection().createStatement();
+            Statement getCategory = getDb().getConnection().createStatement();
             ResultSet data = getCategory.executeQuery(query);
             if(data.next()){
                 Transaction_categoryPOJO category = new Transaction_categoryPOJO(
