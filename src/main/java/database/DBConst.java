@@ -113,6 +113,7 @@ public class DBConst {
                 "CREATE TABLE " + TABLE_CATEGORIES + " (" +
                         CATEGORIES_COLUMN_ID + " INT NOT NULL AUTO_INCREMENT, " +
                         CATEGORIES_COLUMN_CATEGORY_TYPE + " VARCHAR(50), " +
+                        // CATEGORIES_COLUMN_ID is not CATEGORIES_COLUMN_BUDGET_ID. Might be a problem. Take note of this.
                         "PRIMARY KEY (" + CATEGORIES_COLUMN_ID + ")" +
                         ");";
 
