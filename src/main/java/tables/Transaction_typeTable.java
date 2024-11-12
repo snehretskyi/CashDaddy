@@ -42,7 +42,7 @@ public class Transaction_typeTable implements Transaction_typeDAO {
             while (data.next()) {
                 transaction_type.add(new Transaction_typePOJO(
                         data.getInt(TRANSACTION_TYPES_COLUMN_ID),
-                        data.getInt(TRANSACTION_TYPES_COLUMN_TYPE)));
+                        data.getString(TRANSACTION_TYPES_COLUMN_TYPE)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,7 +62,7 @@ public class Transaction_typeTable implements Transaction_typeDAO {
             if(data.next()){
                 Transaction_typePOJO category = new Transaction_typePOJO(
                         data.getInt(TRANSACTION_TYPES_COLUMN_ID),
-                        data.getInt(TRANSACTION_TYPES_COLUMN_TYPE)
+                        data.getString(TRANSACTION_TYPES_COLUMN_TYPE)
                 );
                 return null;
             }

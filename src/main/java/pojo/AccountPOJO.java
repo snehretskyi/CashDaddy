@@ -44,4 +44,6 @@ public class AccountPOJO {
     public void setAccount_id(int account_id) {
         this.account_id = account_id;
     }
+
+    public String toString() {return type;}
 }

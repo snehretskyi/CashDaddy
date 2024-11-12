@@ -34,4 +34,6 @@ public class CategoriesPOJO {
     public void setCategory_type(String category_type) {
         this.category_type = category_type;
     }
+
+    public String toString() {return category_type;}
 }

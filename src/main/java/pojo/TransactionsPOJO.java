@@ -75,4 +75,6 @@ public class TransactionsPOJO {
     public void setTransaction_description(String transaction_description) {
         this.transaction_description = transaction_description;
     }
+
+    public String toString() {return transaction_description;}
 }

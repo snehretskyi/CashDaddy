@@ -56,4 +56,8 @@ public class BudgetPOJO {
     public void setEnd_date(Date end_date) {
         this.end_date = end_date;
     }
+
+
+
+    //TODO after Riddhi adds budget_name in Database public String toString() {return budget_name;}
 }
