@@ -1,9 +1,8 @@
 package pojo;
 
-import java.util.Date;
+import java.sql.Date;
 
-public class TransactionsPOJO {
-    private int transaction_id;
+public class TransactionsPOJO extends DatabaseItemPojo {
     private int transaction_account_id;
     private double amount;
     private int transaction_type_id;
@@ -11,7 +10,7 @@ public class TransactionsPOJO {
     private String transaction_description;
 
     public TransactionsPOJO(int transaction_id, int account_id, double amount, int transaction_type_id, Date transaction_date, String transaction_description) {
-        this.transaction_id = transaction_id;
+        super(transaction_id);
         this.transaction_account_id = account_id;
         this.amount = amount;
         this.transaction_type_id = transaction_type_id;
@@ -26,14 +25,6 @@ public class TransactionsPOJO {
     }
 
     public TransactionsPOJO() {
-    }
-
-    public int getTransaction_id() {
-        return transaction_id;
-    }
-
-    public void setTransaction_id(int transaction_id) {
-        this.transaction_id = transaction_id;
     }
 
     public int getTransaction_account_id() {

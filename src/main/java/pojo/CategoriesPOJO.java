@@ -1,21 +1,12 @@
 package pojo;
 
-public class CategoriesPOJO {
-    private int category_id;
+public class CategoriesPOJO extends DatabaseItemPojo {
     private int budget_id;
     private String category_type;
 
     public CategoriesPOJO(int category_id, String category_type) {
-        this.category_id = category_id;
+        super(category_id);
         this.category_type = category_type;
-    }
-
-    public int getCategory_id() {
-        return category_id;
-    }
-
-    public void setCategory_id(int category_id) {
-        this.category_id = category_id;
     }
 
     public int getBudget_id() {

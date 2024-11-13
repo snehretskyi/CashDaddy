@@ -2,27 +2,18 @@ package pojo;
 
 import java.util.Date;
 
-public class BudgetPOJO {
-    private int budget_id;
+public class BudgetPOJO extends DatabaseItemPojo{
     private int category_id;
     private double goal_amount;
     private Date start_date;
     private Date end_date;
 
     public BudgetPOJO(int budget_id, int category_id, double goal_amount, Date start_date, Date end_date) {
-        this.budget_id = budget_id;
+        super(budget_id);
         this.category_id = category_id;
         this.goal_amount = goal_amount;
         this.start_date = start_date;
         this.end_date = end_date;
-    }
-
-    public int getBudget_idd() {
-        return budget_id;
-    }
-
-    public void setId(int budget_id) {
-        this.budget_id = budget_id;
     }
 
     public int getCategory_id() {
