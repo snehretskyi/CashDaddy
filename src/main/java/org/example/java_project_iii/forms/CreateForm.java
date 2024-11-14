@@ -32,7 +32,6 @@ public class CreateForm extends Form {
         this.formName = formName;
 
         CategoriesTable categoriesTable = new CategoriesTable();
-        BudgetTable budgetTable = new BudgetTable();
         AccountsTable accountsTable = new AccountsTable();
         Transaction_typeTable transactionTypeTable = new Transaction_typeTable();
         TransactionsTable transactionsTable = new TransactionsTable();
@@ -53,15 +52,25 @@ public class CreateForm extends Form {
         Label amountLabel = new Label("Amount:");
         TextField amountField = new TextField();
 
+        Label recurringLabel = new Label("Recurring?");
+        CheckBox recurringCheckBox = new CheckBox();
+
+        VBox recurringIntervalBox = new VBox();
+        Label recurringIntervalLabel = new Label("Interval (in days)");
+        Spinner recurringIntervalSpinner = new Spinner(0, 100, 1);
+        recurringIntervalBox.getChildren().addAll(recurringIntervalLabel, recurringIntervalSpinner);
+        // hide the box unless it is selected
+        recurringIntervalBox.setVisible(false);
+
+        // if checkbox is selected, add ability to enter interval
+        recurringCheckBox.setOnAction((event) -> {
+            recurringIntervalBox.setVisible(recurringCheckBox.isSelected());
+        });
+
         Label categoryLabel = new Label("Category:");
         ListView<CategoriesPOJO> categoryListView = new ListView<>();
         categoryListView.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
         categoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-        Label budgetLabel = new Label("Budget:");
-        ComboBox<BudgetPOJO> budgetComboBox = new ComboBox<>();
-        budgetComboBox.setItems(FXCollections.observableArrayList(budgetTable.getAllBudgets()));
-
 
         Label accountLabel = new Label("Account:");
         ComboBox<AccountPOJO> accountComboBox = new ComboBox<>();
@@ -94,17 +103,18 @@ public class CreateForm extends Form {
         formGrid.add(amountField, 1, 2);
         formGrid.add(categoryLabel, 0, 3);
         formGrid.add(categoryListView, 1, 3);
-        formGrid.add(budgetLabel, 0, 4);
-        formGrid.add(budgetComboBox, 1, 4);
-        formGrid.add(accountLabel, 0, 5);
-        formGrid.add(accountComboBox, 1, 5);
-        formGrid.add(transactionTypeLabel, 0, 6);
-        formGrid.add(transactionTypeRadioBox, 0, 7);
-        formGrid.add(descriptionLabel, 0, 8);
-        formGrid.add(descriptionField, 1, 8);
+        formGrid.add(recurringLabel, 0, 4);
+        formGrid.add(recurringCheckBox, 1, 4);
+        formGrid.add(recurringIntervalBox, 0, 5);
+        formGrid.add(accountLabel, 0, 6);
+        formGrid.add(accountComboBox, 1, 6);
+        formGrid.add(transactionTypeLabel, 0, 7);
+        formGrid.add(transactionTypeRadioBox, 0, 8);
+        formGrid.add(descriptionLabel, 0, 9);
+        formGrid.add(descriptionField, 1, 9);
 
-        formGrid.add(confirmButton, 4, 9);
-        formGrid.add(cancelButton, 5, 9);
+        formGrid.add(confirmButton, 4, 10);
+        formGrid.add(cancelButton, 5, 10);
 
         // logic for buttons
         confirmButton.setOnAction((event) -> {
@@ -112,7 +122,7 @@ public class CreateForm extends Form {
                 // refuse to submit if fields are empty
                 if (amountField.getText().isEmpty()
                         || categoryListView.getSelectionModel().getSelectedItem() == null
-                        || budgetComboBox.getValue() == null || accountComboBox.getValue() == null
+                        || accountComboBox.getValue() == null
                         ||  transactionTypeGroup.getSelectedToggle() == null
                         || descriptionField.getText().isEmpty()) {
                     getErrorText().setText("All fields are required!");
@@ -158,7 +168,7 @@ public class CreateForm extends Form {
                 datePicker.setValue(LocalDate.now());
                 amountField.clear();
                 categoryListView.getSelectionModel().clearSelection();
-                budgetComboBox.getSelectionModel().clearSelection();
+                recurringCheckBox.setSelected(false);
                 accountComboBox.getSelectionModel().clearSelection();
                 transactionTypeGroup.getSelectedToggle().setSelected(false);
                 descriptionField.clear();

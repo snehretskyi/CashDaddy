@@ -43,14 +43,11 @@ public class UpdateForm extends Form {
         System.out.println(transactionsPOJO);
 
         CategoriesTable categoriesTable = new CategoriesTable();
-        BudgetTable budgetTable = new BudgetTable();
         AccountsTable accountsTable = new AccountsTable();
         Transaction_typeTable transactionTypeTable = new Transaction_typeTable();
         TransactionsTable transactionsTable = new TransactionsTable();
         Transaction_categoryTable transactionCategoryTable = new Transaction_categoryTable();
         ArrayList<CategoriesPOJO> allCategories = categoriesTable.getAllCategories();
-        ArrayList<Transaction_categoryPOJO> allTransactionCategories = transactionCategoryTable.getAllTransaction_categories();
-        ArrayList<BudgetPOJO> allBudgets = budgetTable.getAllBudgets();
         ArrayList<AccountPOJO> allAccounts = accountsTable.getAllAccounts();
         ArrayList<Transaction_typePOJO> allTransactionTypes = transactionTypeTable.getAllTransaction_types();
         ArrayList<Integer> allAssociatedCategories = transactionCategoryTable.getAssociatedCategories(transactionsPOJO.getId());
@@ -81,11 +78,20 @@ public class UpdateForm extends Form {
         });
 
 
-        Label budgetLabel = new Label("Budget:");
-        ComboBox<BudgetPOJO> budgetComboBox = new ComboBox<>();
-        budgetComboBox.setItems(FXCollections.observableArrayList(allBudgets));
-        System.out.println(find(allBudgets, transactionsPOJO.getId()));
-        budgetComboBox.getSelectionModel().select(find(allBudgets, transactionsPOJO.getId()));
+        Label recurringLabel = new Label("Recurring?");
+        CheckBox recurringCheckBox = new CheckBox();
+
+        VBox recurringIntervalBox = new VBox();
+        Label recurringIntervalLabel = new Label("Interval (in days)");
+        Spinner recurringIntervalSpinner = new Spinner(0, 100, 1);
+        recurringIntervalBox.getChildren().addAll(recurringIntervalLabel, recurringIntervalSpinner);
+        // hide the box unless it is selected
+        recurringIntervalBox.setVisible(false);
+
+        // if checkbox is selected, add ability to enter interval
+        recurringCheckBox.setOnAction((event) -> {
+            recurringIntervalBox.setVisible(recurringCheckBox.isSelected());
+        });
 
 
         Label accountLabel = new Label("Account:");
@@ -122,17 +128,18 @@ public class UpdateForm extends Form {
         formGrid.add(amountField, 1, 2);
         formGrid.add(categoryLabel, 0, 3);
         formGrid.add(categoryListView, 1, 3);
-        formGrid.add(budgetLabel, 0, 4);
-        formGrid.add(budgetComboBox, 1, 4);
-        formGrid.add(accountLabel, 0, 5);
-        formGrid.add(accountComboBox, 1, 5);
-        formGrid.add(transactionTypeLabel, 0, 6);
-        formGrid.add(transactionTypeRadioBox, 0, 7);
-        formGrid.add(descriptionLabel, 0, 8);
-        formGrid.add(descriptionField, 1, 8);
+        formGrid.add(recurringLabel, 0, 4);
+        formGrid.add(recurringCheckBox, 1, 4);
+        formGrid.add(recurringIntervalBox, 0, 5);
+        formGrid.add(accountLabel, 0, 6);
+        formGrid.add(accountComboBox, 1, 6);
+        formGrid.add(transactionTypeLabel, 0, 7);
+        formGrid.add(transactionTypeRadioBox, 0, 8);
+        formGrid.add(descriptionLabel, 0, 9);
+        formGrid.add(descriptionField, 1, 9);
 
-        formGrid.add(confirmButton, 4, 9);
-        formGrid.add(cancelButton, 5, 9);
+        formGrid.add(confirmButton, 4, 10);
+        formGrid.add(cancelButton, 5, 10);
 
         // logic for buttons
         confirmButton.setOnAction((event) -> {
@@ -140,7 +147,7 @@ public class UpdateForm extends Form {
                 // refuse to submit if fields are empty
                 if (amountField.getText().isEmpty()
                         || categoryListView.getSelectionModel().getSelectedItem() == null
-                        || budgetComboBox.getValue() == null || accountComboBox.getValue() == null
+                        || accountComboBox.getValue() == null
                         ||  transactionTypeGroup.getSelectedToggle() == null
                         || descriptionField.getText().isEmpty()) {
                     getErrorText().setText("All fields are required!");
@@ -190,7 +197,7 @@ public class UpdateForm extends Form {
                 datePicker.setValue(LocalDate.now());
                 amountField.clear();
                 categoryListView.getSelectionModel().clearSelection();
-                budgetComboBox.getSelectionModel().clearSelection();
+                recurringCheckBox.setSelected(false);
                 accountComboBox.getSelectionModel().clearSelection();
                 transactionTypeGroup.getSelectedToggle().setSelected(false);
                 descriptionField.clear();
