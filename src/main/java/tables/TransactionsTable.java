@@ -2,6 +2,8 @@ package tables;
 
 import dao.TransactionsDAO;
 import database.Database;
+import pojo.CategoriesPOJO;
+import pojo.Transaction_categoryPOJO;
 import pojo.TransactionsPOJO;
 
 import java.sql.ResultSet;
@@ -12,8 +14,21 @@ import java.util.ArrayList;
 import static database.DBConst.*;
 
 public class TransactionsTable implements TransactionsDAO {
-    Database db = Database.getInstance();
+    Database db;
     ArrayList<TransactionsPOJO> transactions;
+
+    public Database getDb() throws Exception {
+        try {
+            if(db == null){
+                db = Database.getInstance();
+            }
+            return db;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     public TransactionsTable() throws Exception {
     }
@@ -23,7 +38,7 @@ public class TransactionsTable implements TransactionsDAO {
         String query = "SELECT * FROM " + TABLE_TRANSACTIONS;
         transactions = new ArrayList<TransactionsPOJO>();
         try {
-            Statement getItems = db.getConnection().createStatement();
+            Statement getItems = getDb().getConnection().createStatement();
             ResultSet data = getItems.executeQuery(query);
             //data.next() makes data the first record, then the next record etc.
             while(data.next()) {
@@ -36,27 +51,31 @@ public class TransactionsTable implements TransactionsDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return transactions;
     }
 
     @Override
     public TransactionsPOJO getTransaction(int transaction_id) {
-        String query = "SELECT FROM " + TABLE_TRANSACTIONS + " WHERE " +
+        String query = "SELECT * FROM " + TABLE_TRANSACTIONS + " WHERE " +
                 TRANSACTIONS_COLUMN_ID + " = " + transaction_id;
         TransactionsPOJO transaction = new TransactionsPOJO();
         try {
-            Statement getTransaction = db.getConnection().createStatement();
+            Statement getTransaction = getDb().getConnection().createStatement();
             ResultSet data = getTransaction.executeQuery(query);
             data.next();
-            transactions.add(new TransactionsPOJO(data.getInt(TRANSACTIONS_COLUMN_ID),
+            transaction = new TransactionsPOJO(data.getInt(TRANSACTIONS_COLUMN_ID),
                     data.getInt(TRANSACTIONS_COLUMN_ACCOUNT_ID),
                     data.getDouble(TRANSACTIONS_COLUMN_AMOUNT),
                     data.getInt(TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID),
                     data.getDate(TRANSACTIONS_COLUMN_TRANSACTION_DATE),
-                    data.getString(TRANSACTIONS_COLUMN_DESCRIPTION)));
+                    data.getString(TRANSACTIONS_COLUMN_DESCRIPTION));
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return transaction;
     }
@@ -65,33 +84,50 @@ public class TransactionsTable implements TransactionsDAO {
     public void addTransaction(TransactionsPOJO transactions) {
         String query = "INSERT INTO " + TABLE_TRANSACTIONS +
                 "(" + TRANSACTIONS_COLUMN_AMOUNT + ", " +
+                TRANSACTIONS_COLUMN_ACCOUNT_ID + ", " +
                 TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID + "," +
                 TRANSACTIONS_COLUMN_TRANSACTION_DATE + "," +
                 TRANSACTIONS_COLUMN_DESCRIPTION + ") VALUES ('" +
-                transactions.getAmount() + "','" + transactions.getTransaction_type_id() + "','" +
+                transactions.getAmount() + "','" + transactions.getTransaction_account_id() + "','" + transactions.getTransaction_type_id() + "','" +
                 transactions.getTransaction_date() + "','" + transactions.getTransaction_description() +
                 "')";
         try {
-            db.getConnection().createStatement().execute(query);
+            getDb().getConnection().createStatement().execute(query);
+
+            // get automatically generated id, update pojo with it
+            Statement getAutoId = getDb().getConnection().createStatement();
+            ResultSet resultSet =  getAutoId.executeQuery("SELECT LAST_INSERT_ID()");
+            if (resultSet.next()) {
+                // get first result
+                int generatedId = resultSet.getInt(1);
+                System.out.println(generatedId);
+                transactions.setId(generatedId);
+            }
             System.out.println("Inserted Record");
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public void updateTransaction(TransactionsPOJO transactions) {
         String query = "UPDATE " + TABLE_TRANSACTIONS + " SET " +
-                TRANSACTIONS_COLUMN_ACCOUNT_ID + " " + transactions.getTransaction_account_id() +  "," +
-                TRANSACTIONS_COLUMN_AMOUNT + " " + transactions.getAmount() + "," +
-                TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID + " " + transactions.getTransaction_type_id() + "," +
-                TRANSACTIONS_COLUMN_DESCRIPTION + " " + transactions.getTransaction_description() +
-                " WHERE " + TRANSACTIONS_COLUMN_ID + " = " + transactions.getTransaction_id();
+                TRANSACTIONS_COLUMN_ACCOUNT_ID + " = " + transactions.getTransaction_account_id() + "," +
+                TRANSACTIONS_COLUMN_AMOUNT + " = " + transactions.getAmount() + "," +
+                TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID + " = " + transactions.getTransaction_type_id() + "," +
+                TRANSACTIONS_COLUMN_DESCRIPTION + " = '" + transactions.getTransaction_description() + "'" +
+                " WHERE " + TRANSACTIONS_COLUMN_ID + " = " + transactions.getId();
+        System.out.println(query);
         try {
-            Statement updateItem = db.getConnection().createStatement();
-            updateItem.executeQuery(query);
+            Statement updateItem = getDb().getConnection().createStatement();
+            System.out.println("Updated Transaction!");
+            updateItem.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -100,10 +136,12 @@ public class TransactionsTable implements TransactionsDAO {
         String query  = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " +
                 TRANSACTIONS_COLUMN_ID + " = " + id;
         try {
-            db.getConnection().createStatement().execute(query);
+            getDb().getConnection().createStatement().execute(query);
             System.out.println("Deleted record");
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

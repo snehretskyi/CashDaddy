@@ -1,14 +1,18 @@
 package org.example.java_project_iii.scenes;
 
-import javafx.application.Application;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
-import org.example.java_project_iii.forms.CrudForm;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import org.example.java_project_iii.forms.CreateForm;
+import org.example.java_project_iii.forms.UpdateForm;
+import pojo.TransactionsPOJO;
+import tables.TransactionsTable;
 import tabs.*;
 
 
@@ -51,7 +55,7 @@ public class Dashboard {
     /**
      * Private constructor.
      */
-    private Dashboard(int width, int height) {
+    private Dashboard(int width, int height) throws Exception {
         BorderPane root = new BorderPane();
 
         // Build a MenuBar
@@ -80,8 +84,36 @@ public class Dashboard {
         DeleteTransaction deleteTransaction= new DeleteTransaction();
 
         //add CurdForm to AddTransaction tab
-        CrudForm crudForm = new CrudForm("Add Transaction");
-        addTransaction.setContent(crudForm);
+        CreateForm createForm = new CreateForm("Add Transaction");
+        addTransaction.setContent(createForm);
+
+// --------------------------------------------------------------------------------------------------
+
+        // UNCOMMENT AND INSERT THE ID TO TEST
+
+//        VBox updateItem = new VBox();
+//        Button buttonTest = new Button("Test update form");
+//        buttonTest.setOnAction((event) -> {
+//            TransactionsTable testTransactionsTable = null;
+//            try {
+//                testTransactionsTable = new TransactionsTable();
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//            TransactionsPOJO testTransaction = testTransactionsTable.getTransaction(16);
+//            UpdateForm updateForm = null;
+//            try {
+//                updateForm = new UpdateForm("Update Transaction", testTransaction);
+//                updateItem.getChildren().add(updateForm);
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//        });
+//        updateItem.getChildren().add(buttonTest);
+//        updateTransaction.setContent(updateItem);
+
+ //-----------------------------------------------------------------------------------------------
 
 
         // Add tabs to the TabPane
@@ -101,7 +133,7 @@ public class Dashboard {
     /**
      * As the class needs some arguments (width and height), it's necessary to first set it up
      */
-    public static void createDashboard(int width, int height) {
+    public static void createDashboard(int width, int height) throws Exception {
         dashboardInstance = new Dashboard(width, height);
     }
 

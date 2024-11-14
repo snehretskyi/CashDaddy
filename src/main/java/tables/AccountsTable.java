@@ -12,8 +12,26 @@ import java.util.ArrayList;
 import static database.DBConst.*;
 
 public class AccountsTable implements AccountDAO {
-    Database db = Database.getInstance();
+    Database db;
     ArrayList<AccountPOJO> accounts;
+
+    /**
+     * Try to get db, if no credentials are entered the program won't crash.
+     * @return
+     * @throws Exception
+     */
+    public Database getDb() throws Exception {
+        try {
+            if(db == null){
+                db = Database.getInstance();
+            }
+            return db;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     public AccountsTable() throws Exception {
     }
@@ -23,7 +41,7 @@ public class AccountsTable implements AccountDAO {
         String query = "SELECT * FROM " + TABLE_ACCOUNTS;
         accounts = new ArrayList<AccountPOJO>();
         try {
-            Statement getItems = db.getConnection().createStatement();
+            Statement getItems = getDb().getConnection().createStatement();
             ResultSet data = getItems.executeQuery(query);
             //data.next() makes data the first record, then the next record etc.
             while (data.next()) {
@@ -34,6 +52,8 @@ public class AccountsTable implements AccountDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return accounts;
     }
@@ -43,7 +63,7 @@ public class AccountsTable implements AccountDAO {
         String query = "SELECT * FROM " + TABLE_ACCOUNTS +
                 " WHERE " + ACCOUNTS_COLUMN_ID + " = " + id;
         try{
-            Statement getAccount = db.getConnection().createStatement();
+            Statement getAccount = getDb().getConnection().createStatement();
             ResultSet data = getAccount.executeQuery(query);
             if(data.next()){
                 AccountPOJO account = new AccountPOJO(
