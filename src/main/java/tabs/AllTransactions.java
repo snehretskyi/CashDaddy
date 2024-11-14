@@ -1,6 +1,7 @@
 package tabs;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -46,7 +47,7 @@ public class AllTransactions extends Tab {
                 new TableColumn<>("Transaction Amount");
 
         column2.setCellValueFactory(
-                e-> new SimpleStringProperty(e.getValue().getTransaction_amount()));
+                e-> new SimpleStringProperty(e.getValue().getAmount()));
 
         /**
          * Column3 for displaying transaction type
@@ -56,7 +57,7 @@ public class AllTransactions extends Tab {
                 new TableColumn<>("Transaction Type");
 
         column3.setCellValueFactory(
-                e-> new SimpleStringProperty(e.getValue().getTransaction_type()));
+                e-> new SimpleStringProperty(e.getValue().getType()));
 
         /**
          * Column4 for displaying transaction date
@@ -66,7 +67,7 @@ public class AllTransactions extends Tab {
                 new TableColumn<>("Transction Date");
 
         column4.setCellValueFactory(
-                e-> new SimpleStringProperty(e.getValue().getTransaction_date()));
+                e-> new SimpleStringProperty(e.getValue().getDate()));
 
         /**
          * Column5 for displaying transaction description
@@ -76,17 +77,37 @@ public class AllTransactions extends Tab {
                 new TableColumn<>("Transction Description");
 
         column5.setCellValueFactory(
-                e-> new SimpleStringProperty(e.getValue().getTransaction_description()));
+                e-> new SimpleStringProperty(e.getValue().getDescription()));
 
         /**
          * added all columns to tableView
          */
 
         tableView.getColumns().addAll(column1, column2, column3, column4, column5);
+        tableView.getItems().addAll(transactionsTable.getDetailedTransaction());
 
+        borderPane.setCenter(tableView);
 
+        Button removeTransaction = new Button("Remove Transaction");
+        removeTransaction.setOnAction(e-> {
+            DisplayTransaction remove = (DisplayTransaction) tableView.getSelectionModel().getSelectedItem();
+            transactionsTable.deleteTransaction(remove.getId());
+            try {
+                refreshTable();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            tableView.getItems().clear();;
+            tableView.getItems().addAll(transactionsTable.getDetailedTransaction());
 
+        });
 
+    }
+
+    public void refreshTable() throws Exception {
+        TransactionsTable table = TransactionsTable.getInstance();
+        tableView.getItems().clear();
+        tableView.getItems().addAll(table.getDetailedTransaction());
     }
 
 

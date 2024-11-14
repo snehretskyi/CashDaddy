@@ -42,12 +42,12 @@ public class UpdateForm extends Form {
         this.formName = formName;
         System.out.println(transactionsPOJO);
 
-        CategoriesTable categoriesTable = new CategoriesTable();
-        BudgetTable budgetTable = new BudgetTable();
-        AccountsTable accountsTable = new AccountsTable();
-        Transaction_typeTable transactionTypeTable = new Transaction_typeTable();
-        TransactionsTable transactionsTable = new TransactionsTable();
-        Transaction_categoryTable transactionCategoryTable = new Transaction_categoryTable();
+        CategoriesTable categoriesTable = CategoriesTable.getInstance();
+        BudgetTable budgetTable = BudgetTable.getInstance();
+        AccountsTable accountsTable = AccountsTable.getInstance();
+        Transaction_typeTable transactionTypeTable = Transaction_typeTable.getInstance();
+        TransactionsTable transactionsTable = TransactionsTable.getInstance();
+        Transaction_categoryTable transactionCategoryTable = Transaction_categoryTable.getInstance();
         ArrayList<CategoriesPOJO> allCategories = categoriesTable.getAllCategories();
         ArrayList<Transaction_categoryPOJO> allTransactionCategories = transactionCategoryTable.getAllTransaction_categories();
         ArrayList<BudgetPOJO> allBudgets = budgetTable.getAllBudgets();

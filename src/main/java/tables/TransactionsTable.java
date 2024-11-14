@@ -175,6 +175,26 @@ public class TransactionsTable implements TransactionsDAO {
                 "JOIN transaction_types ON transactions.transaction_type_id = transaction_types.transaction_type_id " +
                 "ORDER BY transactions.transaction_id ASC";
 
+        try {
+            Statement getTransactions = db.getConnection().createStatement();
+            ResultSet data = getTransactions.executeQuery(query);
+
+            // Process each row in the ResultSet
+            while (data.next()) {
+                transactions.add(new DisplayTransaction(
+                        data.getInt("id"),
+                        data.getString("account_name"),
+                        data.getString("transaction_type_name"),
+                        data.getString("amount"),
+                        data.getString("transaction_date"),
+                        data.getString("description")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return transactions;
 
     }
 
