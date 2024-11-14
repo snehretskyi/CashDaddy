@@ -32,7 +32,7 @@ public class DBConst {
         public static final String TRANSACTIONS_COLUMN_AMOUNT = "amount";
         public static final String TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID = "transaction_type_id";
         public static final String TRANSACTIONS_COLUMN_TRANSACTION_DATE = "transaction_date";
-        public static final String TRANSACTIONS_COLUMN_DESCRIPTION = "transaction_description";
+        public static final String TRANSACTIONS_COLUMN_DESCRIPTION = "description";
 
         /**
          * TRANSACTION_TYPE TABLE
@@ -40,7 +40,7 @@ public class DBConst {
 
         public static final String TABLE_TRANSACTION_TYPES = "transaction_types";
         public static final String TRANSACTION_TYPES_COLUMN_ID = "transaction_type_id";
-        public static final String TRANSACTION_TYPES_COLUMN_TYPE = "transaction_type";
+        public static final String TRANSACTION_TYPES_COLUMN_TYPE = "type";
 
         /**
          * CATEGORIES TABLE
@@ -113,6 +113,7 @@ public class DBConst {
                 "CREATE TABLE " + TABLE_CATEGORIES + " (" +
                         CATEGORIES_COLUMN_ID + " INT NOT NULL AUTO_INCREMENT, " +
                         CATEGORIES_COLUMN_CATEGORY_TYPE + " VARCHAR(50), " +
+                        // CATEGORIES_COLUMN_ID is not CATEGORIES_COLUMN_BUDGET_ID. Might be a problem. Take note of this.
                         "PRIMARY KEY (" + CATEGORIES_COLUMN_ID + ")" +
                         ");";
 

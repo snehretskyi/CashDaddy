@@ -1,95 +1,42 @@
 package org.example.java_project_iii.forms;
 
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import pojo.*;
+import tables.*;
 
-import java.io.IOException;
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.sql.Date;
 
 /**
  * Class Description: a form designed to enter and display information to and from Database
  * Validates input.
  * @author Stan
  */
-public class CrudForm extends Form {
+public class CreateForm extends Form {
     private String formName;
-    private LocalDate date;
-    private Double amount;
-    private String category;
-    private String budget;
-    private String account;
-    private String type;
-    private String description;
-
-    // getters and setters
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public void setBudget(String budget) {
-        this.budget = budget;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public String getDescription() {
-        return description;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public String getBudget() {
-        return budget;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
 
     /**
      * Constructor
      * @param formName name of the form, e.g. Update
      */
-    public CrudForm(String formName) {
+    public CreateForm(String formName) throws Exception {
         super();
 
         this.formName = formName;
+
+        CategoriesTable categoriesTable = new CategoriesTable();
+        BudgetTable budgetTable = new BudgetTable();
+        AccountsTable accountsTable = new AccountsTable();
+        Transaction_typeTable transactionTypeTable = new Transaction_typeTable();
+        TransactionsTable transactionsTable = new TransactionsTable();
+        Transaction_categoryTable transactionCategoryTable = new Transaction_categoryTable();
 
         // creating nodes
         GridPane formGrid = new GridPane();
@@ -106,33 +53,34 @@ public class CrudForm extends Form {
         Label amountLabel = new Label("Amount:");
         TextField amountField = new TextField();
 
-        // for now values are hardcoded, later we'll get them from db
         Label categoryLabel = new Label("Category:");
-        ComboBox<String> categoryComboBox = new ComboBox<>();
-        categoryComboBox.getItems().addAll("Recreation", "Rent", "Lorem Ipsum");
+        ListView<CategoriesPOJO> categoryListView = new ListView<>();
+        categoryListView.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
+        categoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         Label budgetLabel = new Label("Budget:");
-        ComboBox<String> budgetComboBox = new ComboBox<>();
-        budgetComboBox.getItems().addAll("Lorem Ipsum", "Mental Health", "Allowance");
+        ComboBox<BudgetPOJO> budgetComboBox = new ComboBox<>();
+        budgetComboBox.setItems(FXCollections.observableArrayList(budgetTable.getAllBudgets()));
+
 
         Label accountLabel = new Label("Account:");
-        ComboBox<String> accountComboBox = new ComboBox<>();
-        accountComboBox.getItems().addAll("RBC Savings", "TD Debt", "CIBC Investments");
+        ComboBox<AccountPOJO> accountComboBox = new ComboBox<>();
+        accountComboBox.setItems(FXCollections.observableArrayList(accountsTable.getAllAccounts()));
+
 
         Label transactionTypeLabel = new Label("Transaction Type:");
 
         HBox transactionTypeRadioBox = new HBox();
-        RadioButton incomeRadio = new RadioButton("Income");
-        RadioButton expenseRadio = new RadioButton("Expense");
-        RadioButton savingsRadio = new RadioButton("Savings");
-        transactionTypeRadioBox.getChildren().addAll(incomeRadio, expenseRadio, savingsRadio);
-
         ToggleGroup transactionTypeGroup = new ToggleGroup();
-        incomeRadio.setToggleGroup(transactionTypeGroup);
-        expenseRadio.setToggleGroup(transactionTypeGroup);
-        savingsRadio.setToggleGroup(transactionTypeGroup);
+        ArrayList<Transaction_typePOJO> transactionTypes = transactionTypeTable.getAllTransaction_types();
 
-
+        transactionTypes.forEach((Transaction_typePOJO transactionType) -> {
+            RadioButton transactionTypeRadio = new RadioButton(transactionType.toString());
+            // set pojo associated with the button
+            transactionTypeRadio.setUserData(transactionType);
+            transactionTypeRadioBox.getChildren().add(transactionTypeRadio);
+            transactionTypeRadio.setToggleGroup(transactionTypeGroup);
+        });
 
         Label descriptionLabel = new Label("Description:");
         TextField descriptionField = new TextField();
@@ -145,7 +93,7 @@ public class CrudForm extends Form {
         formGrid.add(amountLabel, 0, 2);
         formGrid.add(amountField, 1, 2);
         formGrid.add(categoryLabel, 0, 3);
-        formGrid.add(categoryComboBox, 1, 3);
+        formGrid.add(categoryListView, 1, 3);
         formGrid.add(budgetLabel, 0, 4);
         formGrid.add(budgetComboBox, 1, 4);
         formGrid.add(accountLabel, 0, 5);
@@ -162,23 +110,31 @@ public class CrudForm extends Form {
         confirmButton.setOnAction((event) -> {
             try {
                 // refuse to submit if fields are empty
-                if (amountField.getText().isEmpty() || categoryComboBox.getValue() == null
+                if (amountField.getText().isEmpty()
+                        || categoryListView.getSelectionModel().getSelectedItem() == null
                         || budgetComboBox.getValue() == null || accountComboBox.getValue() == null
                         ||  transactionTypeGroup.getSelectedToggle() == null
                         || descriptionField.getText().isEmpty()) {
                     getErrorText().setText("All fields are required!");
+                    System.out.println(accountComboBox.getSelectionModel().getSelectedItem().getId());
                     animateErrorText(getErrorText());
                 } else {
-                    // if not empty, the values of the fields are saved to the instance
-                    // (later should be submitted to db)
-                    getErrorText().setText("");
-                    this.setDate(datePicker.getValue());
-                    this.setAmount(Double.valueOf(amountField.getText()));
-                    this.setCategory(categoryComboBox.getValue());
-                    this.setBudget(budgetComboBox.getValue());
-                    this.setAccount(accountComboBox.getValue());
-                    this.setType(transactionTypeGroup.selectedToggleProperty().getName());
-                    this.setDescription(descriptionField.getText().trim());
+                    int selectedTransactionType = ((Transaction_typePOJO) transactionTypeGroup.getSelectedToggle().getUserData()).getId();
+                    TransactionsPOJO transaction = new TransactionsPOJO(0,
+                            accountComboBox.getSelectionModel().getSelectedItem().getId(),
+                            Double.parseDouble(amountField.getText()),
+                            selectedTransactionType,
+                            Date.valueOf(datePicker.getValue()),
+                            descriptionField.getText());
+                    transactionsTable.addTransaction(transaction);
+
+                    ArrayList<CategoriesPOJO> selectedCategories = new ArrayList<>(categoryListView.getSelectionModel().getSelectedItems());
+
+                    selectedCategories.forEach((CategoriesPOJO category) -> {
+                        Transaction_categoryPOJO transactionCategoryJunction = new Transaction_categoryPOJO(transaction.getId(), category.getId());
+                        transactionCategoryTable.addTransaction_category(transactionCategoryJunction);
+                    });
+
                 }
 
             } catch (DateTimeParseException e) {
@@ -201,7 +157,7 @@ public class CrudForm extends Form {
                 getErrorText().setText("");
                 datePicker.setValue(LocalDate.now());
                 amountField.clear();
-                categoryComboBox.getSelectionModel().clearSelection();
+                categoryListView.getSelectionModel().clearSelection();
                 budgetComboBox.getSelectionModel().clearSelection();
                 accountComboBox.getSelectionModel().clearSelection();
                 transactionTypeGroup.getSelectedToggle().setSelected(false);
@@ -227,10 +183,6 @@ public class CrudForm extends Form {
         formNameLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
         formNameLabel.setPadding(new Insets(5));
         transactionTypeRadioBox.setSpacing(20);
-
-        // TODO: remove this once we add the forms to main scene
-        formGrid.setMaxWidth(844);
-        formGrid.setMaxHeight(480);
 
 
         this.getChildren().addAll(formNameLabel, formGrid, getErrorText());
