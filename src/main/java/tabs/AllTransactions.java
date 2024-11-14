@@ -82,7 +82,8 @@ public class AllTransactions extends Tab {
          * added all columns to tableView
          */
 
-        tableView.getColumns().addAll(column1, column2, column3, column4);
+        tableView.getColumns().addAll(column1, column2, column3, column4, column5);
+
 
 
 

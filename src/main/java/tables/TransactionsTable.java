@@ -3,6 +3,7 @@ package tables;
 import dao.TransactionsDAO;
 import database.Database;
 import pojo.CategoriesPOJO;
+import pojo.DisplayTransaction;
 import pojo.Transaction_categoryPOJO;
 import pojo.TransactionsPOJO;
 
@@ -159,4 +160,23 @@ public class TransactionsTable implements TransactionsDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public ArrayList<DisplayTransaction> getDetailedTransaction(){
+        ArrayList<DisplayTransaction> transactions = new ArrayList<DisplayTransaction>();
+
+        String query = "SELECT transactions.transaction_id AS id, " +
+                "accounts.account_type AS account_name, " +
+                "transactions.amount, " +
+                "transaction_types.transaction_type AS transaction_type_name, " +
+                "transactions.transaction_date, " +
+                "transactions.description " +
+                "FROM transactions " +
+                "JOIN accounts ON transactions.account_id = accounts.account_id " +
+                "JOIN transaction_types ON transactions.transaction_type_id = transaction_types.transaction_type_id " +
+                "ORDER BY transactions.transaction_id ASC";
+
+
+    }
+
+
 }
