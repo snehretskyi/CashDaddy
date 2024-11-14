@@ -6,7 +6,7 @@ import pojo.CategoriesPOJO;
 import pojo.DisplayTransaction;
 import pojo.Transaction_categoryPOJO;
 import pojo.TransactionsPOJO;
-
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -147,13 +147,32 @@ public class TransactionsTable implements TransactionsDAO {
         }
     }
 
+    /**
+     * Deletes a transaction and its related records from the transaction_category table.
+     *
+     * @param id The ID of the transaction to be deleted.
+     */
+
     @Override
     public void deleteTransaction(int id) {
-        String query  = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " +
-                TRANSACTIONS_COLUMN_ID + " = " + id;
+        String deleteFromCategory = "DELETE FROM " + TABLE_TRANSACTION_CATEGORY + " WHERE " +
+                TRANSACTION_CATEGORY_COLUMN_TRANSACTION_ID + " = ?";
+        String deleteFromTransaction = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " +
+                TRANSACTIONS_COLUMN_ID + " = ?";
+
         try {
-            getDb().getConnection().createStatement().execute(query);
-            System.out.println("Deleted record");
+            // Delete related records in transaction_category first
+            PreparedStatement stmt1 = getDb().getConnection().prepareStatement(deleteFromCategory);
+            stmt1.setInt(1, id);
+            stmt1.executeUpdate();
+            System.out.println("Deleted related records in transaction_category");
+
+            // Now, delete the record from transactions
+            PreparedStatement stmt2 = getDb().getConnection().prepareStatement(deleteFromTransaction);
+            stmt2.setInt(1, id);
+            stmt2.executeUpdate();
+            System.out.println("Deleted record from transactions");
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {

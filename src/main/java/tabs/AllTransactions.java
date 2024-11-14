@@ -1,6 +1,8 @@
 package tabs;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
@@ -99,8 +101,10 @@ public class AllTransactions extends Tab {
             }
             tableView.getItems().clear();;
             tableView.getItems().addAll(transactionsTable.getDetailedTransaction());
-
         });
+
+        borderPane.setBottom(removeTransaction);
+        this.setContent(borderPane);
 
     }
 
