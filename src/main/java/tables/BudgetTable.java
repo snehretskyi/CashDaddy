@@ -12,7 +12,23 @@ import java.util.ArrayList;
 import static database.DBConst.*;
 
 public class BudgetTable implements BudgetDAO {
-    Database db;
+    /**
+     * Singleton class for managing database operations on the Budget table.
+     */
+    private static BudgetTable instance;
+    Database db=Database.getInstance();
+
+    private BudgetTable() throws Exception {
+        db = Database.getInstance();
+    }
+
+    public static BudgetTable getInstance() throws Exception {
+        if(instance == null){
+            instance = new BudgetTable();
+        }
+        return instance;
+    }
+
     ArrayList<BudgetPOJO> budgets;
 
     public Database getDb() throws Exception {
@@ -28,8 +44,6 @@ public class BudgetTable implements BudgetDAO {
         return null;
     }
 
-    public BudgetTable() throws Exception {
-    }
 
     @Override
     public ArrayList<BudgetPOJO> getAllBudgets() {
@@ -77,4 +91,6 @@ public class BudgetTable implements BudgetDAO {
         }
         return null;
     }
+
+
 }

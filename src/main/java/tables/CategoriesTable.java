@@ -12,7 +12,25 @@ import java.util.ArrayList;
 import static database.DBConst.*;
 
 public class CategoriesTable implements CategoriesDAO {
-    Database db;
+
+
+    /**
+     * Singleton class for managing database operations on the CategoriesTable .
+     */
+    private static CategoriesTable instance;
+    Database db=Database.getInstance();
+
+    private CategoriesTable() throws Exception {
+        db = Database.getInstance();
+    }
+
+    public static CategoriesTable getInstance() throws Exception {
+        if(instance == null){
+            instance = new CategoriesTable();
+        }
+        return instance;
+    }
+
     ArrayList<CategoriesPOJO> categories;
 
     public Database getDb() throws Exception {
@@ -28,8 +46,6 @@ public class CategoriesTable implements CategoriesDAO {
         return null;
     }
 
-    public CategoriesTable() throws Exception {
-    }
 
     @Override
     public ArrayList<CategoriesPOJO> getAllCategories() {

@@ -4,6 +4,6 @@ import javafx.scene.control.Tab;
 
 public class AllTransactions extends Tab {
     public AllTransactions(){
-        this.setText("All Transactions");
+        this.setText("Transactions");
     }
 }

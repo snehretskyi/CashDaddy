@@ -14,7 +14,25 @@ import java.util.ArrayList;
 import static database.DBConst.*;
 
 public class TransactionsTable implements TransactionsDAO {
-    Database db;
+
+
+    /**
+     * Singleton class for managing database operations on the TransactionsTable .
+     */
+    private static TransactionsTable instance;
+    Database db=Database.getInstance();
+
+    private TransactionsTable() throws Exception {
+        db = Database.getInstance();
+    }
+
+    public static TransactionsTable getInstance() throws Exception {
+        if(instance == null){
+            instance = new TransactionsTable();
+        }
+        return instance;
+    }
+
     ArrayList<TransactionsPOJO> transactions;
 
     public Database getDb() throws Exception {
@@ -28,9 +46,6 @@ public class TransactionsTable implements TransactionsDAO {
         }
 
         return null;
-    }
-
-    public TransactionsTable() throws Exception {
     }
 
     @Override
