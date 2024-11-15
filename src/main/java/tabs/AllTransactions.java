@@ -88,8 +88,14 @@ public class AllTransactions extends Tab {
         tableView.getColumns().addAll(column1, column2, column3, column4, column5);
         tableView.getItems().addAll(transactionsTable.getDetailedTransaction());
 
+        /**
+         * Add tableView to the center of borderpane
+         */
         borderPane.setCenter(tableView);
 
+        /**
+         * Button responsible to remove transaction
+         */
         Button removeTransaction = new Button("Remove Transaction");
         removeTransaction.setOnAction(e-> {
             DisplayTransaction remove = (DisplayTransaction) tableView.getSelectionModel().getSelectedItem();
@@ -103,15 +109,21 @@ public class AllTransactions extends Tab {
             tableView.getItems().addAll(transactionsTable.getDetailedTransaction());
         });
 
+        //set remove transaction button at the bottom of the borderpane
         borderPane.setBottom(removeTransaction);
         this.setContent(borderPane);
 
     }
 
+    /**
+     * Refreshes the table view by clearing current items and reloading transaction data.
+     * @throws Exception
+     */
     public void refreshTable() throws Exception {
         TransactionsTable table = TransactionsTable.getInstance();
         tableView.getItems().clear();
         tableView.getItems().addAll(table.getDetailedTransaction());
+        System.out.println("Table refreshed");
     }
 
 
