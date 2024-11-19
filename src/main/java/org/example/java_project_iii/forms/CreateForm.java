@@ -8,6 +8,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import pojo.*;
 import tables.*;
+import tabs.AllTransactions;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -21,6 +22,34 @@ import java.sql.Date;
  */
 public class CreateForm extends Form {
     private String formName;
+
+    private Tab displayTab;
+
+    private TabPane tabPane;
+
+    public TabPane getTabPane() {
+        return tabPane;
+    }
+
+    public void setTabPane(TabPane tabPane) {
+        this.tabPane = tabPane;
+    }
+
+    public Tab getDisplayTab() {
+        return displayTab;
+    }
+
+    public void setDisplayTab(Tab displayTab) {
+        this.displayTab = displayTab;
+    }
+
+    public String getFormName() {
+        return formName;
+    }
+
+    public void setFormName(String formName) {
+        this.formName = formName;
+    }
 
     /**
      * Constructor
@@ -149,6 +178,20 @@ public class CreateForm extends Form {
 
                         recurringTransactionsTable.addRecurringTransaction(recurringTransactionPOJO);
                     }
+
+                    // clears all fields
+                    getErrorText().setText("");
+                    datePicker.setValue(LocalDate.now());
+                    amountField.clear();
+                    categoryBox.getSelectionModel().clearSelection();
+                    recurringCheckBox.setSelected(false);
+                    accountComboBox.getSelectionModel().clearSelection();
+                    transactionTypeGroup.getSelectedToggle().setSelected(false);
+                    descriptionArea.clear();
+
+                    tabPane.getSelectionModel().select(displayTab);
+
+                    AllTransactions.getInstance().refreshTable();
 
                 }
 

@@ -186,7 +186,7 @@ public class TransactionsTable implements TransactionsDAO {
         String query = "SELECT transactions.transaction_id AS id, " +
                 "accounts.account_type AS account_name, " +
                 "transactions.amount, " +
-                "transaction_types.transaction_type AS transaction_type_name, " +
+                TABLE_TRANSACTION_TYPES + "." + TRANSACTION_TYPES_COLUMN_TYPE + " AS transaction_type_name, " +
                 "transactions.transaction_date, " +
                 "transactions.description " +
                 "FROM transactions " +

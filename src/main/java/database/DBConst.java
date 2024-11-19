@@ -40,7 +40,7 @@ public class DBConst {
 
         public static final String TABLE_TRANSACTION_TYPES = "transaction_types";
         public static final String TRANSACTION_TYPES_COLUMN_ID = "transaction_type_id";
-        public static final String TRANSACTION_TYPES_COLUMN_TYPE = "transaction_type";
+        public static final String TRANSACTION_TYPES_COLUMN_TYPE = "type";
 
         /**
          * CATEGORIES TABLE
