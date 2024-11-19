@@ -40,28 +40,20 @@ import java.io.IOException;
  * @author Stan
  */
 public class LoginForm extends Form {
-    private boolean loginSuccessful = false;
     private Stage stage;
-    private Scene nextScene;
 
-    /**
-     * @return true if login was successful, false if no.
-     */
-    public boolean isLoginSuccessful() {
-        return loginSuccessful;
+    public Stage getStage() {
+        return stage;
     }
 
-    /**
-     * @param loginSuccessful set true if login is successful
-     */
-    public void setLoginSuccessful(boolean loginSuccessful) {
-        this.loginSuccessful = loginSuccessful;
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     /**
      * Constructs a new LoginForm, styles included
      */
-    public LoginForm(Stage stage) {
+    public LoginForm() {
         super();
 
         this.stage = stage;
@@ -201,8 +193,7 @@ public class LoginForm extends Form {
      * Loads next scene that was passed in the constructor
      */
     public void loadNextScene() throws Exception {
-        Dashboard.createDashboard(1280, 720);
-        nextScene = Dashboard.getDashboardSceneInstance();
+        Scene nextScene = Dashboard.getDashboardSceneInstance();
         stage.setScene(nextScene);
     }
 }

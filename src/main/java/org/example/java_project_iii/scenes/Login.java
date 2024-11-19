@@ -19,8 +19,9 @@ public class Login {
     private static Login loginInstance;
     private Stage stage;
     private Scene nextScene;
-    private int width;
-    private int height;
+    // default values
+    private int width = 1280;
+    private int height = 720;
 
     // getters and setters
     public static LoginForm getLoginForm() {
@@ -66,22 +67,15 @@ public class Login {
     /**
      * Private constructor.
      */
-    private Login(Stage stage, int width, int height) {
+    private Login() {
 
         BorderPane root = new BorderPane();
 
-        loginForm = new LoginForm(stage);
+        loginForm = new LoginForm();
 
         root.setCenter(loginForm);
 
         loginScene = new Scene(root, width, height);
-    }
-
-    /**
-     * As the class needs some arguments (width and height), it's necessary to first set it up
-     */
-    public static void createLoginScene(Stage stage, int width, int height) {
-        loginInstance = new Login(stage, width, height);
     }
 
     /**
@@ -90,8 +84,7 @@ public class Login {
      */
     public static Scene getLoginSceneInstance() {
         if (loginInstance == null) {
-            System.out.println("Please ensure you have already created the scene.");
-            return null;
+            loginInstance = new Login();
         }
 
         return loginInstance.getLoginScene();
