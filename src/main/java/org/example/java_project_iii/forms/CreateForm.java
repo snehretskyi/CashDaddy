@@ -91,8 +91,9 @@ public class CreateForm extends Form {
             transactionTypeRadio.setToggleGroup(transactionTypeGroup);
         });
 
-        Label descriptionLabel = new Label("Description:");
-        TextArea textArea = new TextArea();
+        Label descriptionLabel = new Label("Description (up to 255 characters):");
+        TextArea descriptionArea = new TextArea();
+        descriptionArea.setPrefRowCount(3);
 
         Button confirmButton = new Button("Confirm");
         Button cancelButton = new Button("Cancel");
@@ -111,12 +112,7 @@ public class CreateForm extends Form {
         formGrid.add(transactionTypeLabel, 0, 7);
         formGrid.add(transactionTypeRadioBox, 0, 8);
         formGrid.add(descriptionLabel, 0, 9);
-        formGrid.add(accountLabel, 0, 5);
-        formGrid.add(accountComboBox, 1, 5);
-        formGrid.add(transactionTypeLabel, 0, 6);
-        formGrid.add(transactionTypeRadioBox, 0, 7);
-        formGrid.add(descriptionLabel, 0, 8);
-        formGrid.add(textArea, 1, 8);
+        formGrid.add(descriptionArea, 1, 9);
 
         formGrid.add(confirmButton, 4, 10);
         formGrid.add(cancelButton, 5, 10);
@@ -129,10 +125,11 @@ public class CreateForm extends Form {
                         || categoryListView.getSelectionModel().getSelectedItem() == null
                         || accountComboBox.getValue() == null
                         ||  transactionTypeGroup.getSelectedToggle() == null
-                        || textArea.getText().isEmpty()) {
+                        || descriptionArea.getText().isEmpty()) {
                     getErrorText().setText("All fields are required!");
                     animateErrorText(getErrorText());
-                } else if (textArea.getText().length() > 255) {
+                } else if (descriptionArea.getText().length() > 255) {
+                    // check if the description is over 255 characters
                     getErrorText().setText("Description is over 255 characters!");
                     animateErrorText(getErrorText());
                 }
@@ -143,7 +140,7 @@ public class CreateForm extends Form {
                             Double.parseDouble(amountField.getText()),
                             selectedTransactionType,
                             Date.valueOf(datePicker.getValue()),
-                            textArea.getText());
+                            descriptionArea.getText());
                     transactionsTable.addTransaction(transaction);
 
                     ArrayList<CategoriesPOJO> selectedCategories = new ArrayList<>(categoryListView.getSelectionModel().getSelectedItems());
@@ -179,7 +176,7 @@ public class CreateForm extends Form {
                 recurringCheckBox.setSelected(false);
                 accountComboBox.getSelectionModel().clearSelection();
                 transactionTypeGroup.getSelectedToggle().setSelected(false);
-                textArea.clear();
+                descriptionArea.clear();
             } catch (Exception e) {
                 // generic error handling
                 getErrorText().setText("Fatal Error!");

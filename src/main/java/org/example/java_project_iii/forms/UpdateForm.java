@@ -115,9 +115,10 @@ public class UpdateForm extends Form {
 
         transactionTypeGroup.selectToggle((Toggle) transactionTypeRadioBox.getChildren().get(find(allTransactionTypes, transactionsPOJO.getTransaction_type_id())));
 
-        Label descriptionLabel = new Label("Description:");
-        TextField descriptionField = new TextField();
-        descriptionField.setText(transactionsPOJO.getTransaction_description());
+        Label descriptionLabel = new Label("Description (up to 255 characters):");
+        TextArea descriptionArea = new TextArea();
+        descriptionArea.setPrefRowCount(3);
+        descriptionArea.setText(transactionsPOJO.getTransaction_description());
 
         Button confirmButton = new Button("Confirm");
         Button cancelButton = new Button("Cancel");
@@ -136,7 +137,7 @@ public class UpdateForm extends Form {
         formGrid.add(transactionTypeLabel, 0, 7);
         formGrid.add(transactionTypeRadioBox, 0, 8);
         formGrid.add(descriptionLabel, 0, 9);
-        formGrid.add(descriptionField, 1, 9);
+        formGrid.add(descriptionArea, 1, 9);
 
         formGrid.add(confirmButton, 4, 10);
         formGrid.add(cancelButton, 5, 10);
@@ -145,13 +146,17 @@ public class UpdateForm extends Form {
         confirmButton.setOnAction((event) -> {
             try {
                 // refuse to submit if fields are empty
+                // refuse to submit if fields are empty
                 if (amountField.getText().isEmpty()
                         || categoryListView.getSelectionModel().getSelectedItem() == null
                         || accountComboBox.getValue() == null
                         ||  transactionTypeGroup.getSelectedToggle() == null
-                        || descriptionField.getText().isEmpty()) {
+                        || descriptionArea.getText().isEmpty()) {
                     getErrorText().setText("All fields are required!");
-                    System.out.println(accountComboBox.getSelectionModel().getSelectedItem().getId());
+                    animateErrorText(getErrorText());
+                } else if (descriptionArea.getText().length() > 255) {
+                    // check if the description is over 255 characters
+                    getErrorText().setText("Description is over 255 characters!");
                     animateErrorText(getErrorText());
                 } else {
                     int selectedTransactionType = ((Transaction_typePOJO) transactionTypeGroup.getSelectedToggle().getUserData()).getId();
@@ -160,7 +165,7 @@ public class UpdateForm extends Form {
                             Double.parseDouble(amountField.getText()),
                             selectedTransactionType,
                             Date.valueOf(datePicker.getValue()),
-                            descriptionField.getText());
+                            descriptionArea.getText());
                     transactionsTable.updateTransaction(transaction);
 
                     ArrayList<CategoriesPOJO> selectedCategories = new ArrayList<>(categoryListView.getSelectionModel().getSelectedItems());
@@ -200,7 +205,7 @@ public class UpdateForm extends Form {
                 recurringCheckBox.setSelected(false);
                 accountComboBox.getSelectionModel().clearSelection();
                 transactionTypeGroup.getSelectedToggle().setSelected(false);
-                descriptionField.clear();
+                descriptionArea.clear();
             } catch (Exception e) {
                 // generic error handling
                 getErrorText().setText("Fatal Error!");
