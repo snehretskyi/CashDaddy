@@ -88,28 +88,28 @@ public class Dashboard {
 // --------------------------------------------------------------------------------------------------
 
         // UNCOMMENT AND INSERT THE ID TO TEST
-//
-//        VBox updateItem = new VBox();
-//        Button buttonTest = new Button("Test update form");
-//        buttonTest.setOnAction((event) -> {
-//            TransactionsTable testTransactionsTable = null;
-//            try {
-//                testTransactionsTable = new TransactionsTable();
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//            TransactionsPOJO testTransaction = testTransactionsTable.getTransaction(16);
-//            UpdateForm updateForm = null;
-//            try {
-//                updateForm = new UpdateForm("Update Transaction", testTransaction);
-//                updateItem.getChildren().add(updateForm);
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//
-//        });
-//        updateItem.getChildren().add(buttonTest);
-//        updateTransaction.setContent(updateItem);
+
+        VBox updateItem = new VBox();
+        Button buttonTest = new Button("Test update form");
+        buttonTest.setOnAction((event) -> {
+            TransactionsTable testTransactionsTable = null;
+            try {
+                testTransactionsTable = new TransactionsTable();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            TransactionsPOJO testTransaction = testTransactionsTable.getTransaction(16);
+            UpdateForm updateForm = null;
+            try {
+                updateForm = new UpdateForm("Update Transaction", testTransaction);
+                updateItem.getChildren().add(updateForm);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        });
+        updateItem.getChildren().add(buttonTest);
+        updateTransaction.setContent(updateItem);
 
  //-----------------------------------------------------------------------------------------------
 

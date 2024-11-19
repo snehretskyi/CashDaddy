@@ -36,6 +36,7 @@ public class CreateForm extends Form {
         Transaction_typeTable transactionTypeTable = new Transaction_typeTable();
         TransactionsTable transactionsTable = new TransactionsTable();
         Transaction_categoryTable transactionCategoryTable = new Transaction_categoryTable();
+        RecurringTransactionTable recurringTransactionsTable = new RecurringTransactionTable();
 
         // creating nodes
         GridPane formGrid = new GridPane();
@@ -57,7 +58,7 @@ public class CreateForm extends Form {
 
         VBox recurringIntervalBox = new VBox();
         Label recurringIntervalLabel = new Label("Interval (in days)");
-        Spinner recurringIntervalSpinner = new Spinner(0, 100, 1);
+        Spinner<Integer> recurringIntervalSpinner = new Spinner<>(0, 100, 1);
         recurringIntervalBox.getChildren().addAll(recurringIntervalLabel, recurringIntervalSpinner);
         // hide the box unless it is selected
         recurringIntervalBox.setVisible(false);
@@ -68,9 +69,8 @@ public class CreateForm extends Form {
         });
 
         Label categoryLabel = new Label("Category:");
-        ListView<CategoriesPOJO> categoryListView = new ListView<>();
-        categoryListView.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
-        categoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        ComboBox<CategoriesPOJO> categoryBox = new ComboBox<>();
+        categoryBox.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
 
         Label accountLabel = new Label("Account:");
         ComboBox<AccountPOJO> accountComboBox = new ComboBox<>();
@@ -103,14 +103,14 @@ public class CreateForm extends Form {
         formGrid.add(amountLabel, 0, 2);
         formGrid.add(amountField, 1, 2);
         formGrid.add(categoryLabel, 0, 3);
-        formGrid.add(categoryListView, 1, 3);
+        formGrid.add(categoryBox, 1, 3);
         formGrid.add(recurringLabel, 0, 4);
         formGrid.add(recurringCheckBox, 1, 4);
-        formGrid.add(recurringIntervalBox, 0, 5);
+        formGrid.add(recurringIntervalBox, 1, 5);
         formGrid.add(accountLabel, 0, 6);
         formGrid.add(accountComboBox, 1, 6);
         formGrid.add(transactionTypeLabel, 0, 7);
-        formGrid.add(transactionTypeRadioBox, 0, 8);
+        formGrid.add(transactionTypeRadioBox, 1, 7);
         formGrid.add(descriptionLabel, 0, 9);
         formGrid.add(descriptionArea, 1, 9);
 
@@ -122,7 +122,7 @@ public class CreateForm extends Form {
             try {
                 // refuse to submit if fields are empty
                 if (amountField.getText().isEmpty()
-                        || categoryListView.getSelectionModel().getSelectedItem() == null
+                        || categoryBox.getSelectionModel().getSelectedItem() == null
                         || accountComboBox.getValue() == null
                         ||  transactionTypeGroup.getSelectedToggle() == null
                         || descriptionArea.getText().isEmpty()) {
@@ -143,12 +143,12 @@ public class CreateForm extends Form {
                             descriptionArea.getText());
                     transactionsTable.addTransaction(transaction);
 
-                    ArrayList<CategoriesPOJO> selectedCategories = new ArrayList<>(categoryListView.getSelectionModel().getSelectedItems());
+                    if (recurringCheckBox.isSelected()) {
+                        RecurringTransactionPOJO recurringTransactionPOJO = new RecurringTransactionPOJO(0,
+                                transaction.getId(), recurringIntervalSpinner.getValue());
 
-                    selectedCategories.forEach((CategoriesPOJO category) -> {
-                        Transaction_categoryPOJO transactionCategoryJunction = new Transaction_categoryPOJO(transaction.getId(), category.getId());
-                        transactionCategoryTable.addTransaction_category(transactionCategoryJunction);
-                    });
+                        recurringTransactionsTable.addRecurringTransaction(recurringTransactionPOJO);
+                    }
 
                 }
 
@@ -172,7 +172,7 @@ public class CreateForm extends Form {
                 getErrorText().setText("");
                 datePicker.setValue(LocalDate.now());
                 amountField.clear();
-                categoryListView.getSelectionModel().clearSelection();
+                categoryBox.getSelectionModel().clearSelection();
                 recurringCheckBox.setSelected(false);
                 accountComboBox.getSelectionModel().clearSelection();
                 transactionTypeGroup.getSelectedToggle().setSelected(false);

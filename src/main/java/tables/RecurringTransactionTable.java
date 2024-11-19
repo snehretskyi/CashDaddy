@@ -4,6 +4,7 @@ import dao.RecurringTransactionDAO;
 import database.Database;
 import pojo.CategoriesPOJO;
 import pojo.RecurringTransactionPOJO;
+import pojo.TransactionsPOJO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -86,7 +87,7 @@ public class RecurringTransactionTable implements RecurringTransactionDAO {
     public void addRecurringTransaction(RecurringTransactionPOJO recurringTransactionPOJO) {
         String query = "INSERT INTO " + TABLE_RECURRING_TRANSACTION +
                 "(" + RECURRING_TRANSACTION_COLUMN_TRANSACTION_ID + ", " +
-                RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS + "," + ") VALUES (" +
+                RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS + ") VALUES (" +
                 recurringTransactionPOJO.getTransactionId() + "," + recurringTransactionPOJO.getIntervalDays()
                 + ")";
         try {
@@ -107,6 +108,62 @@ public class RecurringTransactionTable implements RecurringTransactionDAO {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public RecurringTransactionPOJO getByTransactionId(int transactionId) {
+        String query = "SELECT * FROM " + TABLE_RECURRING_TRANSACTION +
+                " WHERE " + RECURRING_TRANSACTION_COLUMN_TRANSACTION_ID + " = " + transactionId;
+        try{
+            Statement getRecurringTransaction = getDb().getConnection().createStatement();
+            ResultSet data = getRecurringTransaction.executeQuery(query);
+            if(data.next()){
+                RecurringTransactionPOJO recurringTransaction = new RecurringTransactionPOJO(
+                        data.getInt(RECURRING_TRANSACTION_COLUMN_ID),
+                        data.getInt(RECURRING_TRANSACTION_COLUMN_TRANSACTION_ID),
+                        data.getInt(RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS)
+                );
+                return recurringTransaction;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * @param recurringTransactionId
+     */
+    @Override
+    public void deleteRecurringTransaction(int recurringTransactionId) {
+        String query  = "DELETE FROM " + TABLE_RECURRING_TRANSACTION + " WHERE " +
+                RECURRING_TRANSACTION_COLUMN_ID + " = " + recurringTransactionId;
+        try {
+            getDb().getConnection().createStatement().execute(query);
+            System.out.println("Deleted record");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * @param recurringTransactionPOJO
+     */
+    @Override
+    public void updateRecurringTransaction(RecurringTransactionPOJO recurringTransactionPOJO) {
+            String query = "UPDATE " + TABLE_RECURRING_TRANSACTION + " SET " +
+                    RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS + " = " + recurringTransactionPOJO.getIntervalDays() +
+                    " WHERE " + RECURRING_TRANSACTION_COLUMN_ID + " = " + recurringTransactionPOJO.getId();
+            try {
+                Statement updateItem = getDb().getConnection().createStatement();
+                System.out.println("Updated Transaction!");
+                updateItem.executeUpdate(query);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
     }
 
 }
