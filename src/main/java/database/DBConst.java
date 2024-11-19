@@ -48,13 +48,7 @@ public class DBConst {
         public static final String TABLE_CATEGORIES = "categories";
         public static final String CATEGORIES_COLUMN_ID = "category_id";
         public static final String CATEGORIES_COLUMN_CATEGORY_TYPE = "category_type";
-
-        /**
-         * TRANSACTION_CATEGORY TABLE
-         */
-        public static final String TABLE_TRANSACTION_CATEGORY = "transaction_category";
-        public static final String TRANSACTION_CATEGORY_COLUMN_TRANSACTION_ID = "transaction_id";
-        public static final String TRANSACTION_CATEGORY_COLUMN_CATEGORY_ID = "category_id";
+        public static final String CATEGORIES_COLUMN_TRANSACTION_ID = "transaction_id";
 
 
         /**
@@ -112,18 +106,9 @@ public class DBConst {
                 "CREATE TABLE " + TABLE_CATEGORIES + " (" +
                         CATEGORIES_COLUMN_ID + " INT NOT NULL AUTO_INCREMENT, " +
                         CATEGORIES_COLUMN_CATEGORY_TYPE + " VARCHAR(50), " +
-                        // CATEGORIES_COLUMN_ID is not CATEGORIES_COLUMN_BUDGET_ID. Might be a problem. Take note of this.
-                        "PRIMARY KEY (" + CATEGORIES_COLUMN_ID + ")" +
-                        ");";
-
-        // TRANSACTION_CATEGORY TABLE
-        public static final String CREATE_TABLE_TRANSACTION_CATEGORY =
-                "CREATE TABLE " + TABLE_TRANSACTION_CATEGORY + " (" +
-                        TRANSACTION_CATEGORY_COLUMN_TRANSACTION_ID + " INT, " +
-                        TRANSACTION_CATEGORY_COLUMN_CATEGORY_ID + " INT, " +
-                        "PRIMARY KEY (" + TRANSACTION_CATEGORY_COLUMN_TRANSACTION_ID + ", " + TRANSACTION_CATEGORY_COLUMN_CATEGORY_ID + "), " +
-                        "FOREIGN KEY (" + TRANSACTION_CATEGORY_COLUMN_TRANSACTION_ID + ") REFERENCES " + TABLE_TRANSACTIONS + "(" + TRANSACTIONS_COLUMN_ID + "), " +
-                        "FOREIGN KEY (" + TRANSACTION_CATEGORY_COLUMN_CATEGORY_ID + ") REFERENCES " + TABLE_CATEGORIES + "(" + CATEGORIES_COLUMN_ID + ") );";
+                        CATEGORIES_COLUMN_TRANSACTION_ID + " INT, " + // New foreign key
+                        "PRIMARY KEY (" + CATEGORIES_COLUMN_ID + "), " +
+                        "FOREIGN KEY (" + CATEGORIES_COLUMN_TRANSACTION_ID + ") REFERENCES " + TABLE_TRANSACTIONS + "(" + TRANSACTIONS_COLUMN_ID + ") );";
 
         // RECURRING_TRANSACTION TABLE
         public static final String CREATE_TABLE_RECURRING_TRANSACTION =
