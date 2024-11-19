@@ -92,7 +92,7 @@ public class CreateForm extends Form {
         });
 
         Label descriptionLabel = new Label("Description:");
-        TextField descriptionField = new TextField();
+        TextArea textArea = new TextArea();
 
         Button confirmButton = new Button("Confirm");
         Button cancelButton = new Button("Cancel");
@@ -111,7 +111,12 @@ public class CreateForm extends Form {
         formGrid.add(transactionTypeLabel, 0, 7);
         formGrid.add(transactionTypeRadioBox, 0, 8);
         formGrid.add(descriptionLabel, 0, 9);
-        formGrid.add(descriptionField, 1, 9);
+        formGrid.add(accountLabel, 0, 5);
+        formGrid.add(accountComboBox, 1, 5);
+        formGrid.add(transactionTypeLabel, 0, 6);
+        formGrid.add(transactionTypeRadioBox, 0, 7);
+        formGrid.add(descriptionLabel, 0, 8);
+        formGrid.add(textArea, 1, 8);
 
         formGrid.add(confirmButton, 4, 10);
         formGrid.add(cancelButton, 5, 10);
@@ -124,18 +129,21 @@ public class CreateForm extends Form {
                         || categoryListView.getSelectionModel().getSelectedItem() == null
                         || accountComboBox.getValue() == null
                         ||  transactionTypeGroup.getSelectedToggle() == null
-                        || descriptionField.getText().isEmpty()) {
+                        || textArea.getText().isEmpty()) {
                     getErrorText().setText("All fields are required!");
-                    System.out.println(accountComboBox.getSelectionModel().getSelectedItem().getId());
                     animateErrorText(getErrorText());
-                } else {
+                } else if (textArea.getText().length() > 255) {
+                    getErrorText().setText("Description is over 255 characters!");
+                    animateErrorText(getErrorText());
+                }
+                else {
                     int selectedTransactionType = ((Transaction_typePOJO) transactionTypeGroup.getSelectedToggle().getUserData()).getId();
                     TransactionsPOJO transaction = new TransactionsPOJO(0,
                             accountComboBox.getSelectionModel().getSelectedItem().getId(),
                             Double.parseDouble(amountField.getText()),
                             selectedTransactionType,
                             Date.valueOf(datePicker.getValue()),
-                            descriptionField.getText());
+                            textArea.getText());
                     transactionsTable.addTransaction(transaction);
 
                     ArrayList<CategoriesPOJO> selectedCategories = new ArrayList<>(categoryListView.getSelectionModel().getSelectedItems());
@@ -171,7 +179,7 @@ public class CreateForm extends Form {
                 recurringCheckBox.setSelected(false);
                 accountComboBox.getSelectionModel().clearSelection();
                 transactionTypeGroup.getSelectedToggle().setSelected(false);
-                descriptionField.clear();
+                textArea.clear();
             } catch (Exception e) {
                 // generic error handling
                 getErrorText().setText("Fatal Error!");
