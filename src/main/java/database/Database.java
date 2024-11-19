@@ -39,7 +39,6 @@ public class Database {
         createTable(DBConst.TABLE_CATEGORIES, DBConst.CREATE_TABLE_CATEGORIES, connection);
         createTable(DBConst.TABLE_BUDGETS, DBConst.CREATE_TABLE_BUDGETS, connection);
         createTable(DBConst.TABLE_TRANSACTIONS, DBConst.CREATE_TABLE_TRANSACTIONS, connection);
-        createTable(DBConst.TABLE_TRANSACTION_CATEGORY, DBConst.CREATE_TABLE_TRANSACTION_CATEGORY, connection);
         createTable(DBConst.TABLE_RECURRING_TRANSACTION, DBConst.CREATE_TABLE_RECURRING_TRANSACTION, connection);
     }
 

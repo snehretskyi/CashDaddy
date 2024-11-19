@@ -2,9 +2,7 @@ package tables;
 
 import dao.TransactionsDAO;
 import database.Database;
-import pojo.CategoriesPOJO;
 import pojo.DisplayTransaction;
-import pojo.Transaction_categoryPOJO;
 import pojo.TransactionsPOJO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -155,17 +153,11 @@ public class TransactionsTable implements TransactionsDAO {
 
     @Override
     public void deleteTransaction(int id) {
-        String deleteFromCategory = "DELETE FROM " + TABLE_TRANSACTION_CATEGORY + " WHERE " +
-                TRANSACTION_CATEGORY_COLUMN_TRANSACTION_ID + " = ?";
+
         String deleteFromTransaction = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " +
                 TRANSACTIONS_COLUMN_ID + " = ?";
 
         try {
-            // Delete related records in transaction_category first
-            PreparedStatement stmt1 = getDb().getConnection().prepareStatement(deleteFromCategory);
-            stmt1.setInt(1, id);
-            stmt1.executeUpdate();
-            System.out.println("Deleted related records in transaction_category");
 
             // Now, delete the record from transactions
             PreparedStatement stmt2 = getDb().getConnection().prepareStatement(deleteFromTransaction);
