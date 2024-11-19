@@ -31,12 +31,11 @@ public class CreateForm extends Form {
 
         this.formName = formName;
 
-        CategoriesTable categoriesTable = new CategoriesTable();
-        BudgetTable budgetTable = new BudgetTable();
-        AccountsTable accountsTable = new AccountsTable();
-        Transaction_typeTable transactionTypeTable = new Transaction_typeTable();
-        TransactionsTable transactionsTable = new TransactionsTable();
-        Transaction_categoryTable transactionCategoryTable = new Transaction_categoryTable();
+        CategoriesTable categoriesTable = CategoriesTable.getInstance();
+        AccountsTable accountsTable = AccountsTable.getInstance();
+        Transaction_typeTable transactionTypeTable = Transaction_typeTable.getInstance();
+        TransactionsTable transactionsTable = TransactionsTable.getInstance();
+        Transaction_categoryTable transactionCategoryTable =  Transaction_categoryTable.getInstance();
 
         // creating nodes
         GridPane formGrid = new GridPane();
@@ -57,11 +56,6 @@ public class CreateForm extends Form {
         ListView<CategoriesPOJO> categoryListView = new ListView<>();
         categoryListView.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
         categoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-        Label budgetLabel = new Label("Budget:");
-        ComboBox<BudgetPOJO> budgetComboBox = new ComboBox<>();
-        budgetComboBox.setItems(FXCollections.observableArrayList(budgetTable.getAllBudgets()));
-
 
         Label accountLabel = new Label("Account:");
         ComboBox<AccountPOJO> accountComboBox = new ComboBox<>();
@@ -94,8 +88,6 @@ public class CreateForm extends Form {
         formGrid.add(amountField, 1, 2);
         formGrid.add(categoryLabel, 0, 3);
         formGrid.add(categoryListView, 1, 3);
-        formGrid.add(budgetLabel, 0, 4);
-        formGrid.add(budgetComboBox, 1, 4);
         formGrid.add(accountLabel, 0, 5);
         formGrid.add(accountComboBox, 1, 5);
         formGrid.add(transactionTypeLabel, 0, 6);
@@ -112,7 +104,6 @@ public class CreateForm extends Form {
                 // refuse to submit if fields are empty
                 if (amountField.getText().isEmpty()
                         || categoryListView.getSelectionModel().getSelectedItem() == null
-                        || budgetComboBox.getValue() == null || accountComboBox.getValue() == null
                         ||  transactionTypeGroup.getSelectedToggle() == null
                         || descriptionField.getText().isEmpty()) {
                     getErrorText().setText("All fields are required!");
@@ -158,7 +149,6 @@ public class CreateForm extends Form {
                 datePicker.setValue(LocalDate.now());
                 amountField.clear();
                 categoryListView.getSelectionModel().clearSelection();
-                budgetComboBox.getSelectionModel().clearSelection();
                 accountComboBox.getSelectionModel().clearSelection();
                 transactionTypeGroup.getSelectedToggle().setSelected(false);
                 descriptionField.clear();
