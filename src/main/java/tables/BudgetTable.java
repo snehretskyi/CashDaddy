@@ -12,18 +12,45 @@ import java.util.ArrayList;
 import static database.DBConst.*;
 
 public class BudgetTable implements BudgetDAO {
-    Database db = Database.getInstance();
+    /**
+     * Singleton class for managing database operations on the Budget table.
+     */
+    private static BudgetTable instance;
+    Database db=Database.getInstance();
+
+    private BudgetTable() throws Exception {
+        db = Database.getInstance();
+    }
+
+    public static BudgetTable getInstance() throws Exception {
+        if(instance == null){
+            instance = new BudgetTable();
+        }
+        return instance;
+    }
+
     ArrayList<BudgetPOJO> budgets;
 
-    public BudgetTable() throws Exception {
+    public Database getDb() throws Exception {
+        try {
+            if(db == null){
+                db = Database.getInstance();
+            }
+            return db;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
+
 
     @Override
     public ArrayList<BudgetPOJO> getAllBudgets() {
         String query = "SELECT * FROM " + TABLE_BUDGETS;
         budgets = new ArrayList<BudgetPOJO>();
         try {
-            Statement getBudgets = db.getConnection().createStatement();
+            Statement getBudgets = getDb().getConnection().createStatement();
             ResultSet data = getBudgets.executeQuery(query);
             //data.next() makes data the first record, then the next record etc.
             while (data.next()) {
@@ -36,6 +63,8 @@ public class BudgetTable implements BudgetDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
         return budgets;
     }
@@ -45,7 +74,7 @@ public class BudgetTable implements BudgetDAO {
         String query = "SELECT * FROM " + TABLE_BUDGETS +
                 " WHERE " + BUDGETS_COLUMN_ID + " = " + id;
         try{
-            Statement getBudget = db.getConnection().createStatement();
+            Statement getBudget = getDb().getConnection().createStatement();
             ResultSet data = getBudget.executeQuery(query);
             if(data.next()){
                 BudgetPOJO budget = new BudgetPOJO(
@@ -62,4 +91,6 @@ public class BudgetTable implements BudgetDAO {
         }
         return null;
     }
+
+
 }

@@ -1,13 +1,12 @@
 package pojo;
 
-public class AccountPOJO {
-    private int account_id;
+public class AccountPOJO extends DatabaseItemPojo {
     private String type;
     private double balance;
     private String information;
 
     public AccountPOJO(int id, String type, double balance, String information) {
-        this.account_id = id;
+        super(id);
         this.type = type;
         this.balance = balance;
         this.information = information;
@@ -37,11 +36,5 @@ public class AccountPOJO {
         this.type = type;
     }
 
-    public int getAccount_id() {
-        return account_id;
-    }
-
-    public void setAccount_id(int account_id) {
-        this.account_id = account_id;
-    }
+    public String toString() {return type;}
 }
