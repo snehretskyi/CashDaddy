@@ -102,10 +102,11 @@ public class TransactionsTable implements TransactionsDAO {
                 "(" + TRANSACTIONS_COLUMN_AMOUNT + ", " +
                 TRANSACTIONS_COLUMN_ACCOUNT_ID + ", " +
                 TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID + "," +
+                TRANSACTIONS_COLUMN_CATEGORY_ID + "," +
                 TRANSACTIONS_COLUMN_TRANSACTION_DATE + "," +
                 TRANSACTIONS_COLUMN_DESCRIPTION + ") VALUES ('" +
                 transactions.getAmount() + "','" + transactions.getTransaction_account_id() + "','" + transactions.getTransaction_type_id() + "','" +
-                transactions.getTransaction_date() + "','" + transactions.getTransaction_description() +
+                + transactions.getTransaction_category_id() + "','" + transactions.getTransaction_date() + "','" + transactions.getTransaction_description() +
                 "')";
         try {
             getDb().getConnection().createStatement().execute(query);
@@ -133,6 +134,7 @@ public class TransactionsTable implements TransactionsDAO {
                 TRANSACTIONS_COLUMN_ACCOUNT_ID + " = " + transactions.getTransaction_account_id() + "," +
                 TRANSACTIONS_COLUMN_AMOUNT + " = " + transactions.getAmount() + "," +
                 TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID + " = " + transactions.getTransaction_type_id() + "," +
+                TRANSACTION_TYPES_COLUMN_ID + " = " + transactions.getTransaction_category_id() + "," +
                 TRANSACTIONS_COLUMN_DESCRIPTION + " = '" + transactions.getTransaction_description() + "'" +
                 " WHERE " + TRANSACTIONS_COLUMN_ID + " = " + transactions.getId();
         System.out.println(query);
