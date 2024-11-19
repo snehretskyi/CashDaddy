@@ -78,8 +78,9 @@ public class Transaction_categoryTable implements Transaction_categoryDAO {
     /**
      * Gets all associated categories to transaction id
      * @param transaction_id
-     * @return
+     * @return array list of ids
      */
+    @Override
     public ArrayList<Integer> getAssociatedCategories(int transaction_id) {
         String query = "SELECT * FROM " + TABLE_TRANSACTION_CATEGORY + " WHERE " +
                 TRANSACTION_CATEGORY_COLUMN_TRANSACTION_ID + " = " + transaction_id;
@@ -99,6 +100,11 @@ public class Transaction_categoryTable implements Transaction_categoryDAO {
         return associatedCategoriesIds;
     }
 
+    /**
+     * Instead of doing the usual update, removes all ids associated with transaction. Then recreates them.
+     * @param transaction_categoryPOJOArrayList
+     */
+    @Override
     public void updateTransactionCategory(ArrayList<Transaction_categoryPOJO> transaction_categoryPOJOArrayList) {
         // id of transactions should be the same for all elements
         int transaction_id = transaction_categoryPOJOArrayList.get(0).getId();
