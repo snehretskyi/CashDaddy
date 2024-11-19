@@ -60,6 +60,16 @@ public class AllTransactions extends Tab {
 
         column3.setCellValueFactory(
                 e-> new SimpleStringProperty(e.getValue().getType()));
+//
+//        /**
+//         * Column6 for displaying category type
+//         */
+//        TableColumn<DisplayTransaction, String> column6 =
+//                new TableColumn<>("Category Type");
+//
+//        column3.setCellValueFactory(
+//                e-> new SimpleStringProperty(e.getValue().getType()));
+
 
         /**
          * Column4 for displaying transaction date

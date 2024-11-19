@@ -115,6 +115,7 @@ public class CreateForm extends Form {
                             accountComboBox.getSelectionModel().getSelectedItem().getId(),
                             Double.parseDouble(amountField.getText()),
                             selectedTransactionType,
+                            2,
                             Date.valueOf(datePicker.getValue()),
                             descriptionField.getText());
                     transactionsTable.addTransaction(transaction);

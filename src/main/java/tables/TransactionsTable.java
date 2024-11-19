@@ -60,6 +60,7 @@ public class TransactionsTable implements TransactionsDAO {
                         data.getInt(TRANSACTIONS_COLUMN_ACCOUNT_ID),
                         data.getDouble(TRANSACTIONS_COLUMN_AMOUNT),
                         data.getInt(TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID),
+                        data.getInt(TRANSACTIONS_COLUMN_CATEGORY_ID),
                         data.getDate(TRANSACTIONS_COLUMN_TRANSACTION_DATE),
                         data.getString(TRANSACTIONS_COLUMN_DESCRIPTION)));
             }
@@ -84,6 +85,7 @@ public class TransactionsTable implements TransactionsDAO {
                     data.getInt(TRANSACTIONS_COLUMN_ACCOUNT_ID),
                     data.getDouble(TRANSACTIONS_COLUMN_AMOUNT),
                     data.getInt(TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID),
+                    data.getInt(TRANSACTIONS_COLUMN_CATEGORY_ID),
                     data.getDate(TRANSACTIONS_COLUMN_TRANSACTION_DATE),
                     data.getString(TRANSACTIONS_COLUMN_DESCRIPTION));
         } catch (SQLException e) {
@@ -175,15 +177,18 @@ public class TransactionsTable implements TransactionsDAO {
     public ArrayList<DisplayTransaction> getDetailedTransaction(){
         ArrayList<DisplayTransaction> transactions = new ArrayList<DisplayTransaction>();
 
-        String query = "SELECT transactions.transaction_id AS id, " +
+        String query = "SELECT " +
+                "transactions.transaction_id AS id, " +
                 "accounts.account_type AS account_name, " +
                 "transactions.amount, " +
                 "transaction_types.transaction_type AS transaction_type_name, " +
+                "categories.category_type AS category_type_name, " +
                 "transactions.transaction_date, " +
                 "transactions.description " +
                 "FROM transactions " +
                 "JOIN accounts ON transactions.account_id = accounts.account_id " +
                 "JOIN transaction_types ON transactions.transaction_type_id = transaction_types.transaction_type_id " +
+                "JOIN categories ON transactions.category_id = categories.category_id " +
                 "ORDER BY transactions.transaction_id ASC";
 
         try {
@@ -196,6 +201,7 @@ public class TransactionsTable implements TransactionsDAO {
                         data.getInt("id"),
                         data.getString("account_name"),
                         data.getString("transaction_type_name"),
+                        data.getString("category_type_name"),
                         data.getString("amount"),
                         data.getString("transaction_date"),
                         data.getString("description")
