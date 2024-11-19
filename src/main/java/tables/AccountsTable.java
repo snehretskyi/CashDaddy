@@ -12,14 +12,31 @@ import java.util.ArrayList;
 import static database.DBConst.*;
 
 public class AccountsTable implements AccountDAO {
-    Database db;
+
+    /**
+     * Singleton class for managing database operations on the AccountsTable .
+     */
+    private static AccountsTable instance;
+    Database db=Database.getInstance();
+
+    private AccountsTable() throws Exception {
+        db = Database.getInstance();
+    }
+
+    public static AccountsTable getInstance() throws Exception {
+        if(instance == null){
+            instance = new AccountsTable();
+        }
+        return instance;
+    }
+
     ArrayList<AccountPOJO> accounts;
 
     /**
      * Try to get db, if no credentials are entered the program won't crash.
      * @return
      * @throws Exception
-     */
+    */
     public Database getDb() throws Exception {
         try {
             if(db == null){
@@ -33,8 +50,6 @@ public class AccountsTable implements AccountDAO {
         return null;
     }
 
-    public AccountsTable() throws Exception {
-    }
 
     @Override
     public ArrayList<AccountPOJO> getAllAccounts() {
@@ -63,7 +78,7 @@ public class AccountsTable implements AccountDAO {
         String query = "SELECT * FROM " + TABLE_ACCOUNTS +
                 " WHERE " + ACCOUNTS_COLUMN_ID + " = " + id;
         try{
-            Statement getAccount = getDb().getConnection().createStatement();
+            Statement getAccount = db.getConnection().createStatement();
             ResultSet data = getAccount.executeQuery(query);
             if(data.next()){
                 AccountPOJO account = new AccountPOJO(
@@ -79,4 +94,5 @@ public class AccountsTable implements AccountDAO {
         }
         return null;
     }
+
 }

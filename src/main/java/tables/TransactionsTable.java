@@ -3,9 +3,10 @@ package tables;
 import dao.TransactionsDAO;
 import database.Database;
 import pojo.CategoriesPOJO;
+import pojo.DisplayTransaction;
 import pojo.Transaction_categoryPOJO;
 import pojo.TransactionsPOJO;
-
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,7 +15,25 @@ import java.util.ArrayList;
 import static database.DBConst.*;
 
 public class TransactionsTable implements TransactionsDAO {
-    Database db;
+
+
+    /**
+     * Singleton class for managing database operations on the TransactionsTable .
+     */
+    private static TransactionsTable instance;
+    Database db=Database.getInstance();
+
+    private TransactionsTable() throws Exception {
+        db = Database.getInstance();
+    }
+
+    public static TransactionsTable getInstance() throws Exception {
+        if(instance == null){
+            instance = new TransactionsTable();
+        }
+        return instance;
+    }
+
     ArrayList<TransactionsPOJO> transactions;
 
     public Database getDb() throws Exception {
@@ -28,9 +47,6 @@ public class TransactionsTable implements TransactionsDAO {
         }
 
         return null;
-    }
-
-    public TransactionsTable() throws Exception {
     }
 
     @Override
@@ -131,17 +147,75 @@ public class TransactionsTable implements TransactionsDAO {
         }
     }
 
+    /**
+     * Deletes a transaction and its related records from the transaction_category table.
+     *
+     * @param id The ID of the transaction to be deleted.
+     */
+
     @Override
     public void deleteTransaction(int id) {
-        String query  = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " +
-                TRANSACTIONS_COLUMN_ID + " = " + id;
+        String deleteFromCategory = "DELETE FROM " + TABLE_TRANSACTION_CATEGORY + " WHERE " +
+                TRANSACTION_CATEGORY_COLUMN_TRANSACTION_ID + " = ?";
+        String deleteFromTransaction = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " +
+                TRANSACTIONS_COLUMN_ID + " = ?";
+
         try {
-            getDb().getConnection().createStatement().execute(query);
-            System.out.println("Deleted record");
+            // Delete related records in transaction_category first
+            PreparedStatement stmt1 = getDb().getConnection().prepareStatement(deleteFromCategory);
+            stmt1.setInt(1, id);
+            stmt1.executeUpdate();
+            System.out.println("Deleted related records in transaction_category");
+
+            // Now, delete the record from transactions
+            PreparedStatement stmt2 = getDb().getConnection().prepareStatement(deleteFromTransaction);
+            stmt2.setInt(1, id);
+            stmt2.executeUpdate();
+            System.out.println("Deleted record from transactions");
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
+    public ArrayList<DisplayTransaction> getDetailedTransaction(){
+        ArrayList<DisplayTransaction> transactions = new ArrayList<DisplayTransaction>();
+
+        String query = "SELECT transactions.transaction_id AS id, " +
+                "accounts.account_type AS account_name, " +
+                "transactions.amount, " +
+                "transaction_types.transaction_type AS transaction_type_name, " +
+                "transactions.transaction_date, " +
+                "transactions.description " +
+                "FROM transactions " +
+                "JOIN accounts ON transactions.account_id = accounts.account_id " +
+                "JOIN transaction_types ON transactions.transaction_type_id = transaction_types.transaction_type_id " +
+                "ORDER BY transactions.transaction_id ASC";
+
+        try {
+            Statement getTransactions = db.getConnection().createStatement();
+            ResultSet data = getTransactions.executeQuery(query);
+
+            // Process each row in the ResultSet
+            while (data.next()) {
+                transactions.add(new DisplayTransaction(
+                        data.getInt("id"),
+                        data.getString("account_name"),
+                        data.getString("transaction_type_name"),
+                        data.getString("amount"),
+                        data.getString("transaction_date"),
+                        data.getString("description")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return transactions;
+
+    }
+
+
 }

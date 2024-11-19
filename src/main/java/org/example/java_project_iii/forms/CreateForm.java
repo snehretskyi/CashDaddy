@@ -31,12 +31,12 @@ public class CreateForm extends Form {
 
         this.formName = formName;
 
-        CategoriesTable categoriesTable = new CategoriesTable();
-        AccountsTable accountsTable = new AccountsTable();
-        Transaction_typeTable transactionTypeTable = new Transaction_typeTable();
-        TransactionsTable transactionsTable = new TransactionsTable();
-        Transaction_categoryTable transactionCategoryTable = new Transaction_categoryTable();
-        RecurringTransactionTable recurringTransactionsTable = new RecurringTransactionTable();
+        CategoriesTable categoriesTable = CategoriesTable.getInstance();
+        AccountsTable accountsTable = AccountsTable.getInstance();
+        Transaction_typeTable transactionTypeTable = Transaction_typeTable.getInstance();
+        TransactionsTable transactionsTable = TransactionsTable.getInstance();
+        Transaction_categoryTable transactionCategoryTable =  Transaction_categoryTable.getInstance();
+        RecurringTransactionTable recurringTransactionsTable = RecurringTransactionTable.getInstance();
 
         // creating nodes
         GridPane formGrid = new GridPane();

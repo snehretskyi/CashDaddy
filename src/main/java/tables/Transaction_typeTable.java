@@ -12,7 +12,25 @@ import java.util.ArrayList;
 import static database.DBConst.*;
 
 public class Transaction_typeTable implements Transaction_typeDAO {
-    Database db;
+
+    /**
+     * Singleton class for managing database operations on the Transaction_typeTable .
+     */
+    private static Transaction_typeTable instance;
+    Database db=Database.getInstance();
+
+    private Transaction_typeTable() throws Exception {
+        db = Database.getInstance();
+    }
+
+    public static Transaction_typeTable getInstance() throws Exception {
+        if(instance == null){
+            instance = new Transaction_typeTable();
+        }
+        return instance;
+    }
+
+
     ArrayList<Transaction_typePOJO> transaction_type;
 
     public Database getDb() throws Exception {
@@ -26,9 +44,6 @@ public class Transaction_typeTable implements Transaction_typeDAO {
         }
 
         return null;
-    }
-
-    public Transaction_typeTable() throws Exception {
     }
 
     @Override

@@ -14,7 +14,19 @@ import java.util.ArrayList;
 import static database.DBConst.*;
 
 public class RecurringTransactionTable implements RecurringTransactionDAO {
-    Database db;
+    private Database db;
+    private static RecurringTransactionTable instance;
+    private RecurringTransactionTable() throws Exception {
+        db = Database.getInstance();
+    }
+
+    public static RecurringTransactionTable getInstance() throws Exception {
+        if(instance == null){
+            instance = new RecurringTransactionTable();
+        }
+        return instance;
+    }
+
     ArrayList<RecurringTransactionPOJO> recurringTransactions;
 
     public Database getDb() throws Exception {

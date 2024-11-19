@@ -76,7 +76,7 @@ public class Dashboard {
 
         //create tabs
         AddTransaction addTransaction = new AddTransaction();
-        AllTransactions allTransactions = new AllTransactions();
+        AllTransactions allTransactions = AllTransactions.getInstance();
         UpdateTransaction updateTransaction = new UpdateTransaction();
         SummaryReport summaryReport = new SummaryReport();
         DeleteTransaction deleteTransaction= new DeleteTransaction();

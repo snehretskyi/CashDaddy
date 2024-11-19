@@ -42,16 +42,19 @@ public class UpdateForm extends Form {
         this.formName = formName;
         System.out.println(transactionsPOJO);
 
-        CategoriesTable categoriesTable = new CategoriesTable();
-        AccountsTable accountsTable = new AccountsTable();
-        Transaction_typeTable transactionTypeTable = new Transaction_typeTable();
-        TransactionsTable transactionsTable = new TransactionsTable();
-        Transaction_categoryTable transactionCategoryTable = new Transaction_categoryTable();
+        CategoriesTable categoriesTable = CategoriesTable.getInstance();
+        BudgetTable budgetTable = BudgetTable.getInstance();
+        AccountsTable accountsTable = AccountsTable.getInstance();
+        Transaction_typeTable transactionTypeTable = Transaction_typeTable.getInstance();
+        TransactionsTable transactionsTable = TransactionsTable.getInstance();
+        Transaction_categoryTable transactionCategoryTable = Transaction_categoryTable.getInstance();
         ArrayList<CategoriesPOJO> allCategories = categoriesTable.getAllCategories();
+        ArrayList<Transaction_categoryPOJO> allTransactionCategories = transactionCategoryTable.getAllTransaction_categories();
+        ArrayList<BudgetPOJO> allBudgets = budgetTable.getAllBudgets();
         ArrayList<AccountPOJO> allAccounts = accountsTable.getAllAccounts();
         ArrayList<Transaction_typePOJO> allTransactionTypes = transactionTypeTable.getAllTransaction_types();
         ArrayList<Integer> allAssociatedCategories = transactionCategoryTable.getAssociatedCategories(transactionsPOJO.getId());
-        RecurringTransactionTable recurringTransactionsTable = new RecurringTransactionTable();
+        RecurringTransactionTable recurringTransactionsTable = RecurringTransactionTable.getInstance();
         // try to see if it's recurring
         RecurringTransactionPOJO recurringTransaction = recurringTransactionsTable.getByTransactionId(transactionsPOJO.getId());
 
@@ -146,11 +149,9 @@ public class UpdateForm extends Form {
 
         formGrid.add(confirmButton, 4, 10);
         formGrid.add(cancelButton, 5, 10);
-
         // logic for buttons
         confirmButton.setOnAction((event) -> {
             try {
-                // refuse to submit if fields are empty
                 // refuse to submit if fields are empty
                 if (amountField.getText().isEmpty()
                         || categoryBox.getSelectionModel().getSelectedItem() == null
@@ -217,7 +218,6 @@ public class UpdateForm extends Form {
                 animateErrorText(getErrorText());
             }
         });
-
         // styling (˶◕‿◕˶)
         formGrid.setBorder(new Border(new BorderStroke( Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
         formGrid.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
