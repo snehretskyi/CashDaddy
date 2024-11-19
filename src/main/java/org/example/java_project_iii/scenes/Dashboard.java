@@ -17,10 +17,7 @@ import tabs.*;
 
 
 /**
- * Class for dashboard. Uses singleton pattern.
- * I'm <i>sure</i> there's a better way to create a separate class for scenes, but
- * last sem it wasn't explained properly.
- * TODO: check if it can be done better.
+ * Class for dashboard scene. Uses singleton pattern.
  * @author Riddhi, <sub>modififed by Stan</sub>
  */
 public class Dashboard {
@@ -28,8 +25,9 @@ public class Dashboard {
     private Scene dashboard;
     private static Dashboard dashboardInstance;
 
-    private int width;
-    private int height;
+    // default values for width and height
+    private int width = 1280;
+    private int height = 720;
 
     // getters and setters
     public Scene getDashboardScene() {
@@ -55,7 +53,7 @@ public class Dashboard {
     /**
      * Private constructor.
      */
-    private Dashboard(int width, int height) throws Exception {
+    private Dashboard() throws Exception {
         BorderPane root = new BorderPane();
 
         // Build a MenuBar
@@ -131,20 +129,12 @@ public class Dashboard {
     }
 
     /**
-     * As the class needs some arguments (width and height), it's necessary to first set it up
-     */
-    public static void createDashboard(int width, int height) throws Exception {
-        dashboardInstance = new Dashboard(width, height);
-    }
-
-    /**
      * Checks if the Dashboard already exists. If yes, returns the scene. If no return null as it can't construct.
      * @return scene Login scene
      */
-    public static Scene getDashboardSceneInstance() {
+    public static Scene getDashboardSceneInstance() throws Exception {
         if (dashboardInstance == null) {
-            System.out.println("Please ensure you have already created the scene.");
-            return null;
+            dashboardInstance = new Dashboard();
         }
 
         return dashboardInstance.getDashboardScene();
