@@ -8,6 +8,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import pojo.*;
 import tables.*;
+import tabs.AllTransactions;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -35,7 +36,6 @@ public class CreateForm extends Form {
         AccountsTable accountsTable = AccountsTable.getInstance();
         Transaction_typeTable transactionTypeTable = Transaction_typeTable.getInstance();
         TransactionsTable transactionsTable = TransactionsTable.getInstance();
-        Transaction_categoryTable transactionCategoryTable =  Transaction_categoryTable.getInstance();
 
         // creating nodes
         GridPane formGrid = new GridPane();
@@ -115,16 +115,13 @@ public class CreateForm extends Form {
                             accountComboBox.getSelectionModel().getSelectedItem().getId(),
                             Double.parseDouble(amountField.getText()),
                             selectedTransactionType,
+                            2,
                             Date.valueOf(datePicker.getValue()),
                             descriptionField.getText());
                     transactionsTable.addTransaction(transaction);
 
                     ArrayList<CategoriesPOJO> selectedCategories = new ArrayList<>(categoryListView.getSelectionModel().getSelectedItems());
 
-                    selectedCategories.forEach((CategoriesPOJO category) -> {
-                        Transaction_categoryPOJO transactionCategoryJunction = new Transaction_categoryPOJO(transaction.getId(), category.getId());
-                        transactionCategoryTable.addTransaction_category(transactionCategoryJunction);
-                    });
 
                 }
 
@@ -139,6 +136,11 @@ public class CreateForm extends Form {
                 getErrorText().setText("Fatal Error!");
                 animateErrorText(getErrorText());
                 e.printStackTrace();
+            }
+            try {
+                AllTransactions.getInstance().refreshTable();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
 

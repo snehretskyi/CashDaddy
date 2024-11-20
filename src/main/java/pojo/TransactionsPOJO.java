@@ -6,14 +6,16 @@ public class TransactionsPOJO extends DatabaseItemPojo {
     private int transaction_account_id;
     private double amount;
     private int transaction_type_id;
+    private int transaction_category_id;
     private Date transaction_date;
     private String transaction_description;
 
-    public TransactionsPOJO(int transaction_id, int account_id, double amount, int transaction_type_id, Date transaction_date, String transaction_description) {
+    public TransactionsPOJO(int transaction_id, int account_id, double amount, int transaction_type_id, int  transaction_category_id, Date transaction_date, String transaction_description) {
         super(transaction_id);
         this.transaction_account_id = account_id;
         this.amount = amount;
         this.transaction_type_id = transaction_type_id;
+        this.transaction_category_id = transaction_category_id;
         this.transaction_date = transaction_date;
         this.transaction_description = transaction_description;
     }
@@ -33,6 +35,14 @@ public class TransactionsPOJO extends DatabaseItemPojo {
 
     public void setTransaction_account_id(int transaction_account_id) {
         this.transaction_account_id = transaction_account_id;
+    }
+
+    public int getTransaction_category_id() {
+        return transaction_category_id;
+    }
+
+    public void setTransaction_category_id(int transaction_category_id) {
+        this.transaction_category_id = transaction_category_id;
     }
 
     public double getAmount() {

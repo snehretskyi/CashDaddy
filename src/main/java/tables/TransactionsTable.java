@@ -2,9 +2,7 @@ package tables;
 
 import dao.TransactionsDAO;
 import database.Database;
-import pojo.CategoriesPOJO;
 import pojo.DisplayTransaction;
-import pojo.Transaction_categoryPOJO;
 import pojo.TransactionsPOJO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -62,6 +60,7 @@ public class TransactionsTable implements TransactionsDAO {
                         data.getInt(TRANSACTIONS_COLUMN_ACCOUNT_ID),
                         data.getDouble(TRANSACTIONS_COLUMN_AMOUNT),
                         data.getInt(TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID),
+                        data.getInt(TRANSACTIONS_COLUMN_CATEGORY_ID),
                         data.getDate(TRANSACTIONS_COLUMN_TRANSACTION_DATE),
                         data.getString(TRANSACTIONS_COLUMN_DESCRIPTION)));
             }
@@ -86,6 +85,7 @@ public class TransactionsTable implements TransactionsDAO {
                     data.getInt(TRANSACTIONS_COLUMN_ACCOUNT_ID),
                     data.getDouble(TRANSACTIONS_COLUMN_AMOUNT),
                     data.getInt(TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID),
+                    data.getInt(TRANSACTIONS_COLUMN_CATEGORY_ID),
                     data.getDate(TRANSACTIONS_COLUMN_TRANSACTION_DATE),
                     data.getString(TRANSACTIONS_COLUMN_DESCRIPTION));
         } catch (SQLException e) {
@@ -102,10 +102,11 @@ public class TransactionsTable implements TransactionsDAO {
                 "(" + TRANSACTIONS_COLUMN_AMOUNT + ", " +
                 TRANSACTIONS_COLUMN_ACCOUNT_ID + ", " +
                 TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID + "," +
+                TRANSACTIONS_COLUMN_CATEGORY_ID + "," +
                 TRANSACTIONS_COLUMN_TRANSACTION_DATE + "," +
                 TRANSACTIONS_COLUMN_DESCRIPTION + ") VALUES ('" +
                 transactions.getAmount() + "','" + transactions.getTransaction_account_id() + "','" + transactions.getTransaction_type_id() + "','" +
-                transactions.getTransaction_date() + "','" + transactions.getTransaction_description() +
+                + transactions.getTransaction_category_id() + "','" + transactions.getTransaction_date() + "','" + transactions.getTransaction_description() +
                 "')";
         try {
             getDb().getConnection().createStatement().execute(query);
@@ -133,6 +134,7 @@ public class TransactionsTable implements TransactionsDAO {
                 TRANSACTIONS_COLUMN_ACCOUNT_ID + " = " + transactions.getTransaction_account_id() + "," +
                 TRANSACTIONS_COLUMN_AMOUNT + " = " + transactions.getAmount() + "," +
                 TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID + " = " + transactions.getTransaction_type_id() + "," +
+                TRANSACTION_TYPES_COLUMN_ID + " = " + transactions.getTransaction_category_id() + "," +
                 TRANSACTIONS_COLUMN_DESCRIPTION + " = '" + transactions.getTransaction_description() + "'" +
                 " WHERE " + TRANSACTIONS_COLUMN_ID + " = " + transactions.getId();
         System.out.println(query);
@@ -155,17 +157,11 @@ public class TransactionsTable implements TransactionsDAO {
 
     @Override
     public void deleteTransaction(int id) {
-        String deleteFromCategory = "DELETE FROM " + TABLE_TRANSACTION_CATEGORY + " WHERE " +
-                TRANSACTION_CATEGORY_COLUMN_TRANSACTION_ID + " = ?";
+
         String deleteFromTransaction = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " +
                 TRANSACTIONS_COLUMN_ID + " = ?";
 
         try {
-            // Delete related records in transaction_category first
-            PreparedStatement stmt1 = getDb().getConnection().prepareStatement(deleteFromCategory);
-            stmt1.setInt(1, id);
-            stmt1.executeUpdate();
-            System.out.println("Deleted related records in transaction_category");
 
             // Now, delete the record from transactions
             PreparedStatement stmt2 = getDb().getConnection().prepareStatement(deleteFromTransaction);
@@ -183,15 +179,18 @@ public class TransactionsTable implements TransactionsDAO {
     public ArrayList<DisplayTransaction> getDetailedTransaction(){
         ArrayList<DisplayTransaction> transactions = new ArrayList<DisplayTransaction>();
 
-        String query = "SELECT transactions.transaction_id AS id, " +
+        String query = "SELECT " +
+                "transactions.transaction_id AS id, " +
                 "accounts.account_type AS account_name, " +
                 "transactions.amount, " +
                 "transaction_types.transaction_type AS transaction_type_name, " +
+                "categories.category_type AS category_type_name, " +
                 "transactions.transaction_date, " +
                 "transactions.description " +
                 "FROM transactions " +
                 "JOIN accounts ON transactions.account_id = accounts.account_id " +
                 "JOIN transaction_types ON transactions.transaction_type_id = transaction_types.transaction_type_id " +
+                "JOIN categories ON transactions.category_id = categories.category_id " +
                 "ORDER BY transactions.transaction_id ASC";
 
         try {
@@ -204,6 +203,7 @@ public class TransactionsTable implements TransactionsDAO {
                         data.getInt("id"),
                         data.getString("account_name"),
                         data.getString("transaction_type_name"),
+                        data.getString("category_type_name"),
                         data.getString("amount"),
                         data.getString("transaction_date"),
                         data.getString("description")

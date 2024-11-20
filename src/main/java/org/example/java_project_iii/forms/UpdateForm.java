@@ -47,13 +47,10 @@ public class UpdateForm extends Form {
         AccountsTable accountsTable = AccountsTable.getInstance();
         Transaction_typeTable transactionTypeTable = Transaction_typeTable.getInstance();
         TransactionsTable transactionsTable = TransactionsTable.getInstance();
-        Transaction_categoryTable transactionCategoryTable = Transaction_categoryTable.getInstance();
         ArrayList<CategoriesPOJO> allCategories = categoriesTable.getAllCategories();
-        ArrayList<Transaction_categoryPOJO> allTransactionCategories = transactionCategoryTable.getAllTransaction_categories();
         ArrayList<BudgetPOJO> allBudgets = budgetTable.getAllBudgets();
         ArrayList<AccountPOJO> allAccounts = accountsTable.getAllAccounts();
         ArrayList<Transaction_typePOJO> allTransactionTypes = transactionTypeTable.getAllTransaction_types();
-        ArrayList<Integer> allAssociatedCategories = transactionCategoryTable.getAssociatedCategories(transactionsPOJO.getId());
 
         // creating nodes
         GridPane formGrid = new GridPane();
@@ -76,9 +73,9 @@ public class UpdateForm extends Form {
         ListView<CategoriesPOJO> categoryListView = new ListView<>();
         categoryListView.setItems(FXCollections.observableArrayList(allCategories));
         categoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        allAssociatedCategories.forEach((Integer i) -> {
-            categoryListView.getSelectionModel().select(i);
-        });
+//        allAssociatedCategories.forEach((Integer i) -> {
+//            categoryListView.getSelectionModel().select(i);
+//        });
 
 
         Label budgetLabel = new Label("Budget:");
@@ -152,20 +149,15 @@ public class UpdateForm extends Form {
                             accountComboBox.getSelectionModel().getSelectedItem().getId(),
                             Double.parseDouble(amountField.getText()),
                             selectedTransactionType,
+                            2,
                             Date.valueOf(datePicker.getValue()),
                             descriptionField.getText());
                     transactionsTable.updateTransaction(transaction);
 
                     ArrayList<CategoriesPOJO> selectedCategories = new ArrayList<>(categoryListView.getSelectionModel().getSelectedItems());
-                    ArrayList<Transaction_categoryPOJO> transaction_categoryPOJOArrayList = new ArrayList<>();
 
                     System.out.println(transactionsPOJO.getId());
-                    selectedCategories.forEach((CategoriesPOJO category) -> {
-                        Transaction_categoryPOJO transactionCategoryJunction = new Transaction_categoryPOJO(transaction.getId(), category.getId());
-                        transaction_categoryPOJOArrayList.add(transactionCategoryJunction);
-                    });
 
-                    transactionCategoryTable.updateTransactionCategory(transaction_categoryPOJOArrayList);
 
                 }
 

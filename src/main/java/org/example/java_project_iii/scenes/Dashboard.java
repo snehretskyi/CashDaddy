@@ -81,7 +81,6 @@ public class Dashboard {
         AllTransactions allTransactions = AllTransactions.getInstance();
         UpdateTransaction updateTransaction = new UpdateTransaction();
         SummaryReport summaryReport = new SummaryReport();
-        DeleteTransaction deleteTransaction= new DeleteTransaction();
 
         //add CurdForm to AddTransaction tab
         CreateForm createForm = new CreateForm("Add Transaction");
@@ -119,7 +118,7 @@ public class Dashboard {
         // Add tabs to the TabPane
 
         //addTransaction.getContent().setRotate(90);
-        tabPane.getTabs().addAll(addTransaction,allTransactions, updateTransaction, deleteTransaction, summaryReport);
+        tabPane.getTabs().addAll(addTransaction,allTransactions, updateTransaction, summaryReport);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.setSide(Side.TOP);
 
