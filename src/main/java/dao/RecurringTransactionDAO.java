@@ -1,7 +1,6 @@
 package dao;
 
 import pojo.RecurringTransactionPOJO;
-import pojo.Transaction_categoryPOJO;
 
 import java.util.ArrayList;
 

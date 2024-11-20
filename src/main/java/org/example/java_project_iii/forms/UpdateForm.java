@@ -126,7 +126,7 @@ public class UpdateForm extends Form {
         descriptionArea.setText(transactionsPOJO.getTransaction_description());
 
         Button confirmButton = new Button("Confirm");
-        Button cancelButton = new Button("Cancel");
+        Button clearButton = new Button("Clear");
 
         formGrid.add(dateLabel, 0, 1);
         formGrid.add(datePicker, 1, 1);
@@ -145,7 +145,7 @@ public class UpdateForm extends Form {
         formGrid.add(descriptionArea, 1, 9);
 
         formGrid.add(confirmButton, 4, 10);
-        formGrid.add(cancelButton, 5, 10);
+        formGrid.add(clearButton, 5, 10);
         // logic for buttons
         confirmButton.setOnAction((event) -> {
             try {
@@ -160,6 +160,9 @@ public class UpdateForm extends Form {
                 } else if (descriptionArea.getText().length() > 255) {
                     // check if the description is over 255 characters
                     getErrorText().setText("Description is over 255 characters!");
+                    animateErrorText(getErrorText());
+                } else if (Double.parseDouble(amountField.getText()) > 99999999.99) {
+                    getErrorText().setText("We only support transactions with value up to $99,999,999.99");
                     animateErrorText(getErrorText());
                 } else {
                     int selectedTransactionType = ((Transaction_typePOJO) transactionTypeGroup.getSelectedToggle().getUserData()).getId();
@@ -199,7 +202,7 @@ public class UpdateForm extends Form {
             }
         });
 
-        cancelButton.setOnAction((event) -> {
+        clearButton.setOnAction((event) -> {
             try {
                 // clears all fields
                 getErrorText().setText("");

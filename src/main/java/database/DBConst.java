@@ -1,5 +1,7 @@
 package database;
 
+import java.sql.Date;
+
 public class DBConst {
 
         /**
@@ -58,6 +60,7 @@ public class DBConst {
         public static final String RECURRING_TRANSACTION_COLUMN_ID = "recurring_transaction_id";
         public static final String RECURRING_TRANSACTION_COLUMN_TRANSACTION_ID = "transaction_id";
         public static final String RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS = "interval_days";
+        public static final String RECURRING_TRANSACTION_NEXT_DATE = "next_date";
 
         // CREATE TABLES
 
@@ -117,6 +120,7 @@ public class DBConst {
                         RECURRING_TRANSACTION_COLUMN_ID + " INT NOT NULL AUTO_INCREMENT, " +
                         RECURRING_TRANSACTION_COLUMN_TRANSACTION_ID + " INT, " +
                         RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS + " INT, " +
+                        RECURRING_TRANSACTION_NEXT_DATE + " DATE, " +
                         "PRIMARY KEY (" + RECURRING_TRANSACTION_COLUMN_ID + "), " +
                         "FOREIGN KEY (" + RECURRING_TRANSACTION_COLUMN_TRANSACTION_ID + ") REFERENCES " + TABLE_TRANSACTIONS + "(" + TRANSACTIONS_COLUMN_ID + ") );";
 

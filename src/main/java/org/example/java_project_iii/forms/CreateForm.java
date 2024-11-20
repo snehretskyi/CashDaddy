@@ -160,6 +160,9 @@ public class CreateForm extends Form {
                     // check if the description is over 255 characters
                     getErrorText().setText("Description is over 255 characters!");
                     animateErrorText(getErrorText());
+                } else if (Double.parseDouble(amountField.getText()) > 99999999.99) {
+                    getErrorText().setText("We only support transactions with value up to $99,999,999.99");
+                    animateErrorText(getErrorText());
                 }
                 else {
                     int selectedTransactionType = ((Transaction_typePOJO) transactionTypeGroup.getSelectedToggle().getUserData()).getId();

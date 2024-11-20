@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import org.example.java_project_iii.forms.CreateForm;
 import org.example.java_project_iii.forms.UpdateForm;
 import pojo.TransactionsPOJO;
+import services.RecurringTransactionService;
 import tables.TransactionsTable;
 import tabs.*;
 
@@ -54,6 +55,9 @@ public class Dashboard {
      * Private constructor.
      */
     private Dashboard() throws Exception {
+        // check if there is a recurring transaction due
+        RecurringTransactionService.processDueRecurringTransactions();
+
         BorderPane root = new BorderPane();
 
         // Build a MenuBar

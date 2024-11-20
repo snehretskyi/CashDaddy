@@ -56,7 +56,8 @@ public class RecurringTransactionTable implements RecurringTransactionDAO {
             while(data.next()) {
                 recurringTransactions.add(new RecurringTransactionPOJO(data.getInt(RECURRING_TRANSACTION_COLUMN_ID),
                         data.getInt(RECURRING_TRANSACTION_COLUMN_TRANSACTION_ID),
-                        data.getInt(RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS)));
+                        data.getInt(RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS),
+                        data.getDate(RECURRING_TRANSACTION_NEXT_DATE)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,7 +82,8 @@ public class RecurringTransactionTable implements RecurringTransactionDAO {
                 RecurringTransactionPOJO recurringTransaction = new RecurringTransactionPOJO(
                         data.getInt(RECURRING_TRANSACTION_COLUMN_ID),
                         data.getInt(RECURRING_TRANSACTION_COLUMN_TRANSACTION_ID),
-                        data.getInt(RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS)
+                        data.getInt(RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS),
+                        data.getDate(RECURRING_TRANSACTION_NEXT_DATE)
                 );
                 return recurringTransaction;
             }
@@ -99,9 +101,12 @@ public class RecurringTransactionTable implements RecurringTransactionDAO {
     public void addRecurringTransaction(RecurringTransactionPOJO recurringTransactionPOJO) {
         String query = "INSERT INTO " + TABLE_RECURRING_TRANSACTION +
                 "(" + RECURRING_TRANSACTION_COLUMN_TRANSACTION_ID + ", " +
-                RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS + ") VALUES (" +
-                recurringTransactionPOJO.getTransactionId() + "," + recurringTransactionPOJO.getIntervalDays()
-                + ")";
+                RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS + ", " +
+                RECURRING_TRANSACTION_NEXT_DATE + ") VALUES (" +
+                recurringTransactionPOJO.getTransactionId() + ","
+                + recurringTransactionPOJO.getIntervalDays() + ", '"
+                + recurringTransactionPOJO.getNextDate()
+                + "')";
         try {
             getDb().getConnection().createStatement().execute(query);
 
@@ -132,7 +137,8 @@ public class RecurringTransactionTable implements RecurringTransactionDAO {
                 RecurringTransactionPOJO recurringTransaction = new RecurringTransactionPOJO(
                         data.getInt(RECURRING_TRANSACTION_COLUMN_ID),
                         data.getInt(RECURRING_TRANSACTION_COLUMN_TRANSACTION_ID),
-                        data.getInt(RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS)
+                        data.getInt(RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS),
+                        data.getDate(RECURRING_TRANSACTION_NEXT_DATE)
                 );
                 return recurringTransaction;
             }
@@ -165,7 +171,9 @@ public class RecurringTransactionTable implements RecurringTransactionDAO {
     @Override
     public void updateRecurringTransaction(RecurringTransactionPOJO recurringTransactionPOJO) {
             String query = "UPDATE " + TABLE_RECURRING_TRANSACTION + " SET " +
-                    RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS + " = " + recurringTransactionPOJO.getIntervalDays() +
+                    RECURRING_TRANSACTION_COLUMN_TRANSACTION_ID + " = " + recurringTransactionPOJO.getTransactionId() + ", " +
+                    RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS + " = " + recurringTransactionPOJO.getIntervalDays() + ", " +
+                    RECURRING_TRANSACTION_NEXT_DATE + " = '" + recurringTransactionPOJO.getNextDate() + "'" +
                     " WHERE " + RECURRING_TRANSACTION_COLUMN_ID + " = " + recurringTransactionPOJO.getId();
             try {
                 Statement updateItem = getDb().getConnection().createStatement();
