@@ -12,6 +12,7 @@ public class DisplayTransaction {
     private String type;
     private String amount;
     private String date;
+    private String category;
     private String description;
 
     /**
@@ -24,13 +25,30 @@ public class DisplayTransaction {
      * @param description additional details about the transaction
      */
 
-    public DisplayTransaction(int id, String account_name, String type, String amount, String date, String description) {
+    public DisplayTransaction(int id, String account_name, String type, String category, String amount, String date, String description) {
         this.id = id;
         this.account_name = account_name;
         this.type = type;
+        this.category = category;
         this.amount = amount;
         this.date = date;
         this.description = description;
+    }
+
+    /**
+     * Gets the category associated with transaction
+     * @return the category
+     */
+    public String getCategory() {
+        return category;
+    }
+
+    /**
+     * Gets the category associated with transaction
+     * @param category set to the transaction
+     */
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     /**

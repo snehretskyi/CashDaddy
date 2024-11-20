@@ -64,7 +64,6 @@ public class CreateForm extends Form {
         AccountsTable accountsTable = AccountsTable.getInstance();
         Transaction_typeTable transactionTypeTable = Transaction_typeTable.getInstance();
         TransactionsTable transactionsTable = TransactionsTable.getInstance();
-        Transaction_categoryTable transactionCategoryTable =  Transaction_categoryTable.getInstance();
         RecurringTransactionTable recurringTransactionsTable = RecurringTransactionTable.getInstance();
 
         // creating nodes
@@ -168,6 +167,7 @@ public class CreateForm extends Form {
                             accountComboBox.getSelectionModel().getSelectedItem().getId(),
                             Double.parseDouble(amountField.getText()),
                             selectedTransactionType,
+                            categoryBox.getSelectionModel().getSelectedItem().getId(),
                             Date.valueOf(datePicker.getValue()),
                             descriptionArea.getText());
                     transactionsTable.addTransaction(transaction);

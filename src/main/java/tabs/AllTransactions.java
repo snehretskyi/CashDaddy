@@ -62,6 +62,16 @@ public class AllTransactions extends Tab {
                 e-> new SimpleStringProperty(e.getValue().getType()));
 
         /**
+         * Column6 for displaying category type
+         */
+        TableColumn<DisplayTransaction, String> column6 =
+                new TableColumn<>("Category Type");
+
+        column6.setCellValueFactory(
+                e-> new SimpleStringProperty(e.getValue().getCategory()));
+
+
+        /**
          * Column4 for displaying transaction date
          */
 
@@ -85,13 +95,23 @@ public class AllTransactions extends Tab {
          * added all columns to tableView
          */
 
-        tableView.getColumns().addAll(column1, column2, column3, column4, column5);
+        tableView.getColumns().addAll(column1, column2, column3, column6, column4, column5);
         tableView.getItems().addAll(transactionsTable.getDetailedTransaction());
 
         /**
          * Add tableView to the center of borderpane
          */
         borderPane.setCenter(tableView);
+
+        /**
+         * set width in pixels
+         */
+        column1.setPrefWidth(200);
+        column2.setPrefWidth(150);
+        column3.setPrefWidth(200);
+        column4.setPrefWidth(200);
+        column5.setPrefWidth(100);
+        column6.setPrefWidth(80);
 
         /**
          * Button responsible to remove transaction

@@ -47,13 +47,10 @@ public class UpdateForm extends Form {
         AccountsTable accountsTable = AccountsTable.getInstance();
         Transaction_typeTable transactionTypeTable = Transaction_typeTable.getInstance();
         TransactionsTable transactionsTable = TransactionsTable.getInstance();
-        Transaction_categoryTable transactionCategoryTable = Transaction_categoryTable.getInstance();
         ArrayList<CategoriesPOJO> allCategories = categoriesTable.getAllCategories();
-        ArrayList<Transaction_categoryPOJO> allTransactionCategories = transactionCategoryTable.getAllTransaction_categories();
         ArrayList<BudgetPOJO> allBudgets = budgetTable.getAllBudgets();
         ArrayList<AccountPOJO> allAccounts = accountsTable.getAllAccounts();
         ArrayList<Transaction_typePOJO> allTransactionTypes = transactionTypeTable.getAllTransaction_types();
-        ArrayList<Integer> allAssociatedCategories = transactionCategoryTable.getAssociatedCategories(transactionsPOJO.getId());
         RecurringTransactionTable recurringTransactionsTable = RecurringTransactionTable.getInstance();
         // try to see if it's recurring
         RecurringTransactionPOJO recurringTransaction = recurringTransactionsTable.getByTransactionId(transactionsPOJO.getId());
@@ -170,6 +167,7 @@ public class UpdateForm extends Form {
                             accountComboBox.getSelectionModel().getSelectedItem().getId(),
                             Double.parseDouble(amountField.getText()),
                             selectedTransactionType,
+                            categoryBox.getSelectionModel().getSelectedItem().getId(),
                             Date.valueOf(datePicker.getValue()),
                             descriptionArea.getText());
                     transactionsTable.updateTransaction(transaction);
@@ -218,6 +216,7 @@ public class UpdateForm extends Form {
                 animateErrorText(getErrorText());
             }
         });
+
         // styling (˶◕‿◕˶)
         formGrid.setBorder(new Border(new BorderStroke( Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
         formGrid.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
