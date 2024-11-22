@@ -12,9 +12,9 @@ public class CashDaddy extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Login.createLoginScene(primaryStage, 1280, 720);
-
         Scene loginScene = Login.getLoginSceneInstance();
+        // set stage for login form
+        Login.getLoginForm().setStage(primaryStage);
 
         // try connecting to db
         Scene dashboard = null;

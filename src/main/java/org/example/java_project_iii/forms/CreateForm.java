@@ -23,6 +23,34 @@ import java.sql.Date;
 public class CreateForm extends Form {
     private String formName;
 
+    private Tab displayTab;
+
+    private TabPane tabPane;
+
+    public TabPane getTabPane() {
+        return tabPane;
+    }
+
+    public void setTabPane(TabPane tabPane) {
+        this.tabPane = tabPane;
+    }
+
+    public Tab getDisplayTab() {
+        return displayTab;
+    }
+
+    public void setDisplayTab(Tab displayTab) {
+        this.displayTab = displayTab;
+    }
+
+    public String getFormName() {
+        return formName;
+    }
+
+    public void setFormName(String formName) {
+        this.formName = formName;
+    }
+
     /**
      * Constructor
      * @param formName name of the form, e.g. Update
@@ -36,6 +64,7 @@ public class CreateForm extends Form {
         AccountsTable accountsTable = AccountsTable.getInstance();
         Transaction_typeTable transactionTypeTable = Transaction_typeTable.getInstance();
         TransactionsTable transactionsTable = TransactionsTable.getInstance();
+        RecurringTransactionTable recurringTransactionsTable = RecurringTransactionTable.getInstance();
 
         // creating nodes
         GridPane formGrid = new GridPane();
@@ -52,10 +81,24 @@ public class CreateForm extends Form {
         Label amountLabel = new Label("Amount:");
         TextField amountField = new TextField();
 
+        Label recurringLabel = new Label("Recurring?");
+        CheckBox recurringCheckBox = new CheckBox();
+
+        VBox recurringIntervalBox = new VBox();
+        Label recurringIntervalLabel = new Label("Interval (in days)");
+        Spinner<Integer> recurringIntervalSpinner = new Spinner<>(0, 100, 1);
+        recurringIntervalBox.getChildren().addAll(recurringIntervalLabel, recurringIntervalSpinner);
+        // hide the box unless it is selected
+        recurringIntervalBox.setVisible(false);
+
+        // if checkbox is selected, add ability to enter interval
+        recurringCheckBox.setOnAction((event) -> {
+            recurringIntervalBox.setVisible(recurringCheckBox.isSelected());
+        });
+
         Label categoryLabel = new Label("Category:");
-        ListView<CategoriesPOJO> categoryListView = new ListView<>();
-        categoryListView.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
-        categoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        ComboBox<CategoriesPOJO> categoryBox = new ComboBox<>();
+        categoryBox.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
 
         Label accountLabel = new Label("Account:");
         ComboBox<AccountPOJO> accountComboBox = new ComboBox<>();
@@ -76,8 +119,9 @@ public class CreateForm extends Form {
             transactionTypeRadio.setToggleGroup(transactionTypeGroup);
         });
 
-        Label descriptionLabel = new Label("Description:");
-        TextField descriptionField = new TextField();
+        Label descriptionLabel = new Label("Description (up to 255 characters):");
+        TextArea descriptionArea = new TextArea();
+        descriptionArea.setPrefRowCount(3);
 
         Button confirmButton = new Button("Confirm");
         Button cancelButton = new Button("Cancel");
@@ -87,41 +131,70 @@ public class CreateForm extends Form {
         formGrid.add(amountLabel, 0, 2);
         formGrid.add(amountField, 1, 2);
         formGrid.add(categoryLabel, 0, 3);
-        formGrid.add(categoryListView, 1, 3);
-        formGrid.add(accountLabel, 0, 5);
-        formGrid.add(accountComboBox, 1, 5);
-        formGrid.add(transactionTypeLabel, 0, 6);
-        formGrid.add(transactionTypeRadioBox, 0, 7);
-        formGrid.add(descriptionLabel, 0, 8);
-        formGrid.add(descriptionField, 1, 8);
+        formGrid.add(categoryBox, 1, 3);
+        formGrid.add(recurringLabel, 0, 4);
+        formGrid.add(recurringCheckBox, 1, 4);
+        formGrid.add(recurringIntervalBox, 1, 5);
+        formGrid.add(accountLabel, 0, 6);
+        formGrid.add(accountComboBox, 1, 6);
+        formGrid.add(transactionTypeLabel, 0, 7);
+        formGrid.add(transactionTypeRadioBox, 1, 7);
+        formGrid.add(descriptionLabel, 0, 9);
+        formGrid.add(descriptionArea, 1, 9);
 
-        formGrid.add(confirmButton, 4, 9);
-        formGrid.add(cancelButton, 5, 9);
+        formGrid.add(confirmButton, 4, 10);
+        formGrid.add(cancelButton, 5, 10);
 
         // logic for buttons
         confirmButton.setOnAction((event) -> {
             try {
                 // refuse to submit if fields are empty
                 if (amountField.getText().isEmpty()
-                        || categoryListView.getSelectionModel().getSelectedItem() == null
+                        || categoryBox.getSelectionModel().getSelectedItem() == null
+                        || accountComboBox.getValue() == null
                         ||  transactionTypeGroup.getSelectedToggle() == null
-                        || descriptionField.getText().isEmpty()) {
+                        || descriptionArea.getText().isEmpty()) {
                     getErrorText().setText("All fields are required!");
-                    System.out.println(accountComboBox.getSelectionModel().getSelectedItem().getId());
                     animateErrorText(getErrorText());
-                } else {
+                } else if (descriptionArea.getText().length() > 255) {
+                    // check if the description is over 255 characters
+                    getErrorText().setText("Description is over 255 characters!");
+                    animateErrorText(getErrorText());
+                } else if (Double.parseDouble(amountField.getText()) > 99999999.99) {
+                    getErrorText().setText("We only support transactions with value up to $99,999,999.99");
+                    animateErrorText(getErrorText());
+                }
+                else {
                     int selectedTransactionType = ((Transaction_typePOJO) transactionTypeGroup.getSelectedToggle().getUserData()).getId();
                     TransactionsPOJO transaction = new TransactionsPOJO(0,
                             accountComboBox.getSelectionModel().getSelectedItem().getId(),
                             Double.parseDouble(amountField.getText()),
                             selectedTransactionType,
-                            2,
+                            categoryBox.getSelectionModel().getSelectedItem().getId(),
                             Date.valueOf(datePicker.getValue()),
-                            descriptionField.getText());
+                            descriptionArea.getText());
                     transactionsTable.addTransaction(transaction);
 
-                    ArrayList<CategoriesPOJO> selectedCategories = new ArrayList<>(categoryListView.getSelectionModel().getSelectedItems());
+                    if (recurringCheckBox.isSelected()) {
+                        RecurringTransactionPOJO recurringTransactionPOJO = new RecurringTransactionPOJO(0,
+                                transaction.getId(), recurringIntervalSpinner.getValue());
 
+                        recurringTransactionsTable.addRecurringTransaction(recurringTransactionPOJO);
+                    }
+
+                    // clears all fields
+                    getErrorText().setText("");
+                    datePicker.setValue(LocalDate.now());
+                    amountField.clear();
+                    categoryBox.getSelectionModel().clearSelection();
+                    recurringCheckBox.setSelected(false);
+                    accountComboBox.getSelectionModel().clearSelection();
+                    transactionTypeGroup.getSelectedToggle().setSelected(false);
+                    descriptionArea.clear();
+
+                    tabPane.getSelectionModel().select(displayTab);
+
+                    AllTransactions.getInstance().refreshTable();
 
                 }
 
@@ -137,11 +210,6 @@ public class CreateForm extends Form {
                 animateErrorText(getErrorText());
                 e.printStackTrace();
             }
-            try {
-                AllTransactions.getInstance().refreshTable();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         });
 
         cancelButton.setOnAction((event) -> {
@@ -150,10 +218,11 @@ public class CreateForm extends Form {
                 getErrorText().setText("");
                 datePicker.setValue(LocalDate.now());
                 amountField.clear();
-                categoryListView.getSelectionModel().clearSelection();
+                categoryBox.getSelectionModel().clearSelection();
+                recurringCheckBox.setSelected(false);
                 accountComboBox.getSelectionModel().clearSelection();
                 transactionTypeGroup.getSelectedToggle().setSelected(false);
-                descriptionField.clear();
+                descriptionArea.clear();
             } catch (Exception e) {
                 // generic error handling
                 getErrorText().setText("Fatal Error!");

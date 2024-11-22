@@ -2,6 +2,7 @@ package tables;
 
 import dao.TransactionsDAO;
 import database.Database;
+import pojo.CategoriesPOJO;
 import pojo.DisplayTransaction;
 import pojo.TransactionsPOJO;
 import java.sql.PreparedStatement;
@@ -162,8 +163,6 @@ public class TransactionsTable implements TransactionsDAO {
                 TRANSACTIONS_COLUMN_ID + " = ?";
 
         try {
-
-            // Now, delete the record from transactions
             PreparedStatement stmt2 = getDb().getConnection().prepareStatement(deleteFromTransaction);
             stmt2.setInt(1, id);
             stmt2.executeUpdate();
@@ -180,10 +179,10 @@ public class TransactionsTable implements TransactionsDAO {
         ArrayList<DisplayTransaction> transactions = new ArrayList<DisplayTransaction>();
 
         String query = "SELECT " +
-                "transactions.transaction_id AS id, " +
-                "accounts.account_type AS account_name, " +
-                "transactions.amount, " +
-                "transaction_types.transaction_type AS transaction_type_name, " +
+                TABLE_TRANSACTIONS+"."+TRANSACTIONS_COLUMN_ID+" AS id, " +
+                TABLE_ACCOUNTS+"."+ACCOUNTS_COLUMN_ACCOUNT_TYPE+" AS account_name, " +
+                TABLE_TRANSACTIONS+"."+TRANSACTIONS_COLUMN_AMOUNT+", " +
+                TABLE_TRANSACTION_TYPES+"."+TRANSACTION_TYPES_COLUMN_TYPE+" AS transaction_type_name, " +
                 "categories.category_type AS category_type_name, " +
                 "transactions.transaction_date, " +
                 "transactions.description " +
