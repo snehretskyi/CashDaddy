@@ -124,5 +124,22 @@ public class DBConst {
                         "PRIMARY KEY (" + RECURRING_TRANSACTION_COLUMN_ID + "), " +
                         "FOREIGN KEY (" + RECURRING_TRANSACTION_COLUMN_TRANSACTION_ID + ") REFERENCES " + TABLE_TRANSACTIONS + "(" + TRANSACTIONS_COLUMN_ID + ") );";
 
+        /**
+         * INSERT INTO queries
+         */
 
+        public static final String INSERT_TRANSACTION_TYPES =
+                "INSERT INTO " + TABLE_TRANSACTION_TYPES + " (" + TRANSACTION_TYPES_COLUMN_TYPE + ") " +
+                        "VALUES ('Income'), ('Expense'), ('Recurring');";
+
+        public static final String INSERT_CATEGORIES =
+                "INSERT INTO " + TABLE_CATEGORIES + " (" + CATEGORIES_COLUMN_CATEGORY_TYPE + ") " +
+                        "VALUES ('Dividend'), ('Rent'), ('Utilities'), ('Groceries'), ('Entertainment'), ('Shopping'), ('Travel'), ('Other');";
+
+        public static final String INSERT_ACCOUNTS =
+                "INSERT INTO " + TABLE_ACCOUNTS + " (" + ACCOUNTS_COLUMN_ACCOUNT_TYPE + ", " +
+                        ACCOUNTS_COLUMN_BALANCE + ", " + ACCOUNTS_COLUMN_INFORMATION + ") " +
+                        "VALUES ('Savings Account', 1000.50, 'Personal savings account'), " +
+                        "('Checking Account', 500.75, 'Primary checking account'), " +
+                        "('Credit Account', 2000.00, 'Credit card account');";
 }
