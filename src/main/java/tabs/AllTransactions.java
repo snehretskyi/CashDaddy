@@ -164,8 +164,9 @@ public class AllTransactions extends Tab {
                         updateTransaction.setContent(updateForm);
 
                         // Add the new tab to the tab pane and activate it
-                        TabsContainer.getInstance().addOrActivateTab(updateTransaction);
+//                        TabsContainer.getInstance().addOrActivateTab(updateTransaction);
 
+                        getTabPane().getSelectionModel().select(updateTransaction);
 
                     } catch (Exception ex) {
                         ex.printStackTrace();

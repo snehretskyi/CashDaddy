@@ -79,7 +79,8 @@ public class Dashboard {
         addTransaction.setContent(createForm);
         TransactionsPOJO transactionsPOJO = new TransactionsPOJO();
 
-        TabsContainer.initialize(tabPane);
+
+        //TabsContainer.initialize(tabPane);
 
 // --------------------------------------------------------------------------------------------------
 
