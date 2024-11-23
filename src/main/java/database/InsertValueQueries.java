@@ -40,26 +40,27 @@ public class InsertValueQueries {
                     TRANSACTIONS_COLUMN_TRANSACTION_DATE + ", " +
                     TRANSACTIONS_COLUMN_DESCRIPTION + ") " +
                     "VALUES " +
-                    "(1, 500.00, 1, 1, '2024-11-01', 'Salary'), " +
-                    "(2, 100.00, 2, 2, '2024-11-02', 'Rent payment'), " +
-                    "(3, 150.00, 2, 3, '2024-11-03', 'Groceries'), " +
-                    "(1, 50.00, 2, 4, '2024-11-04', 'Utility bill'), " +
-                    "(2, 200.00, 1, 5, '2024-11-05', 'Freelance work'), " +
-                    "(3, 80.00, 2, 6, '2024-11-06', 'Dining out'), " +
-                    "(1, 120.00, 2, 7, '2024-11-07', 'Entertainment'), " +
-                    "(2, 250.00, 1, 8, '2024-11-08', 'Investment returns'), " +
-                    "(3, 90.00, 2, 9, '2024-11-09', 'Shopping'), " +
-                    "(1, 200.00, 1, 10, '2024-11-10', 'Bonus'), " +
-                    "(2, 300.00, 2, 11, '2024-11-11', 'Credit card payment'), " +
-                    "(3, 110.00, 2, 12, '2024-11-12', 'Transport'), " +
-                    "(1, 350.00, 1, 13, '2024-11-13', 'Project earnings'), " +
-                    "(2, 90.00, 2, 14, '2024-11-14', 'Insurance'), " +
-                    "(3, 130.00, 2, 15, '2024-11-15', 'Grocery shopping'), " +
-                    "(1, 300.00, 1, 16, '2024-11-16', 'Stock dividends'), " +
-                    "(2, 200.00, 2, 17, '2024-11-17', 'Internet bill'), " +
-                    "(3, 50.00, 2, 18, '2024-11-18', 'Coffee shop'), " +
-                    "(1, 400.00, 1, 19, '2024-11-19', 'Side hustle income'), " +
-                    "(2, 120.00, 2, 20, '2024-11-20', 'Gym membership');";
+                    "(1, 500.00, 1, 1, '2024-11-01', 'Salary'), " +  // Category 1
+                    "(2, 100.00, 2, 2, '2024-11-02', 'Rent payment'), " + // Category 2
+                    "(3, 150.00, 2, 3, '2024-11-03', 'Groceries'), " +  // Category 3
+                    "(1, 50.00, 2, 4, '2024-11-04', 'Utility bill'), " + // Category 4
+                    "(2, 200.00, 1, 5, '2024-11-05', 'Freelance work'), " + // Category 5
+                    "(3, 80.00, 2, 6, '2024-11-06', 'Dining out'), " +  // Category 6
+                    "(1, 120.00, 2, 7, '2024-11-07', 'Entertainment'), " + // Category 7
+                    "(2, 250.00, 1, 8, '2024-11-08', 'Investment returns'), " + // Category 8
+                    "(3, 90.00, 2, 2, '2024-11-09', 'Shopping'), " + // Category 9 (ensure this category exists)
+                    "(1, 200.00, 1, 1, '2024-11-10', 'Bonus'), " +
+                    "(2, 300.00, 2, 4, '2024-11-11', 'Credit card payment'), " +
+                    "(3, 110.00, 2, 6, '2024-11-12', 'Transport'), " +
+                    "(1, 350.00, 1, 8, '2024-11-13', 'Project earnings'), " +
+                    "(2, 90.00, 2, 5, '2024-11-14', 'Insurance'), " +
+                    "(3, 130.00, 2, 5, '2024-11-15', 'Grocery shopping'), " +
+                    "(1, 300.00, 1, 6, '2024-11-16', 'Stock dividends'), " +
+                    "(2, 200.00, 2, 7, '2024-11-17', 'Internet bill'), " +
+                    "(3, 50.00, 2, 1, '2024-11-18', 'Coffee shop'), " +
+                    "(1, 400.00, 1, 8, '2024-11-19', 'Side hustle income'), " +
+                    "(2, 120.00, 2, 2, '2024-11-20', 'Gym membership');";
+
 
     /**
      * Insert recurring transactions.
@@ -73,7 +74,7 @@ public class InsertValueQueries {
                     "(1, 30, '2024-12-01'), " + // Salary (Recurring)
                     "(2, 30, '2024-12-02'), " + // Rent payment (Recurring)
                     "(5, 30, '2024-12-05'), " + // Freelance work (Recurring)
-                    "(7, 30, '2024-12-07'), " + // Entertainment (Recurring)
-                    "(8, 30, '2024-12-08');";  // Investment returns (Recurring)
+                    "(9, 30, '2024-12-07'), " + // Entertainment (Recurring)
+                    "(16, 30, '2024-12-08');";  // Investment returns (Recurring)
 
 }

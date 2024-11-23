@@ -60,20 +60,6 @@ public class Dashboard {
 
         BorderPane root = new BorderPane();
 
-        // Build a MenuBar
-        MenuBar menu = new MenuBar();
-
-        Menu year = new Menu("Year");
-        Menu income = new Menu("Income");
-        Menu expanses = new Menu("Expenses");
-        Menu savings = new Menu("Savings");
-
-
-        // add the menu item to the menu bar
-
-        menu.getMenus().addAll(year, income, expanses, savings);
-
-
         // Create a TabPane
 
         TabPane tabPane = new TabPane();
@@ -128,7 +114,6 @@ public class Dashboard {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.setSide(Side.TOP);
 
-        root.setTop(menu);
         root.setCenter(tabPane);
 
 
