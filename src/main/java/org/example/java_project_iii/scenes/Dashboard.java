@@ -77,6 +77,12 @@ public class Dashboard {
         createForm.setDisplayTab(allTransactions);
 
         addTransaction.setContent(createForm);
+        TransactionsPOJO transactionsPOJO = new TransactionsPOJO();
+
+        UpdateForm updateForm = new UpdateForm("Update your details", transactionsPOJO);
+        updateTransaction.setContent(updateForm);
+
+        TabsContainer.initialize(tabPane);
 
 // --------------------------------------------------------------------------------------------------
 

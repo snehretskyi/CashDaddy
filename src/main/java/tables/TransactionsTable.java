@@ -150,6 +150,7 @@ public class TransactionsTable implements TransactionsDAO {
         }
     }
 
+
     /**
      * Deletes a transaction and its related records from the transaction_category table.
      *
@@ -179,6 +180,8 @@ public class TransactionsTable implements TransactionsDAO {
             throw new RuntimeException(e);
         }
     }
+
+
 
     public ArrayList<DisplayTransaction> getDetailedTransaction(){
         ArrayList<DisplayTransaction> transactions = new ArrayList<DisplayTransaction>();
@@ -225,6 +228,16 @@ public class TransactionsTable implements TransactionsDAO {
 
         return transactions;
 
+    }
+
+
+    public TransactionsPOJO getTransactionById(int transactionId) throws Exception {
+        for (TransactionsPOJO transaction : getAllTransactions()) {
+            if (transaction.getId() == transactionId) {
+                return transaction;
+            }
+        }
+        throw new Exception("Transaction not found for ID: " + transactionId);
     }
 
 

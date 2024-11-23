@@ -61,7 +61,12 @@ public class UpdateForm extends Form {
         Label formNameLabel = new Label(this.formName);
 
         Label dateLabel = new Label("Date:");
-        DatePicker datePicker = new DatePicker(transactionsPOJO.getTransaction_date().toLocalDate());
+        //DatePicker datePicker = new DatePicker(transactionsPOJO.getTransaction_date().toLocalDate());
+
+        DatePicker datePicker = new DatePicker(
+                transactionsPOJO.getTransaction_date() != null ? transactionsPOJO.getTransaction_date().toLocalDate() : null
+        );
+
 
         // unfortunately I had to turn off text input for date
         // exception handling doesn't work as expected if user inputs invalid date (・へ・)

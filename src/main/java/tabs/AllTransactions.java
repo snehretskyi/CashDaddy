@@ -3,11 +3,9 @@ package tabs;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import org.example.java_project_iii.forms.UpdateForm;
 import pojo.DisplayTransaction;
 import pojo.TransactionsPOJO;
 import tables.TransactionsTable;
@@ -151,6 +149,34 @@ public class AllTransactions extends Tab {
         borderPane.setBottom(removeTransaction);
         this.setContent(borderPane);
 
+
+        tableView.setRowFactory(tv -> {
+            TableRow<DisplayTransaction> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    DisplayTransaction selectedTransaction = row.getItem();
+                    try {
+                        // Fetch the detailed TransactionsPOJO
+                        TransactionsPOJO transactionsPOJO = TransactionsTable.getInstance().getTransactionById(selectedTransaction.getId());
+
+                        // Create a new UpdateForm
+                        UpdateForm updateForm = new UpdateForm("Update your details", transactionsPOJO);
+
+                        // Create a new tab for UpdateTransaction
+                        Tab updateTransaction = new Tab("Update Transaction");
+                        updateTransaction.setContent(updateForm);
+
+                        // Add the new tab to the tab pane and activate it
+                        TabsContainer.getInstance().addOrActivateTab(updateTransaction);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+            return row;
+        });
+
+
     }
 
     /**
@@ -171,5 +197,6 @@ public class AllTransactions extends Tab {
         }
         return instance;
     }
+
 
 }

@@ -40,15 +40,15 @@ public class InsertValueQueries {
                     TRANSACTIONS_COLUMN_TRANSACTION_DATE + ", " +
                     TRANSACTIONS_COLUMN_DESCRIPTION + ") " +
                     "VALUES " +
-                    "(1, 500.00, 1, 1, '2024-11-01', 'Salary'), " +  // Category 1
-                    "(2, 100.00, 2, 2, '2024-11-02', 'Rent payment'), " + // Category 2
-                    "(3, 150.00, 2, 3, '2024-11-03', 'Groceries'), " +  // Category 3
-                    "(1, 50.00, 2, 4, '2024-11-04', 'Utility bill'), " + // Category 4
-                    "(2, 200.00, 1, 5, '2024-11-05', 'Freelance work'), " + // Category 5
-                    "(3, 80.00, 2, 6, '2024-11-06', 'Dining out'), " +  // Category 6
-                    "(1, 120.00, 2, 7, '2024-11-07', 'Entertainment'), " + // Category 7
-                    "(2, 250.00, 1, 8, '2024-11-08', 'Investment returns'), " + // Category 8
-                    "(3, 90.00, 2, 2, '2024-11-09', 'Shopping'), " + // Category 9 (ensure this category exists)
+                    "(1, 500.00, 1, 1, '2024-11-01', 'Salary'), " +
+                    "(2, 100.00, 2, 2, '2024-11-02', 'Rent payment'), " +
+                    "(3, 150.00, 2, 3, '2024-11-03', 'Groceries'), " +
+                    "(1, 50.00, 2, 4, '2024-11-04', 'Utility bill'), " +
+                    "(2, 200.00, 1, 5, '2024-11-05', 'Freelance work'), " +
+                    "(3, 80.00, 2, 6, '2024-11-06', 'Dining out'), " +
+                    "(1, 120.00, 2, 7, '2024-11-07', 'Entertainment'), " +
+                    "(2, 250.00, 1, 8, '2024-11-08', 'Investment returns'), " +
+                    "(3, 90.00, 2, 2, '2024-11-09', 'Shopping'), " +
                     "(1, 200.00, 1, 1, '2024-11-10', 'Bonus'), " +
                     "(2, 300.00, 2, 4, '2024-11-11', 'Credit card payment'), " +
                     "(3, 110.00, 2, 6, '2024-11-12', 'Transport'), " +
