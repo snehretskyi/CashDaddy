@@ -92,10 +92,28 @@ public class AllTransactions extends Tab {
                 e-> new SimpleStringProperty(e.getValue().getDescription()));
 
         /**
+         * Column7 for displaying recurring transaction status
+         */
+
+        TableColumn<DisplayTransaction, String> column7 =
+                new TableColumn<>("Recurring Transaction");
+        column7.setCellValueFactory(
+                e -> new SimpleStringProperty(e.getValue().getRecurringStatus()));
+
+        /**
+         * Column8 for displaying recurring transaction days
+         */
+
+        TableColumn<DisplayTransaction, String> column8 =
+                new TableColumn<>("Interval Days");
+        column8.setCellValueFactory(
+                e -> new SimpleStringProperty(e.getValue().getIntervalDays()));
+
+        /**
          * added all columns to tableView
          */
 
-        tableView.getColumns().addAll(column1, column2, column3, column6, column4, column5);
+        tableView.getColumns().addAll(column1, column2, column3, column6, column4, column5, column7, column8);
         tableView.getItems().addAll(transactionsTable.getDetailedTransaction());
 
         /**

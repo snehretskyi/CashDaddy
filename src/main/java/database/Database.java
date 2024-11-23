@@ -41,9 +41,9 @@ public class Database {
         createTable(DBConst.TABLE_TRANSACTIONS, DBConst.CREATE_TABLE_TRANSACTIONS, connection);
         createTable(DBConst.TABLE_RECURRING_TRANSACTION, DBConst.CREATE_TABLE_RECURRING_TRANSACTION, connection);
 
-        insertDefaultValues(DBConst.TABLE_TRANSACTION_TYPES, DBConst.INSERT_TRANSACTION_TYPES, connection);
-        insertDefaultValues(DBConst.TABLE_CATEGORIES, DBConst.INSERT_CATEGORIES, connection);
-        insertDefaultValues(DBConst.TABLE_ACCOUNTS, DBConst.INSERT_ACCOUNTS, connection);
+        insertDefaultValues(DBConst.TABLE_TRANSACTION_TYPES, InsertValueQueries.INSERT_TRANSACTION_TYPES, connection);
+        insertDefaultValues(DBConst.TABLE_CATEGORIES, InsertValueQueries.INSERT_CATEGORIES, connection);
+        insertDefaultValues(DBConst.TABLE_ACCOUNTS, InsertValueQueries.INSERT_ACCOUNTS, connection);
 
     }
 
@@ -114,6 +114,5 @@ public class Database {
             System.out.println(tableName + " table does not exist.");
         }
     }
-
 
 }

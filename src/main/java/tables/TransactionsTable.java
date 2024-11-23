@@ -158,11 +158,16 @@ public class TransactionsTable implements TransactionsDAO {
 
     @Override
     public void deleteTransaction(int id) {
-
+        String deleteFromRecurringTransaction = "DELETE FROM recurring_transaction WHERE transaction_id = ?";
         String deleteFromTransaction = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " +
                 TRANSACTIONS_COLUMN_ID + " = ?";
 
         try {
+            PreparedStatement stmt1 = getDb().getConnection().prepareStatement(deleteFromRecurringTransaction);
+            stmt1.setInt(1, id);
+            stmt1.executeUpdate();
+            System.out.println("Deleted record from recurring_transaction");
+
             PreparedStatement stmt2 = getDb().getConnection().prepareStatement(deleteFromTransaction);
             stmt2.setInt(1, id);
             stmt2.executeUpdate();
@@ -179,18 +184,22 @@ public class TransactionsTable implements TransactionsDAO {
         ArrayList<DisplayTransaction> transactions = new ArrayList<DisplayTransaction>();
 
         String query = "SELECT " +
-                TABLE_TRANSACTIONS+"."+TRANSACTIONS_COLUMN_ID+" AS id, " +
-                TABLE_ACCOUNTS+"."+ACCOUNTS_COLUMN_ACCOUNT_TYPE+" AS account_name, " +
-                TABLE_TRANSACTIONS+"."+TRANSACTIONS_COLUMN_AMOUNT+", " +
-                TABLE_TRANSACTION_TYPES+"."+TRANSACTION_TYPES_COLUMN_TYPE+" AS transaction_type_name, " +
+                "transactions.transaction_id AS id, " +
+                "accounts.account_type AS account_name, " +
+                "transactions.amount, " +
+                "transaction_types.type AS transaction_type_name, " +
                 "categories.category_type AS category_type_name, " +
                 "transactions.transaction_date, " +
-                "transactions.description " +
+                "transactions.description, " +
+                "CASE WHEN recurring_transaction.interval_days IS NOT NULL THEN 'Yes' ELSE 'No' END AS recurring_status, " +
+                "COALESCE(recurring_transaction.interval_days, 'N/A') AS interval_days " +
                 "FROM transactions " +
                 "JOIN accounts ON transactions.account_id = accounts.account_id " +
                 "JOIN transaction_types ON transactions.transaction_type_id = transaction_types.transaction_type_id " +
                 "JOIN categories ON transactions.category_id = categories.category_id " +
+                "LEFT JOIN recurring_transaction ON transactions.transaction_id = recurring_transaction.transaction_id " +
                 "ORDER BY transactions.transaction_id ASC";
+
 
         try {
             Statement getTransactions = db.getConnection().createStatement();
@@ -205,7 +214,9 @@ public class TransactionsTable implements TransactionsDAO {
                         data.getString("category_type_name"),
                         data.getString("amount"),
                         data.getString("transaction_date"),
-                        data.getString("description")
+                        data.getString("description"),
+                        data.getString("recurring_status"),
+                        data.getString("interval_days")
                 ));
             }
         } catch (SQLException e) {
