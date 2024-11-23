@@ -67,7 +67,7 @@ public class Dashboard {
         //create tabs
         AddTransaction addTransaction = new AddTransaction();
         AllTransactions allTransactions = AllTransactions.getInstance();
-        UpdateTransaction updateTransaction = new UpdateTransaction();
+        UpdateTransaction updateTransaction = UpdateTransaction.getInstance();
         SummaryReport summaryReport = new SummaryReport();
 
         //add CurdForm to AddTransaction tab
@@ -78,9 +78,6 @@ public class Dashboard {
 
         addTransaction.setContent(createForm);
         TransactionsPOJO transactionsPOJO = new TransactionsPOJO();
-
-        UpdateForm updateForm = new UpdateForm("Update your details", transactionsPOJO);
-        updateTransaction.setContent(updateForm);
 
         TabsContainer.initialize(tabPane);
 
