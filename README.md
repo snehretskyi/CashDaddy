@@ -15,6 +15,9 @@ To launch the application, please select Amazon Coretto Java 20.
 
 On your first launch of the application, you will be asked to provide credentials to the database you wish to use. Please fill out all of the fields. Once the connection is established, the app will not ask you to login again, unless it cannot connect to the database.
 
+## Mockup
+insert mockup here
+
 ## Authors
 
 - [Riddhi Meet Savsani](https://github.com/RiddhiMeetSavsani)
