@@ -1,11 +1,8 @@
 package org.example.java_project_iii.forms;
 
 import javafx.collections.FXCollections;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import pojo.*;
 import tables.*;
@@ -237,20 +234,6 @@ public class UpdateForm extends Form {
         });
 
         // styling (˶◕‿◕˶)
-
-//        formGrid.setBorder(new Border(new BorderStroke( Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
-//        formGrid.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-//        formGrid.setPadding(new Insets(20));
-//        formGrid.setVgap(20);
-//        formGrid.setHgap(10);
-//        formGrid.setAlignment(Pos.CENTER);
-//        formNameLabel.setBorder(new Border(new BorderStroke(
-//                Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
-//                new BorderWidths(2, 2, 0, 2)
-//        )));
-//        formNameLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-//        formNameLabel.setPadding(new Insets(5));
-//        transactionTypeRadioBox.setSpacing(20);
 
         // Apply styles for the GridPane
         formGrid.getStyleClass().add("form-grid");

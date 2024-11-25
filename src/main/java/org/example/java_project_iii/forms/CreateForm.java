@@ -231,20 +231,25 @@ public class CreateForm extends Form {
         });
 
         // styling (˶◕‿◕˶)
-        formGrid.setBorder(new Border(new BorderStroke( Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
-        formGrid.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-        formGrid.setPadding(new Insets(20));
-        formGrid.setVgap(20);
-        formGrid.setHgap(10);
-        formGrid.setAlignment(Pos.CENTER);
-        formNameLabel.setBorder(new Border(new BorderStroke(
-                Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
-                new BorderWidths(2, 2, 0, 2)
-        )));
-        formNameLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-        formNameLabel.setPadding(new Insets(5));
-        transactionTypeRadioBox.setSpacing(20);
+        formGrid.getStyleClass().add("form-grid");
 
+        // Apply styles for the form name label
+        formNameLabel.getStyleClass().add("form-name-label");
+        dateLabel.getStyleClass().add("form-label");
+        amountLabel.getStyleClass().add("form-label");
+        categoryLabel.getStyleClass().add("form-label");
+        recurringLabel.getStyleClass().add("form-label");
+        accountLabel.getStyleClass().add("form-label");
+        transactionTypeLabel.getStyleClass().add("form-label");
+        descriptionLabel.getStyleClass().add("form-label");
+        confirmButton.getStyleClass().add("confirm-button");
+        cancelButton.getStyleClass().add("clear-button");
+
+        // Apply styles for the transaction type radio box
+        transactionTypeRadioBox.getStyleClass().add("transaction-type-radio-box");
+
+        // Load the CSS file
+        formGrid.getStylesheets().add(getClass().getClassLoader().getResource("css/updateForm.css").toExternalForm());
 
         this.getChildren().addAll(formNameLabel, formGrid, getErrorText());
     }
