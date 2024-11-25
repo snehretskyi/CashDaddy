@@ -172,7 +172,6 @@ public class UpdateForm extends Form {
                     animateErrorText(getErrorText());
                 } else {
                     int selectedTransactionType = ((Transaction_typePOJO) transactionTypeGroup.getSelectedToggle().getUserData()).getId();
-                    System.out.println(selectedTransactionType);
                     TransactionsPOJO transaction = new TransactionsPOJO(transactionsPOJO.getId(),
                             accountComboBox.getSelectionModel().getSelectedItem().getId(),
                             Double.parseDouble(amountField.getText()),

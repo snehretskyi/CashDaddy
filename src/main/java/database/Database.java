@@ -46,8 +46,8 @@ public class Database {
         insertDefaultValues(DBConst.TABLE_CATEGORIES, InsertValueQueries.INSERT_CATEGORIES, connection);
         insertDefaultValues(DBConst.TABLE_ACCOUNTS, InsertValueQueries.INSERT_ACCOUNTS, connection);
 
-//        insertDefaultValuesForTransactions(DBConst.TABLE_TRANSACTIONS, InsertValueQueries.INSERT_TRANSACTIONS, connection);
-//        insertDefaultValuesForTransactions(DBConst.TABLE_RECURRING_TRANSACTION, InsertValueQueries.INSERT_RECURRING_TRANSACTIONS, connection);
+        insertDefaultValuesForTransactions(DBConst.TABLE_TRANSACTIONS, InsertValueQueries.INSERT_TRANSACTIONS, connection);
+        insertDefaultValuesForTransactions(DBConst.TABLE_RECURRING_TRANSACTION, InsertValueQueries.INSERT_RECURRING_TRANSACTIONS, connection);
 
 
     }
