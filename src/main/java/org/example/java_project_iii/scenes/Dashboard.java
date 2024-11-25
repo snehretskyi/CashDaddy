@@ -2,10 +2,7 @@ package org.example.java_project_iii.scenes;
 
 import javafx.geometry.Side;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -25,12 +22,38 @@ public class Dashboard {
 
     private Scene dashboard;
     private static Dashboard dashboardInstance;
+    private static TabPane tabPane = new TabPane();
+
+    private static Tab allTransactions;
+
+    static {
+        try {
+            allTransactions = AllTransactions.getInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     // default values for width and height
     private int width = 1280;
     private int height = 720;
 
     // getters and setters
+    public static Tab getAllTransactions() {
+        return allTransactions;
+    }
+
+    public static void setAllTransactions(Tab allTransactions) {
+        Dashboard.allTransactions = allTransactions;
+    }
+
+    public static TabPane getTabPane() {
+        return tabPane;
+    }
+
+    public static void setTabPane(TabPane tabPane) {
+        Dashboard.tabPane = tabPane;
+    }
     public Scene getDashboardScene() {
         return dashboard;
     }
@@ -62,56 +85,19 @@ public class Dashboard {
 
         // Create a TabPane
 
-        TabPane tabPane = new TabPane();
-
         //create tabs
         AddTransaction addTransaction = new AddTransaction();
-        AllTransactions allTransactions = AllTransactions.getInstance();
         UpdateTransaction updateTransaction = UpdateTransaction.getInstance();
         SummaryReport summaryReport = new SummaryReport();
 
         //add CurdForm to AddTransaction tab
         CreateForm createForm = new CreateForm("Add Transaction");
-        // set tab to redirect to
-        createForm.setTabPane(tabPane);
-        createForm.setDisplayTab(allTransactions);
 
         addTransaction.setContent(createForm);
         TransactionsPOJO transactionsPOJO = new TransactionsPOJO();
 
         UpdateForm updateForm = new UpdateForm("Update transaction details", transactionsPOJO);
         updateTransaction.setContent(updateForm);
-
-        //TabsContainer.initialize(tabPane);
-
-// --------------------------------------------------------------------------------------------------
-
-        // UNCOMMENT AND INSERT THE ID TO TEST
-//
-//        VBox updateItem = new VBox();
-//        Button buttonTest = new Button("Test update form");
-//        buttonTest.setOnAction((event) -> {
-//            TransactionsTable testTransactionsTable = null;
-//            try {
-//                testTransactionsTable = new TransactionsTable();
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//            TransactionsPOJO testTransaction = testTransactionsTable.getTransaction(16);
-//            UpdateForm updateForm = null;
-//            try {
-//                updateForm = new UpdateForm("Update Transaction", testTransaction);
-//                updateItem.getChildren().add(updateForm);
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//
-//        });
-//        updateItem.getChildren().add(buttonTest);
-//        updateTransaction.setContent(updateItem);
-
- //-----------------------------------------------------------------------------------------------
-
 
         // Add tabs to the TabPane
 

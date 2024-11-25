@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import org.example.java_project_iii.forms.UpdateForm;
+import org.example.java_project_iii.scenes.Dashboard;
 import pojo.DisplayTransaction;
 import pojo.TransactionsPOJO;
 import tables.TransactionsTable;
@@ -161,6 +162,7 @@ public class AllTransactions extends Tab {
                         UpdateTransaction updateTransaction = UpdateTransaction.getInstance();
                         // Create a new UpdateForm
                         UpdateForm updateForm = new UpdateForm("Update transaction details", transactionsPOJO);
+
                         updateTransaction.setContent(updateForm);
 
                         // Add the new tab to the tab pane and activate it

@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import org.example.java_project_iii.scenes.Dashboard;
 import pojo.*;
 import tables.*;
 import tabs.AllTransactions;
@@ -22,6 +23,34 @@ import java.util.ArrayList;
  */
 public class UpdateForm extends Form {
     private String formName;
+
+    private Tab displayTab = Dashboard.getAllTransactions();
+
+    private TabPane tabPane = Dashboard.getTabPane();
+
+    public TabPane getTabPane() {
+        return tabPane;
+    }
+
+    public void setTabPane(TabPane tabPane) {
+        this.tabPane = tabPane;
+    }
+
+    public Tab getDisplayTab() {
+        return displayTab;
+    }
+
+    public void setDisplayTab(Tab displayTab) {
+        this.displayTab = displayTab;
+    }
+
+    public String getFormName() {
+        return formName;
+    }
+
+    public void setFormName(String formName) {
+        this.formName = formName;
+    }
 
     public int find(ArrayList<?> arrayList, int id){
         ArrayList<DatabaseItemPojo> searchList = (ArrayList<DatabaseItemPojo>) ((ArrayList<?>) arrayList);
@@ -192,6 +221,13 @@ public class UpdateForm extends Form {
                     } else if (recurringCheckBox.isSelected() && recurringTransaction != null) {
                         recurringTransactionsTable.updateRecurringTransaction(recurringTransaction);
                     }
+
+                    // clears error text
+                    getErrorText().setText("");
+
+                    tabPane.getSelectionModel().select(displayTab);
+
+
                     AllTransactions.getInstance().refreshTable();
                 }
 
