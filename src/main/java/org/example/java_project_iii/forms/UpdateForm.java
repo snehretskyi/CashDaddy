@@ -80,8 +80,8 @@ public class UpdateForm extends Form {
         Label categoryLabel = new Label("Category:");
         ComboBox<CategoriesPOJO> categoryBox = new ComboBox<>();
         categoryBox.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
-        categoryBox.getSelectionModel().select(find(allCategories, transactionsPOJO.getId()));
-
+        categoryBox.getSelectionModel().select(find(allCategories, transactionsPOJO.getTransaction_category_id()));
+        System.out.println(transactionsPOJO.getId());
 
         Label recurringLabel = new Label("Recurring?");
         CheckBox recurringCheckBox = new CheckBox();
@@ -107,7 +107,7 @@ public class UpdateForm extends Form {
         Label accountLabel = new Label("Account:");
         ComboBox<AccountPOJO> accountComboBox = new ComboBox<>();
         accountComboBox.setItems(FXCollections.observableArrayList(allAccounts));
-        accountComboBox.getSelectionModel().select(find(allAccounts, transactionsPOJO.getId()));
+        accountComboBox.getSelectionModel().select(find(allAccounts, transactionsPOJO.getTransaction_account_id()));
 
         Label transactionTypeLabel = new Label("Transaction Type:");
 
