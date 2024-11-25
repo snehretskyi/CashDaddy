@@ -74,7 +74,7 @@ public class AllTransactions extends Tab {
          */
 
         TableColumn<DisplayTransaction, String> column4 =
-                new TableColumn<>("Transction Date");
+                new TableColumn<>("Transaction Date");
 
         column4.setCellValueFactory(
                 e-> new SimpleStringProperty(e.getValue().getDate()));
@@ -84,7 +84,7 @@ public class AllTransactions extends Tab {
          */
 
         TableColumn<DisplayTransaction, String> column5 =
-                new TableColumn<>("Transction Description");
+                new TableColumn<>("Transaction Description");
 
         column5.setCellValueFactory(
                 e-> new SimpleStringProperty(e.getValue().getDescription()));
