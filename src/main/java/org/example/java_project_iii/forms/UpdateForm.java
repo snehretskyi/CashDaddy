@@ -8,6 +8,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import pojo.*;
 import tables.*;
+import tabs.AllTransactions;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -171,6 +172,7 @@ public class UpdateForm extends Form {
                     animateErrorText(getErrorText());
                 } else {
                     int selectedTransactionType = ((Transaction_typePOJO) transactionTypeGroup.getSelectedToggle().getUserData()).getId();
+                    System.out.println(selectedTransactionType);
                     TransactionsPOJO transaction = new TransactionsPOJO(transactionsPOJO.getId(),
                             accountComboBox.getSelectionModel().getSelectedItem().getId(),
                             Double.parseDouble(amountField.getText()),
@@ -191,6 +193,7 @@ public class UpdateForm extends Form {
                     } else if (recurringCheckBox.isSelected() && recurringTransaction != null) {
                         recurringTransactionsTable.updateRecurringTransaction(recurringTransaction);
                     }
+                    AllTransactions.getInstance().refreshTable();
                 }
 
             } catch (DateTimeParseException e) {

@@ -135,8 +135,9 @@ public class TransactionsTable implements TransactionsDAO {
                 TRANSACTIONS_COLUMN_ACCOUNT_ID + " = " + transactions.getTransaction_account_id() + "," +
                 TRANSACTIONS_COLUMN_AMOUNT + " = " + transactions.getAmount() + "," +
                 TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID + " = " + transactions.getTransaction_type_id() + "," +
-                TRANSACTION_TYPES_COLUMN_ID + " = " + transactions.getTransaction_category_id() + "," +
-                TRANSACTIONS_COLUMN_DESCRIPTION + " = '" + transactions.getTransaction_description() + "'" +
+                TRANSACTIONS_COLUMN_CATEGORY_ID + " = " + transactions.getTransaction_category_id() + "," +
+                TRANSACTIONS_COLUMN_DESCRIPTION + " = '" + transactions.getTransaction_description() + "'" + "," +
+                TRANSACTIONS_COLUMN_TRANSACTION_DATE + " = '" + transactions.getTransaction_date() + "'" +
                 " WHERE " + TRANSACTIONS_COLUMN_ID + " = " + transactions.getId();
         System.out.println(query);
         try {
