@@ -4,6 +4,7 @@ package database;
 import java.sql.*;
 
 import static database.Const.*;
+import static database.DBHelper.*;
 
 /**
  * This class is using the Singleton Design Pattern so that the entire application shares one connection
@@ -22,15 +23,15 @@ public class Database {
 
     //private constructor
     private Database() throws Exception {
-        try{
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager
                     .getConnection("jdbc:mysql://" + DB_HOST + "/" + DB_NAME +
-                            "?serverTimeZone=UTC",
+                                    "?serverTimeZone=UTC",
                             DB_USER,
                             DB_PASS);
             System.out.println("Created Connection!");
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new Exception("Couldn't connect!");
         }
 
@@ -39,8 +40,15 @@ public class Database {
         createTable(DBConst.TABLE_CATEGORIES, DBConst.CREATE_TABLE_CATEGORIES, connection);
         createTable(DBConst.TABLE_BUDGETS, DBConst.CREATE_TABLE_BUDGETS, connection);
         createTable(DBConst.TABLE_TRANSACTIONS, DBConst.CREATE_TABLE_TRANSACTIONS, connection);
-        createTable(DBConst.TABLE_TRANSACTION_CATEGORY, DBConst.CREATE_TABLE_TRANSACTION_CATEGORY, connection);
         createTable(DBConst.TABLE_RECURRING_TRANSACTION, DBConst.CREATE_TABLE_RECURRING_TRANSACTION, connection);
+
+        insertDefaultValues(DBConst.TABLE_TRANSACTION_TYPES, InsertValueQueries.INSERT_TRANSACTION_TYPES, connection);
+        insertDefaultValues(DBConst.TABLE_CATEGORIES, InsertValueQueries.INSERT_CATEGORIES, connection);
+        insertDefaultValues(DBConst.TABLE_ACCOUNTS, InsertValueQueries.INSERT_ACCOUNTS, connection);
+
+        insertDefaultValuesForTransactions(DBConst.TABLE_TRANSACTIONS, InsertValueQueries.INSERT_TRANSACTIONS, connection);
+
+
     }
 
     public static Database getInstance() throws Exception {
@@ -54,18 +62,6 @@ public class Database {
         return connection;
     }
 
-    public void createTable(String tableName, String tableQuery, Connection connection) throws SQLException {
-        Statement createTable;
-        DatabaseMetaData md = connection.getMetaData();
-        ResultSet resultSet = md.getTables(DB_NAME, null, tableName, null);
-        if(resultSet.next()){
-            System.out.println(tableName + " table already exists");
-        }
-        else{
-            createTable = connection.createStatement();
-            createTable.execute(tableQuery);
-            System.out.println("The " + tableName + " table has been created");
-        }
-    }
+
 
 }

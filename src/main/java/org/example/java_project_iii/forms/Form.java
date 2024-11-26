@@ -1,11 +1,15 @@
 package org.example.java_project_iii.forms;
 
 import javafx.animation.TranslateTransition;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 /***
@@ -31,6 +35,9 @@ public abstract class Form extends VBox {
     public Form() {
         getErrorText().setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
         getErrorText().setFill(Color.RED);
+        getErrorText().setTextAlignment(TextAlignment.CENTER);
+        this.setAlignment(Pos.CENTER);
+        VBox.setMargin(getErrorText(), new Insets(0, 0, 10, 0));
     }
 
     /**

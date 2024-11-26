@@ -10,9 +10,12 @@ public class DisplayTransaction {
     private int id;
     private String account_name;
     private String type;
-    private String amount;
+    private int amount;
     private String date;
+    private String category;
     private String description;
+    private String recurringStatus;
+    private String intervalDays;
 
     /**
      * Constructs a DisplayTransaction with specified values.
@@ -24,13 +27,48 @@ public class DisplayTransaction {
      * @param description additional details about the transaction
      */
 
-    public DisplayTransaction(int id, String account_name, String type, String amount, String date, String description) {
+    public DisplayTransaction(int id, String account_name, String type, String category, int amount, String date, String description, String recurringStatus, String intervalDays ) {
         this.id = id;
         this.account_name = account_name;
         this.type = type;
+        this.category = category;
         this.amount = amount;
         this.date = date;
         this.description = description;
+        this.recurringStatus= recurringStatus;
+        this.intervalDays = intervalDays;
+    }
+
+    public String getRecurringStatus() {
+        return recurringStatus;
+    }
+
+    public void setRecurringStatus(String recurringStatus) {
+        this.recurringStatus = recurringStatus;
+    }
+
+    public String getIntervalDays() {
+        return intervalDays;
+    }
+
+    public void setIntervalDays(String intervalDays) {
+        this.intervalDays = intervalDays;
+    }
+
+    /**
+     * Gets the category associated with transaction
+     * @return the category
+     */
+    public String getCategory() {
+        return category;
+    }
+
+    /**
+     * Gets the category associated with transaction
+     * @param category set to the transaction
+     */
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     /**
@@ -85,7 +123,7 @@ public class DisplayTransaction {
      * Gets the transaction amount
      * @return the transaction amount
      */
-    public String getAmount() {
+    public int getAmount() {
         return amount;
     }
 
@@ -93,7 +131,7 @@ public class DisplayTransaction {
      * Sets the transaction amount
      * @param amount the transaction amount to set
      */
-    public void setAmount(String amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 

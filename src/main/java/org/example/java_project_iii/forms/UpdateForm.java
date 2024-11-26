@@ -2,12 +2,14 @@ package org.example.java_project_iii.forms;
 
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import org.example.java_project_iii.scenes.Dashboard;
 import pojo.*;
 import tables.*;
+import tabs.AllTransactions;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -20,7 +22,25 @@ import java.util.ArrayList;
  * @author Stan
  */
 public class UpdateForm extends Form {
-    private String formName;
+    private Tab displayTab = Dashboard.getAllTransactions();
+    private TabPane tabPane = Dashboard.getTabPane();
+
+    public TabPane getTabPane() {
+        return tabPane;
+    }
+
+    public void setTabPane(TabPane tabPane) {
+        this.tabPane = tabPane;
+    }
+
+    public Tab getDisplayTab() {
+        return displayTab;
+    }
+
+    public void setDisplayTab(Tab displayTab) {
+        this.displayTab = displayTab;
+    }
+
 
     public int find(ArrayList<?> arrayList, int id){
         ArrayList<DatabaseItemPojo> searchList = (ArrayList<DatabaseItemPojo>) ((ArrayList<?>) arrayList);
@@ -34,64 +54,73 @@ public class UpdateForm extends Form {
 
     /**
      * Constructor
-     * @param formName name of the form, e.g. Update
      */
-    public UpdateForm(String formName, TransactionsPOJO transactionsPOJO) throws Exception {
+    public UpdateForm(TransactionsPOJO transactionsPOJO) throws Exception {
         super();
-
-        this.formName = formName;
-        System.out.println(transactionsPOJO);
 
         CategoriesTable categoriesTable = CategoriesTable.getInstance();
         BudgetTable budgetTable = BudgetTable.getInstance();
         AccountsTable accountsTable = AccountsTable.getInstance();
         Transaction_typeTable transactionTypeTable = Transaction_typeTable.getInstance();
         TransactionsTable transactionsTable = TransactionsTable.getInstance();
-        Transaction_categoryTable transactionCategoryTable = Transaction_categoryTable.getInstance();
         ArrayList<CategoriesPOJO> allCategories = categoriesTable.getAllCategories();
-        ArrayList<Transaction_categoryPOJO> allTransactionCategories = transactionCategoryTable.getAllTransaction_categories();
         ArrayList<BudgetPOJO> allBudgets = budgetTable.getAllBudgets();
         ArrayList<AccountPOJO> allAccounts = accountsTable.getAllAccounts();
         ArrayList<Transaction_typePOJO> allTransactionTypes = transactionTypeTable.getAllTransaction_types();
-        ArrayList<Integer> allAssociatedCategories = transactionCategoryTable.getAssociatedCategories(transactionsPOJO.getId());
+        RecurringTransactionTable recurringTransactionsTable = RecurringTransactionTable.getInstance();
+        // try to see if it's recurring
+        RecurringTransactionPOJO recurringTransaction = recurringTransactionsTable.getByTransactionId(transactionsPOJO.getId());
 
         // creating nodes
         GridPane formGrid = new GridPane();
 
-        Label formNameLabel = new Label(this.formName);
-
         Label dateLabel = new Label("Date:");
-        DatePicker datePicker = new DatePicker(transactionsPOJO.getTransaction_date().toLocalDate());
+        //DatePicker datePicker = new DatePicker(transactionsPOJO.getTransaction_date().toLocalDate());
+
+        DatePicker datePicker = new DatePicker(
+                transactionsPOJO.getTransaction_date() != null ? transactionsPOJO.getTransaction_date().toLocalDate() : null
+        );
+
 
         // unfortunately I had to turn off text input for date
         // exception handling doesn't work as expected if user inputs invalid date (・へ・)
         datePicker.setEditable(false);
-
 
         Label amountLabel = new Label("Amount:");
         TextField amountField = new TextField();
         amountField.setText(String.valueOf(transactionsPOJO.getAmount()));
 
         Label categoryLabel = new Label("Category:");
-        ListView<CategoriesPOJO> categoryListView = new ListView<>();
-        categoryListView.setItems(FXCollections.observableArrayList(allCategories));
-        categoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        allAssociatedCategories.forEach((Integer i) -> {
-            categoryListView.getSelectionModel().select(i);
+        ComboBox<CategoriesPOJO> categoryBox = new ComboBox<>();
+        categoryBox.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
+        categoryBox.getSelectionModel().select(find(allCategories, transactionsPOJO.getTransaction_category_id()));
+        System.out.println(transactionsPOJO.getId());
+
+        Label recurringLabel = new Label("Recurring?");
+        CheckBox recurringCheckBox = new CheckBox();
+
+        VBox recurringIntervalBox = new VBox();
+        Label recurringIntervalLabel = new Label("Interval (in days)");
+        Spinner<Integer> recurringIntervalSpinner = new Spinner<>(0, 100, 1);
+        recurringIntervalBox.getChildren().addAll(recurringIntervalLabel, recurringIntervalSpinner);
+        // hide the box unless it is selected
+        recurringIntervalBox.setVisible(false);
+
+        // if checkbox is selected, add ability to enter interval
+        recurringCheckBox.setOnAction((event) -> {
+            recurringIntervalBox.setVisible(recurringCheckBox.isSelected());
         });
 
-
-        Label budgetLabel = new Label("Budget:");
-        ComboBox<BudgetPOJO> budgetComboBox = new ComboBox<>();
-        budgetComboBox.setItems(FXCollections.observableArrayList(allBudgets));
-        System.out.println(find(allBudgets, transactionsPOJO.getId()));
-        budgetComboBox.getSelectionModel().select(find(allBudgets, transactionsPOJO.getId()));
-
+        if (recurringTransaction != null) {
+            recurringCheckBox.setSelected(true);
+            recurringIntervalBox.setVisible(true);
+            recurringIntervalSpinner.getValueFactory().setValue(recurringTransaction.getIntervalDays());
+        }
 
         Label accountLabel = new Label("Account:");
         ComboBox<AccountPOJO> accountComboBox = new ComboBox<>();
         accountComboBox.setItems(FXCollections.observableArrayList(allAccounts));
-        accountComboBox.getSelectionModel().select(find(allAccounts, transactionsPOJO.getId()));
+        accountComboBox.getSelectionModel().select(find(allAccounts, transactionsPOJO.getTransaction_account_id()));
 
         Label transactionTypeLabel = new Label("Transaction Type:");
 
@@ -109,42 +138,54 @@ public class UpdateForm extends Form {
 
         transactionTypeGroup.selectToggle((Toggle) transactionTypeRadioBox.getChildren().get(find(allTransactionTypes, transactionsPOJO.getTransaction_type_id())));
 
-        Label descriptionLabel = new Label("Description:");
-        TextField descriptionField = new TextField();
-        descriptionField.setText(transactionsPOJO.getTransaction_description());
+        Label descriptionLabel = new Label("Description (up to 255 characters):");
+        TextArea descriptionArea = new TextArea();
+        descriptionArea.setPrefRowCount(3);
+        descriptionArea.setText(transactionsPOJO.getTransaction_description());
 
         Button confirmButton = new Button("Confirm");
-        Button cancelButton = new Button("Cancel");
+        Button clearButton = new Button("Clear");
+
+        if(transactionsPOJO.getAmount()==0){
+            getErrorText().setText("Please Select Transaction To Update");
+                confirmButton.setDisable(true);
+        }
 
         formGrid.add(dateLabel, 0, 1);
         formGrid.add(datePicker, 1, 1);
         formGrid.add(amountLabel, 0, 2);
         formGrid.add(amountField, 1, 2);
         formGrid.add(categoryLabel, 0, 3);
-        formGrid.add(categoryListView, 1, 3);
-        formGrid.add(budgetLabel, 0, 4);
-        formGrid.add(budgetComboBox, 1, 4);
-        formGrid.add(accountLabel, 0, 5);
-        formGrid.add(accountComboBox, 1, 5);
-        formGrid.add(transactionTypeLabel, 0, 6);
-        formGrid.add(transactionTypeRadioBox, 0, 7);
-        formGrid.add(descriptionLabel, 0, 8);
-        formGrid.add(descriptionField, 1, 8);
+        formGrid.add(categoryBox, 1, 3);
+        formGrid.add(recurringLabel, 0, 4);
+        formGrid.add(recurringCheckBox, 1, 4);
+        formGrid.add(recurringIntervalBox, 1, 5);
+        formGrid.add(accountLabel, 0, 6);
+        formGrid.add(accountComboBox, 1, 6);
+        formGrid.add(transactionTypeLabel, 0, 7);
+        formGrid.add(transactionTypeRadioBox, 1, 7);
+        formGrid.add(descriptionLabel, 0, 9);
+        formGrid.add(descriptionArea, 1, 9);
 
-        formGrid.add(confirmButton, 4, 9);
-        formGrid.add(cancelButton, 5, 9);
-
+        formGrid.add(confirmButton, 4, 10);
+        formGrid.add(clearButton, 5,10);
         // logic for buttons
         confirmButton.setOnAction((event) -> {
             try {
                 // refuse to submit if fields are empty
                 if (amountField.getText().isEmpty()
-                        || categoryListView.getSelectionModel().getSelectedItem() == null
-                        || budgetComboBox.getValue() == null || accountComboBox.getValue() == null
+                        || categoryBox.getSelectionModel().getSelectedItem() == null
+                        || accountComboBox.getValue() == null
                         ||  transactionTypeGroup.getSelectedToggle() == null
-                        || descriptionField.getText().isEmpty()) {
+                        || descriptionArea.getText().isEmpty()) {
                     getErrorText().setText("All fields are required!");
-                    System.out.println(accountComboBox.getSelectionModel().getSelectedItem().getId());
+                    animateErrorText(getErrorText());
+                } else if (descriptionArea.getText().length() > 255) {
+                    // check if the description is over 255 characters
+                    getErrorText().setText("Description is over 255 characters!");
+                    animateErrorText(getErrorText());
+                } else if (Double.parseDouble(amountField.getText()) > 99999999.99) {
+                    getErrorText().setText("We only support transactions with value up to $99,999,999.99");
                     animateErrorText(getErrorText());
                 } else {
                     int selectedTransactionType = ((Transaction_typePOJO) transactionTypeGroup.getSelectedToggle().getUserData()).getId();
@@ -152,21 +193,26 @@ public class UpdateForm extends Form {
                             accountComboBox.getSelectionModel().getSelectedItem().getId(),
                             Double.parseDouble(amountField.getText()),
                             selectedTransactionType,
+                            categoryBox.getSelectionModel().getSelectedItem().getId(),
                             Date.valueOf(datePicker.getValue()),
-                            descriptionField.getText());
+                            descriptionArea.getText());
                     transactionsTable.updateTransaction(transaction);
 
-                    ArrayList<CategoriesPOJO> selectedCategories = new ArrayList<>(categoryListView.getSelectionModel().getSelectedItems());
-                    ArrayList<Transaction_categoryPOJO> transaction_categoryPOJOArrayList = new ArrayList<>();
+                    // update recurring transaction depending on user selection
+                    if (recurringCheckBox.isSelected() && recurringTransaction == null) {
+                        RecurringTransactionPOJO recurringTransactionPOJO = new RecurringTransactionPOJO(0,
+                                transaction.getId(), recurringIntervalSpinner.getValue());
 
-                    System.out.println(transactionsPOJO.getId());
-                    selectedCategories.forEach((CategoriesPOJO category) -> {
-                        Transaction_categoryPOJO transactionCategoryJunction = new Transaction_categoryPOJO(transaction.getId(), category.getId());
-                        transaction_categoryPOJOArrayList.add(transactionCategoryJunction);
-                    });
+                        recurringTransactionsTable.addRecurringTransaction(recurringTransactionPOJO);
+                    } else if (!recurringCheckBox.isSelected() && recurringTransaction != null) {
+                        recurringTransactionsTable.deleteRecurringTransaction(recurringTransaction.getId());
+                    } else if (recurringCheckBox.isSelected() && recurringTransaction != null) {
+                        recurringTransactionsTable.updateRecurringTransaction(recurringTransaction);
+                    }
+                    getErrorText().setText("");
+                    tabPane.getSelectionModel().select(displayTab);
 
-                    transactionCategoryTable.updateTransactionCategory(transaction_categoryPOJOArrayList);
-
+                    AllTransactions.getInstance().refreshTable();
                 }
 
             } catch (DateTimeParseException e) {
@@ -183,17 +229,17 @@ public class UpdateForm extends Form {
             }
         });
 
-        cancelButton.setOnAction((event) -> {
+        clearButton.setOnAction((event) -> {
             try {
                 // clears all fields
                 getErrorText().setText("");
                 datePicker.setValue(LocalDate.now());
                 amountField.clear();
-                categoryListView.getSelectionModel().clearSelection();
-                budgetComboBox.getSelectionModel().clearSelection();
+                categoryBox.getSelectionModel().clearSelection();
+                recurringCheckBox.setSelected(false);
                 accountComboBox.getSelectionModel().clearSelection();
                 transactionTypeGroup.getSelectedToggle().setSelected(false);
-                descriptionField.clear();
+                descriptionArea.clear();
             } catch (Exception e) {
                 // generic error handling
                 getErrorText().setText("Fatal Error!");
@@ -202,21 +248,32 @@ public class UpdateForm extends Form {
         });
 
         // styling (˶◕‿◕˶)
-        formGrid.setBorder(new Border(new BorderStroke( Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
-        formGrid.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-        formGrid.setPadding(new Insets(20));
-        formGrid.setVgap(20);
-        formGrid.setHgap(10);
-        formGrid.setAlignment(Pos.CENTER);
-        formNameLabel.setBorder(new Border(new BorderStroke(
-                Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
-                new BorderWidths(2, 2, 0, 2)
-        )));
-        formNameLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-        formNameLabel.setPadding(new Insets(5));
-        transactionTypeRadioBox.setSpacing(20);
+
+        // Apply styles for the GridPane
+        formGrid.getStyleClass().add("form-grid");
+
+        // Apply styles for the form name label
+        dateLabel.getStyleClass().add("form-label");
+        amountLabel.getStyleClass().add("form-label");
+        categoryLabel.getStyleClass().add("form-label");
+        recurringLabel.getStyleClass().add("form-label");
+        accountLabel.getStyleClass().add("form-label");
+        transactionTypeLabel.getStyleClass().add("form-label");
+        descriptionLabel.getStyleClass().add("form-label");
+
+        confirmButton.getStyleClass().add("confirm-button");
+        clearButton.getStyleClass().add("clear-button");
+
+        // Apply styles for the transaction type radio box
+        transactionTypeRadioBox.getStyleClass().add("transaction-type-radio-box");
+        VBox.setMargin(formGrid, new Insets(0, 25, 25, 25));
 
 
-        this.getChildren().addAll(formNameLabel, formGrid, getErrorText());
+        // Load the CSS file
+        formGrid.getStylesheets().add(this.getClass().getResource("/css/forms.css").toExternalForm());
+
+
+        this.getChildren().addAll( getErrorText(), formGrid);
     }
+
 }
