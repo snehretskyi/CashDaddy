@@ -43,22 +43,13 @@ public class CreateForm extends Form {
         this.displayTab = displayTab;
     }
 
-    public String getFormName() {
-        return formName;
-    }
-
-    public void setFormName(String formName) {
-        this.formName = formName;
-    }
-
     /**
      * Constructor
      * @param formName name of the form, e.g. Update
      */
-    public CreateForm(String formName) throws Exception {
+    public CreateForm(Label formName) throws Exception {
         super();
 
-        this.formName = formName;
 
         CategoriesTable categoriesTable = CategoriesTable.getInstance();
         AccountsTable accountsTable = AccountsTable.getInstance();
@@ -69,7 +60,7 @@ public class CreateForm extends Form {
         // creating nodes
         GridPane formGrid = new GridPane();
 
-        Label formNameLabel = new Label(this.formName);
+        Label formNameLabel = formName;
 
         Label dateLabel = new Label("Date:");
         DatePicker datePicker = new DatePicker(LocalDate.now());
@@ -126,6 +117,8 @@ public class CreateForm extends Form {
         Button confirmButton = new Button("Confirm");
         Button cancelButton = new Button("Cancel");
 
+        formGrid.add(formName, 0, 0);
+        GridPane.setColumnSpan(formName, 5);
         formGrid.add(dateLabel, 0, 1);
         formGrid.add(datePicker, 1, 1);
         formGrid.add(amountLabel, 0, 2);
@@ -251,6 +244,6 @@ public class CreateForm extends Form {
         // Load the CSS file
         formGrid.getStylesheets().add(getClass().getClassLoader().getResource("css/updateForm.css").toExternalForm());
 
-        this.getChildren().addAll(formNameLabel, formGrid, getErrorText());
+        this.getChildren().addAll( formGrid, getErrorText());
     }
 }

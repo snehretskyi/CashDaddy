@@ -10,6 +10,7 @@ public class UpdateTransaction extends Tab {
 
     private UpdateTransaction() {
         this.setText("Update Transaction");
+        this.getStyleClass().add("tab-add-transaction");
     }
 
     public static UpdateTransaction getInstance() {

@@ -2,10 +2,7 @@ package org.example.java_project_iii.scenes;
 
 import javafx.geometry.Side;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -70,8 +67,9 @@ public class Dashboard {
         UpdateTransaction updateTransaction = UpdateTransaction.getInstance();
         SummaryReport summaryReport = new SummaryReport();
 
+        Label transactionTablabel = new Label("Add Transaction");
         //add CurdForm to AddTransaction tab
-        CreateForm createForm = new CreateForm("Add Transaction");
+        CreateForm createForm = new CreateForm(transactionTablabel);
         // set tab to redirect to
         createForm.setTabPane(tabPane);
         createForm.setDisplayTab(allTransactions);
@@ -79,43 +77,11 @@ public class Dashboard {
         addTransaction.setContent(createForm);
         TransactionsPOJO transactionsPOJO = new TransactionsPOJO();
 
-        UpdateForm updateForm = new UpdateForm("Modify Your Transaction ", transactionsPOJO);
+        Label formTitleLabel = new Label("Modify Your Transaction");
+
+        UpdateForm updateForm = new UpdateForm("Modify Your Transaction", transactionsPOJO);
         updateTransaction.setContent(updateForm);
 
-        //TabsContainer.initialize(tabPane);
-
-// --------------------------------------------------------------------------------------------------
-
-        // UNCOMMENT AND INSERT THE ID TO TEST
-//
-//        VBox updateItem = new VBox();
-//        Button buttonTest = new Button("Test update form");
-//        buttonTest.setOnAction((event) -> {
-//            TransactionsTable testTransactionsTable = null;
-//            try {
-//                testTransactionsTable = new TransactionsTable();
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//            TransactionsPOJO testTransaction = testTransactionsTable.getTransaction(16);
-//            UpdateForm updateForm = null;
-//            try {
-//                updateForm = new UpdateForm("Update Transaction", testTransaction);
-//                updateItem.getChildren().add(updateForm);
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//
-//        });
-//        updateItem.getChildren().add(buttonTest);
-//        updateTransaction.setContent(updateItem);
-
- //-----------------------------------------------------------------------------------------------
-
-
-        // Add tabs to the TabPane
-
-        //addTransaction.getContent().setRotate(90);
         tabPane.getTabs().addAll(addTransaction,allTransactions, updateTransaction, summaryReport);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.setSide(Side.TOP);
@@ -124,6 +90,20 @@ public class Dashboard {
 
 
         dashboard = new Scene(root, width, height);
+
+        //CSS
+        tabPane.getStyleClass().add("dashboard-tab-pane");
+        formTitleLabel.getStyleClass().add("form-title-label");
+
+        //Assign styles to each tab
+        addTransaction.getStyleClass().add("tab-add-transaction");
+        allTransactions.getStyleClass().add("tab-all-transactions");
+        updateTransaction.getStyleClass().add("tab-update-transaction");
+        summaryReport.getStyleClass().add("tab-summary-report");
+
+
+        root.getStylesheets().add(getClass().getClassLoader().getResource("css/dashboard.css").toExternalForm());
+
     }
 
     /**
@@ -137,4 +117,6 @@ public class Dashboard {
 
         return dashboardInstance.getDashboardScene();
     }
+
+
 }

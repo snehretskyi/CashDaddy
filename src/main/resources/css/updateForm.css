@@ -1,12 +1,18 @@
 /* Grid styling for the form layout */
 .form-grid {
     -fx-border-color: black;
-    -fx-border-width: 2;
+    -fx-border-width: 0 3 3 3;
     -fx-background-color: #f5f5ef;
-    -fx-padding: 10 10 10 50;
-    -fx-vgap: 25;
+    -fx-padding: 60 10 10 60;
+    -fx-vgap: 20;
     -fx-hgap: 5;
     -fx-alignment: center;
+}
+.form-name-label{
+    -fx-alignment: center;
+     -fx-font-size: 24px;
+     -fx-text-fill: #5e5e3b;
+
 }
 
 /* Styling for form labels */

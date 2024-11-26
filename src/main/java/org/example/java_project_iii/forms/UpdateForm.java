@@ -137,7 +137,10 @@ public class UpdateForm extends Form {
 
         if(transactionsPOJO.getAmount()==0){
                formGrid.add(instructionText, 0, 0);
-               GridPane.setColumnSpan(instructionText, 2);
+               GridPane.setColumnSpan(instructionText, 5);
+        }else{
+            formGrid.add(formNameLabel, 0,0);
+            GridPane.setColumnSpan(formNameLabel, 5);
         }
 
         formGrid.add(dateLabel, 0, 1);
@@ -259,7 +262,7 @@ public class UpdateForm extends Form {
         formGrid.getStylesheets().add(this.getClass().getResource("/css/updateForm.css").toExternalForm());
 
 
-        this.getChildren().addAll(formNameLabel, formGrid, getErrorText());
+        this.getChildren().addAll( formGrid, getErrorText());
     }
 
 }
