@@ -229,7 +229,7 @@ public class CreateForm extends Form {
         confirmButton.getStyleClass().add("confirm-button");
         cancelButton.getStyleClass().add("clear-button");
 
-        VBox.setMargin(formGrid, new Insets(25));
+        VBox.setMargin(formGrid, new Insets(0, 25, 25, 25));
 
         // Apply styles for the transaction type radio box
         transactionTypeRadioBox.getStyleClass().add("transaction-type-radio-box");
@@ -237,6 +237,6 @@ public class CreateForm extends Form {
         // Load the CSS file
         formGrid.getStylesheets().add(getClass().getClassLoader().getResource("css/forms.css").toExternalForm());
 
-        this.getChildren().addAll(formGrid, getErrorText());
+        this.getChildren().addAll(getErrorText(),formGrid);
     }
 }

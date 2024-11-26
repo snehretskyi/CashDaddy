@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import org.example.java_project_iii.scenes.Dashboard;
 import pojo.*;
 import tables.*;
@@ -85,10 +86,6 @@ public class UpdateForm extends Form {
         // exception handling doesn't work as expected if user inputs invalid date (・へ・)
         datePicker.setEditable(false);
 
-
-        //When form has no amount
-        Text instructionText = new Text("Please select transaction to update");
-
         Label amountLabel = new Label("Amount:");
         TextField amountField = new TextField();
         amountField.setText(String.valueOf(transactionsPOJO.getAmount()));
@@ -150,8 +147,7 @@ public class UpdateForm extends Form {
         Button clearButton = new Button("Clear");
 
         if(transactionsPOJO.getAmount()==0){
-               formGrid.add(instructionText, 0, 0);
-               GridPane.setColumnSpan(instructionText, 5);
+            getErrorText().setText("Please Select Transaction To Update");
                 confirmButton.setDisable(true);
         }
 
@@ -264,21 +260,20 @@ public class UpdateForm extends Form {
         accountLabel.getStyleClass().add("form-label");
         transactionTypeLabel.getStyleClass().add("form-label");
         descriptionLabel.getStyleClass().add("form-label");
-        instructionText.getStyleClass().add("instruction-text");
 
         confirmButton.getStyleClass().add("confirm-button");
         clearButton.getStyleClass().add("clear-button");
 
         // Apply styles for the transaction type radio box
         transactionTypeRadioBox.getStyleClass().add("transaction-type-radio-box");
-        VBox.setMargin(formGrid, new Insets(25));
+        VBox.setMargin(formGrid, new Insets(0, 25, 25, 25));
 
 
         // Load the CSS file
         formGrid.getStylesheets().add(this.getClass().getResource("/css/forms.css").toExternalForm());
 
 
-        this.getChildren().addAll( formGrid, getErrorText());
+        this.getChildren().addAll( getErrorText(), formGrid);
     }
 
 }
