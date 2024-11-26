@@ -118,7 +118,6 @@ public class TransactionsTable implements TransactionsDAO {
             if (resultSet.next()) {
                 // get first result
                 int generatedId = resultSet.getInt(1);
-                System.out.println(generatedId);
                 transactions.setId(generatedId);
             }
             System.out.println("Inserted Record");
@@ -139,7 +138,6 @@ public class TransactionsTable implements TransactionsDAO {
                 TRANSACTIONS_COLUMN_DESCRIPTION + " = '" + transactions.getTransaction_description() + "'" + "," +
                 TRANSACTIONS_COLUMN_TRANSACTION_DATE + " = '" + transactions.getTransaction_date() + "'" +
                 " WHERE " + TRANSACTIONS_COLUMN_ID + " = " + transactions.getId();
-        System.out.println(query);
         try {
             Statement updateItem = getDb().getConnection().createStatement();
             System.out.println("Updated Transaction!");
