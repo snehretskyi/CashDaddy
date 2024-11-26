@@ -27,6 +27,18 @@ public class Dashboard {
     private int width = 1280;
     private int height = 720;
 
+    private static TabPane tabPane = new TabPane();
+
+    private static Tab allTransactions;
+
+    static {
+        try {
+            allTransactions = AllTransactions.getInstance();
+            } catch (Exception e) {
+            throw new RuntimeException(e);
+       }
+    }
+
     // getters and setters
     public Scene getDashboardScene() {
         return dashboard;
@@ -44,6 +56,24 @@ public class Dashboard {
         return height;
     }
 
+
+    public static TabPane getTabPane() {
+        return tabPane;
+    }
+
+    public static void setTabPane(TabPane tabPane) {
+        Dashboard.tabPane = tabPane;
+    }
+
+    public static Tab getAllTransactions() {
+        return allTransactions;
+    }
+
+    public static void setAllTransactions(Tab allTransactions) {
+        Dashboard.allTransactions = allTransactions;
+    }
+
+
     public void setHeight(int height) {
         this.height = height;
     }
@@ -57,9 +87,6 @@ public class Dashboard {
 
         BorderPane root = new BorderPane();
 
-        // Create a TabPane
-
-        TabPane tabPane = new TabPane();
 
         //create tabs
         AddTransaction addTransaction = new AddTransaction();

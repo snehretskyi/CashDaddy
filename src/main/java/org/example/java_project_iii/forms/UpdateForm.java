@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import org.example.java_project_iii.scenes.Dashboard;
 import pojo.*;
 import tables.*;
 import tabs.AllTransactions;
@@ -20,6 +21,25 @@ import java.util.ArrayList;
  * @author Stan
  */
 public class UpdateForm extends Form {
+    private Tab displayTab = Dashboard.getAllTransactions();
+    private TabPane tabPane = Dashboard.getTabPane();
+
+    public TabPane getTabPane() {
+        return tabPane;
+    }
+
+    public void setTabPane(TabPane tabPane) {
+        this.tabPane = tabPane;
+    }
+
+    public Tab getDisplayTab() {
+        return displayTab;
+    }
+
+    public void setDisplayTab(Tab displayTab) {
+        this.displayTab = displayTab;
+    }
+
 
     public int find(ArrayList<?> arrayList, int id){
         ArrayList<DatabaseItemPojo> searchList = (ArrayList<DatabaseItemPojo>) ((ArrayList<?>) arrayList);
@@ -195,6 +215,9 @@ public class UpdateForm extends Form {
                     } else if (recurringCheckBox.isSelected() && recurringTransaction != null) {
                         recurringTransactionsTable.updateRecurringTransaction(recurringTransaction);
                     }
+                    getErrorText().setText("");
+                    tabPane.getSelectionModel().select(displayTab);
+
                     AllTransactions.getInstance().refreshTable();
                 }
 
