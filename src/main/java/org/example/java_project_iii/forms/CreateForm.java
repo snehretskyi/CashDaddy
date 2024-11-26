@@ -234,10 +234,9 @@ public class CreateForm extends Form {
         transactionTypeRadioBox.getStyleClass().add("transaction-type-radio-box");
 
         // Load the CSS file
-        formGrid.getStylesheets().add(getClass().getClassLoader().getResource("css/style.css").toExternalForm());
+        formGrid.getStylesheets().add(getClass().getClassLoader().getResource("css/forms.css").toExternalForm());
 
         System.out.println(datePicker.getClassCssMetaData());
         this.getChildren().addAll(formGrid, getErrorText());
-
     }
 }

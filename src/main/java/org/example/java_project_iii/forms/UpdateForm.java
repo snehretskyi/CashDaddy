@@ -133,7 +133,7 @@ public class UpdateForm extends Form {
 
         if(transactionsPOJO.getAmount()==0){
                formGrid.add(instructionText, 0, 0);
-               GridPane.setColumnSpan(instructionText, 2);
+               GridPane.setColumnSpan(instructionText, 5);
         }
 
         formGrid.add(dateLabel, 0, 1);
@@ -251,7 +251,12 @@ public class UpdateForm extends Form {
         transactionTypeRadioBox.getStyleClass().add("transaction-type-radio-box");
         VBox.setMargin(formGrid, new Insets(25));
 
-        this.getChildren().addAll(formGrid, getErrorText());
+
+        // Load the CSS file
+        formGrid.getStylesheets().add(this.getClass().getResource("/css/forms.css").toExternalForm());
+
+
+        this.getChildren().addAll( formGrid, getErrorText());
     }
 
 }

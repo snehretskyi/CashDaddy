@@ -30,14 +30,14 @@
     -fx-padding: 10 20;
     -fx-font-weight: bold;
     -fx-text-fill: white;
-    -fx-background-color: #7DCE32;
+    -fx-background-color: #a0e51a;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
 }
 
 /* Hover effect for the confirm button */
 .confirm-button:hover {
-    -fx-background-color: #8d8d58;
+    -fx-background-color: #93ce31;
 }
 
 /* Styling for the clear button */
@@ -55,6 +55,7 @@
     -fx-background-color: #ff5252;
 }
 
+/* form controls styles */
 .combo-box {
     -fx-background-color: #F1F1F0;
     -fx-border-color: #949494;
@@ -103,11 +104,4 @@
 
 .spinner .increment-arrow-button:hover, .spinner .decrement-arrow-button:hover {
     -fx-background-color: #E2E2E2;
-}
-
-.tab-pane .tab {
-        -fx-background-color: #F1F1EE;
-        -fx-border-color: #949494;
-        -fx-border-radius: 2px, 2px, 2px, 2px;
-        outline: 0;
 }

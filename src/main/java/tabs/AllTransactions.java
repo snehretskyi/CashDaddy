@@ -1,10 +1,9 @@
 package tabs;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import org.example.java_project_iii.forms.UpdateForm;
 import pojo.DisplayTransaction;
 import pojo.TransactionsPOJO;
@@ -22,9 +21,11 @@ public class AllTransactions extends Tab {
     private AllTransactions() throws Exception {
 
         this.setText("Transactions");
+        this.getStyleClass().add("tab-add-transaction");
         TransactionsTable transactionsTable = TransactionsTable.getInstance();
 
         BorderPane borderPane = new BorderPane();
+        Text instructionText = new Text("Double click to modify any transaction");
 
         tableView = new TableView();
 
@@ -117,6 +118,7 @@ public class AllTransactions extends Tab {
         /**
          * Add tableView to the center of borderpane
          */
+        borderPane.setTop(instructionText);
         borderPane.setCenter(tableView);
 
         /**
@@ -164,7 +166,7 @@ public class AllTransactions extends Tab {
                         updateTransaction.setContent(updateForm);
 
                         // Add the new tab to the tab pane and activate it
-//                        TabsContainer.getInstance().addOrActivateTab(updateTransaction);
+                        // TabsContainer.getInstance().addOrActivateTab(updateTransaction);
 
                         getTabPane().getSelectionModel().select(updateTransaction);
 
@@ -176,6 +178,12 @@ public class AllTransactions extends Tab {
             return row;
         });
 
+        //Apply styles to nodes, load the stylesheet
+        tableView.getStyleClass().add("table-view");
+        instructionText.getStyleClass().add("instruction-text");
+        removeTransaction.getStyleClass().add("button");
+
+        borderPane.getStylesheets().add(this.getClass().getResource("/css/displayTransactions.css").toExternalForm());
 
     }
 

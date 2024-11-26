@@ -1,0 +1,124 @@
+/* General styling for the TableView */
+.table-view {
+    -fx-font-size: 15px;
+    -fx-font-family: "Helvetica";
+    -fx-background-color: #f6f6ef;
+    -fx-border-color: #8e8e50;
+    -fx-border-width: 2px;
+}
+.table-cell{
+      -fx-border-color: #8e8e50;
+      -fx-border-width: 0.5 0.2 0.5 0.2;
+}
+/* Row Styling */
+.table-row-cell {
+    -fx-background-color: #f5f5ef;
+    -fx-alignment: center;
+    -fx-text-fill: black;
+}
+
+/* Hover Effect for Row */
+.table-row-cell:hover {
+    -fx-background-color: #e3e3ce;
+    -fx-text-fill: black;
+}
+
+/* Styling for Selected Row */
+.table-row-cell:selected {
+    -fx-background-color: #d1d1ad;
+    -fx-text-fill: black !important;
+    -fx-focus-color: transparent !important;
+    -fx-faint-focus-color: transparent !important;
+}
+
+/* Styling for Focused Row */
+.table-row-cell:focused {
+    -fx-background-color: #e3e3ce;
+    -fx-text-fill: black !important;
+    -fx-focus-color: transparent !important;
+    -fx-faint-focus-color: transparent !important;
+}
+
+/* General styling for the TableView */
+.table-view {
+    -fx-font-size: 15px;
+    -fx-font-family: "Helvetica";
+    -fx-background-color: #f6f6ef;
+}
+
+/* Row Styling */
+.table-row-cell {
+    -fx-background-color: #f5f5ef;
+    -fx-alignment: center;
+    -fx-text-fill: black;
+}
+
+/* Hover Effect for Row */
+.table-row-cell:hover {
+    -fx-background-color: #e3e3ce;
+    -fx-text-fill: black;
+}
+
+/* Selected Table Row Styling */
+.table-row-cell:selected {
+    -fx-background-color: #d1d1ad;
+    -fx-text-fill: black !important;
+    -fx-border-color: #8e8e50;
+}
+
+/* Focused Table Row Styling */
+.table-row-cell:focused {
+    -fx-background-color: #e3e3ce;
+    -fx-text-fill: black !important;
+}
+
+/* General Styling for Table Column Header */
+.table-view .column-header {
+    -fx-background-color: #d1d1ad;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-border-color: #8e8e50;
+    -fx-border-width: 2px;
+    -fx-padding: 0;
+
+}
+
+/* Hover Effect for Column Header */
+.table-view .column-header:hover {
+    -fx-background-color: #d1d1ad;
+    -fx-text-fill: black;
+}
+
+/* Remove any default focus-related text color */
+.table-view .table-row-cell:selected .table-cell,
+.table-view .table-row-cell:focused .table-cell {
+    -fx-text-fill: black !important;
+}
+
+/* Reset Focused and Selected Row Styles */
+.table-view .table-row-cell:focused {
+    -fx-focus-color: transparent !important;
+    -fx-faint-focus-color: transparent !important;
+}
+.instruction-text{
+     -fx-padding: 100 2000 100 2000;
+     -fx-font-size: 25px;
+}
+
+/* Styling the Remove Button */
+.button {
+    -fx-padding: 10 20;
+        -fx-font-weight: bold;
+        -fx-text-fill: white;
+        -fx-background-color: #ff8a80;
+        -fx-border-radius: 5;
+        -fx-background-radius: 5;
+}
+
+/* Remove Button Hover Effect */
+.button:hover {
+    -fx-background-color: #ff5252;
+}
+
+
+

@@ -2,10 +2,7 @@ package org.example.java_project_iii.scenes;
 
 import javafx.geometry.Side;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -63,9 +60,6 @@ public class Dashboard {
         // Create a TabPane
 
         TabPane tabPane = new TabPane();
-        // Load the CSS file
-        tabPane.getStylesheets().add(this.getClass().getResource("/css/style.css").toExternalForm());
-
 
         //create tabs
         AddTransaction addTransaction = new AddTransaction();
@@ -73,8 +67,10 @@ public class Dashboard {
         UpdateTransaction updateTransaction = UpdateTransaction.getInstance();
         SummaryReport summaryReport = new SummaryReport();
 
+        Label transactionTablabel = new Label("Add Transaction");
         //add CurdForm to AddTransaction tab
         CreateForm createForm = new CreateForm();
+
         // set tab to redirect to
         createForm.setTabPane(tabPane);
         createForm.setDisplayTab(allTransactions);
@@ -88,6 +84,7 @@ public class Dashboard {
         // Add tabs to the TabPane
 
         //addTransaction.getContent().setRotate(90);
+
         tabPane.getTabs().addAll(addTransaction,allTransactions, updateTransaction, summaryReport);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.setSide(Side.TOP);
@@ -96,6 +93,19 @@ public class Dashboard {
 
 
         dashboard = new Scene(root, width, height);
+
+        //CSS
+        tabPane.getStyleClass().add("dashboard-tab-pane");
+
+        //Assign styles to each tab
+        addTransaction.getStyleClass().add("tab-add-transaction");
+        allTransactions.getStyleClass().add("tab-all-transactions");
+        updateTransaction.getStyleClass().add("tab-update-transaction");
+        summaryReport.getStyleClass().add("tab-summary-report");
+
+
+        root.getStylesheets().add(getClass().getClassLoader().getResource("css/dashboard.css").toExternalForm());
+
     }
 
     /**
@@ -109,4 +119,6 @@ public class Dashboard {
 
         return dashboardInstance.getDashboardScene();
     }
+
+
 }
