@@ -1,6 +1,7 @@
 package org.example.java_project_iii.forms;
 
 import javafx.animation.TranslateTransition;
+import javafx.geometry.Insets;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;

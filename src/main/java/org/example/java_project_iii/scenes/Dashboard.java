@@ -27,6 +27,18 @@ public class Dashboard {
     private int width = 1280;
     private int height = 720;
 
+    private static TabPane tabPane = new TabPane();
+
+    private static Tab allTransactions;
+
+    static {
+        try {
+            allTransactions = AllTransactions.getInstance();
+            } catch (Exception e) {
+            throw new RuntimeException(e);
+       }
+    }
+
     // getters and setters
     public Scene getDashboardScene() {
         return dashboard;
@@ -44,6 +56,24 @@ public class Dashboard {
         return height;
     }
 
+
+    public static TabPane getTabPane() {
+        return tabPane;
+    }
+
+    public static void setTabPane(TabPane tabPane) {
+        Dashboard.tabPane = tabPane;
+    }
+
+    public static Tab getAllTransactions() {
+        return allTransactions;
+    }
+
+    public static void setAllTransactions(Tab allTransactions) {
+        Dashboard.allTransactions = allTransactions;
+    }
+
+
     public void setHeight(int height) {
         this.height = height;
     }
@@ -57,9 +87,6 @@ public class Dashboard {
 
         BorderPane root = new BorderPane();
 
-        // Create a TabPane
-
-        TabPane tabPane = new TabPane();
 
         //create tabs
         AddTransaction addTransaction = new AddTransaction();
@@ -69,7 +96,8 @@ public class Dashboard {
 
         Label transactionTablabel = new Label("Add Transaction");
         //add CurdForm to AddTransaction tab
-        CreateForm createForm = new CreateForm(transactionTablabel);
+        CreateForm createForm = new CreateForm();
+
         // set tab to redirect to
         createForm.setTabPane(tabPane);
         createForm.setDisplayTab(allTransactions);
@@ -77,10 +105,12 @@ public class Dashboard {
         addTransaction.setContent(createForm);
         TransactionsPOJO transactionsPOJO = new TransactionsPOJO();
 
-        Label formTitleLabel = new Label("Modify Your Transaction");
-
-        UpdateForm updateForm = new UpdateForm("Modify Your Transaction", transactionsPOJO);
+        UpdateForm updateForm = new UpdateForm(transactionsPOJO);
         updateTransaction.setContent(updateForm);
+
+        // Add tabs to the TabPane
+
+        //addTransaction.getContent().setRotate(90);
 
         tabPane.getTabs().addAll(addTransaction,allTransactions, updateTransaction, summaryReport);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
@@ -93,7 +123,6 @@ public class Dashboard {
 
         //CSS
         tabPane.getStyleClass().add("dashboard-tab-pane");
-        formTitleLabel.getStyleClass().add("form-title-label");
 
         //Assign styles to each tab
         addTransaction.getStyleClass().add("tab-add-transaction");

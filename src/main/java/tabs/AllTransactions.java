@@ -1,5 +1,6 @@
 package tabs;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -44,11 +45,11 @@ public class AllTransactions extends Tab {
          * Column2 for displaying transaction amount
          */
 
-        TableColumn<DisplayTransaction, String> column2 =
+        TableColumn<DisplayTransaction, Integer> column2 =
                 new TableColumn<>("Transaction Amount");
 
         column2.setCellValueFactory(
-                e-> new SimpleStringProperty(e.getValue().getAmount()));
+                e-> new SimpleIntegerProperty(e.getValue().getAmount()).asObject());
 
         /**
          * Column3 for displaying transaction type
@@ -162,7 +163,7 @@ public class AllTransactions extends Tab {
                         TransactionsPOJO transactionsPOJO = TransactionsTable.getInstance().getTransactionById(selectedTransaction.getId());
                         UpdateTransaction updateTransaction = UpdateTransaction.getInstance();
                         // Create a new UpdateForm
-                        UpdateForm updateForm = new UpdateForm("Update transaction details", transactionsPOJO);
+                        UpdateForm updateForm = new UpdateForm(transactionsPOJO);
                         updateTransaction.setContent(updateForm);
 
                         // Add the new tab to the tab pane and activate it

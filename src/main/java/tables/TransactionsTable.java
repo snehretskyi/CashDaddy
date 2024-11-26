@@ -216,7 +216,7 @@ public class TransactionsTable implements TransactionsDAO {
                         data.getString("account_name"),
                         data.getString("transaction_type_name"),
                         data.getString("category_type_name"),
-                        data.getString("amount"),
+                        data.getInt("amount"),
                         data.getString("transaction_date"),
                         data.getString("description"),
                         data.getString("recurring_status"),

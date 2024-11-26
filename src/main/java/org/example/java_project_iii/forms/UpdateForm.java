@@ -1,9 +1,11 @@
 package org.example.java_project_iii.forms;
 
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import org.example.java_project_iii.scenes.Dashboard;
 import pojo.*;
 import tables.*;
 import tabs.AllTransactions;
@@ -19,7 +21,25 @@ import java.util.ArrayList;
  * @author Stan
  */
 public class UpdateForm extends Form {
-    private String formName;
+    private Tab displayTab = Dashboard.getAllTransactions();
+    private TabPane tabPane = Dashboard.getTabPane();
+
+    public TabPane getTabPane() {
+        return tabPane;
+    }
+
+    public void setTabPane(TabPane tabPane) {
+        this.tabPane = tabPane;
+    }
+
+    public Tab getDisplayTab() {
+        return displayTab;
+    }
+
+    public void setDisplayTab(Tab displayTab) {
+        this.displayTab = displayTab;
+    }
+
 
     public int find(ArrayList<?> arrayList, int id){
         ArrayList<DatabaseItemPojo> searchList = (ArrayList<DatabaseItemPojo>) ((ArrayList<?>) arrayList);
@@ -33,12 +53,10 @@ public class UpdateForm extends Form {
 
     /**
      * Constructor
-     * @param formName name of the form, e.g. Update
      */
-    public UpdateForm(String formName, TransactionsPOJO transactionsPOJO) throws Exception {
+    public UpdateForm(TransactionsPOJO transactionsPOJO) throws Exception {
         super();
 
-        this.formName = formName;
         System.out.println(transactionsPOJO);
 
         CategoriesTable categoriesTable = CategoriesTable.getInstance();
@@ -56,8 +74,6 @@ public class UpdateForm extends Form {
 
         // creating nodes
         GridPane formGrid = new GridPane();
-
-        Label formNameLabel = new Label(this.formName);
 
         Label dateLabel = new Label("Date:");
         //DatePicker datePicker = new DatePicker(transactionsPOJO.getTransaction_date().toLocalDate());
@@ -138,9 +154,7 @@ public class UpdateForm extends Form {
         if(transactionsPOJO.getAmount()==0){
                formGrid.add(instructionText, 0, 0);
                GridPane.setColumnSpan(instructionText, 5);
-        }else{
-            formGrid.add(formNameLabel, 0,0);
-            GridPane.setColumnSpan(formNameLabel, 5);
+                confirmButton.setDisable(true);
         }
 
         formGrid.add(dateLabel, 0, 1);
@@ -201,6 +215,9 @@ public class UpdateForm extends Form {
                     } else if (recurringCheckBox.isSelected() && recurringTransaction != null) {
                         recurringTransactionsTable.updateRecurringTransaction(recurringTransaction);
                     }
+                    getErrorText().setText("");
+                    tabPane.getSelectionModel().select(displayTab);
+
                     AllTransactions.getInstance().refreshTable();
                 }
 
@@ -242,7 +259,6 @@ public class UpdateForm extends Form {
         formGrid.getStyleClass().add("form-grid");
 
         // Apply styles for the form name label
-        formNameLabel.getStyleClass().add("form-name-label");
         dateLabel.getStyleClass().add("form-label");
         amountLabel.getStyleClass().add("form-label");
         categoryLabel.getStyleClass().add("form-label");
@@ -257,9 +273,11 @@ public class UpdateForm extends Form {
 
         // Apply styles for the transaction type radio box
         transactionTypeRadioBox.getStyleClass().add("transaction-type-radio-box");
+        VBox.setMargin(formGrid, new Insets(25));
+
 
         // Load the CSS file
-        formGrid.getStylesheets().add(this.getClass().getResource("/css/updateForm.css").toExternalForm());
+        formGrid.getStylesheets().add(this.getClass().getResource("/css/forms.css").toExternalForm());
 
 
         this.getChildren().addAll( formGrid, getErrorText());

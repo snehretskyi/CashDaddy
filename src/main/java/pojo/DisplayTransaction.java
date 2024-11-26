@@ -10,7 +10,7 @@ public class DisplayTransaction {
     private int id;
     private String account_name;
     private String type;
-    private String amount;
+    private int amount;
     private String date;
     private String category;
     private String description;
@@ -27,7 +27,7 @@ public class DisplayTransaction {
      * @param description additional details about the transaction
      */
 
-    public DisplayTransaction(int id, String account_name, String type, String category, String amount, String date, String description, String recurringStatus, String intervalDays ) {
+    public DisplayTransaction(int id, String account_name, String type, String category, int amount, String date, String description, String recurringStatus, String intervalDays ) {
         this.id = id;
         this.account_name = account_name;
         this.type = type;
@@ -123,7 +123,7 @@ public class DisplayTransaction {
      * Gets the transaction amount
      * @return the transaction amount
      */
-    public String getAmount() {
+    public int getAmount() {
         return amount;
     }
 
@@ -131,7 +131,7 @@ public class DisplayTransaction {
      * Sets the transaction amount
      * @param amount the transaction amount to set
      */
-    public void setAmount(String amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 
