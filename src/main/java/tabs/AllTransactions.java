@@ -1,13 +1,10 @@
 package tabs;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
+import org.example.java_project_iii.forms.UpdateForm;
 import pojo.DisplayTransaction;
 import pojo.TransactionsPOJO;
 import tables.TransactionsTable;
@@ -24,9 +21,11 @@ public class AllTransactions extends Tab {
     private AllTransactions() throws Exception {
 
         this.setText("Transactions");
+        this.getStyleClass().add("tab-add-transaction");
         TransactionsTable transactionsTable = TransactionsTable.getInstance();
 
         BorderPane borderPane = new BorderPane();
+        Text instructionText = new Text("Double click to modify any transaction");
 
         tableView = new TableView();
 
@@ -76,7 +75,7 @@ public class AllTransactions extends Tab {
          */
 
         TableColumn<DisplayTransaction, String> column4 =
-                new TableColumn<>("Transction Date");
+                new TableColumn<>("Transaction Date");
 
         column4.setCellValueFactory(
                 e-> new SimpleStringProperty(e.getValue().getDate()));
@@ -86,21 +85,40 @@ public class AllTransactions extends Tab {
          */
 
         TableColumn<DisplayTransaction, String> column5 =
-                new TableColumn<>("Transction Description");
+                new TableColumn<>("Transaction Description");
 
         column5.setCellValueFactory(
                 e-> new SimpleStringProperty(e.getValue().getDescription()));
 
         /**
+         * Column7 for displaying recurring transaction status
+         */
+
+        TableColumn<DisplayTransaction, String> column7 =
+                new TableColumn<>("Recurring Transaction");
+        column7.setCellValueFactory(
+                e -> new SimpleStringProperty(e.getValue().getRecurringStatus()));
+
+        /**
+         * Column8 for displaying recurring transaction days
+         */
+
+        TableColumn<DisplayTransaction, String> column8 =
+                new TableColumn<>("Interval Days");
+        column8.setCellValueFactory(
+                e -> new SimpleStringProperty(e.getValue().getIntervalDays()));
+
+        /**
          * added all columns to tableView
          */
 
-        tableView.getColumns().addAll(column1, column2, column3, column6, column4, column5);
+        tableView.getColumns().addAll(column1, column2, column3, column6, column4, column5, column7, column8);
         tableView.getItems().addAll(transactionsTable.getDetailedTransaction());
 
         /**
          * Add tableView to the center of borderpane
          */
+        borderPane.setTop(instructionText);
         borderPane.setCenter(tableView);
 
         /**
@@ -133,6 +151,40 @@ public class AllTransactions extends Tab {
         borderPane.setBottom(removeTransaction);
         this.setContent(borderPane);
 
+
+        tableView.setRowFactory(tv -> {
+            TableRow<DisplayTransaction> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    DisplayTransaction selectedTransaction = row.getItem();
+                    try {
+                        // Fetch the detailed TransactionsPOJO
+                        TransactionsPOJO transactionsPOJO = TransactionsTable.getInstance().getTransactionById(selectedTransaction.getId());
+                        UpdateTransaction updateTransaction = UpdateTransaction.getInstance();
+                        // Create a new UpdateForm
+                        UpdateForm updateForm = new UpdateForm("Update transaction details", transactionsPOJO);
+                        updateTransaction.setContent(updateForm);
+
+                        // Add the new tab to the tab pane and activate it
+                        // TabsContainer.getInstance().addOrActivateTab(updateTransaction);
+
+                        getTabPane().getSelectionModel().select(updateTransaction);
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            });
+            return row;
+        });
+
+        //Apply styles to nodes, load the stylesheet
+        tableView.getStyleClass().add("table-view");
+        instructionText.getStyleClass().add("instruction-text");
+        removeTransaction.getStyleClass().add("button");
+
+        borderPane.getStylesheets().add(this.getClass().getResource("/css/displayTransactions.css").toExternalForm());
+
     }
 
     /**
@@ -153,5 +205,6 @@ public class AllTransactions extends Tab {
         }
         return instance;
     }
+
 
 }

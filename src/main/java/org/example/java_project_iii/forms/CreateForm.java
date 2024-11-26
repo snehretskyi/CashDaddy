@@ -43,22 +43,13 @@ public class CreateForm extends Form {
         this.displayTab = displayTab;
     }
 
-    public String getFormName() {
-        return formName;
-    }
-
-    public void setFormName(String formName) {
-        this.formName = formName;
-    }
-
     /**
      * Constructor
      * @param formName name of the form, e.g. Update
      */
-    public CreateForm(String formName) throws Exception {
+    public CreateForm(Label formName) throws Exception {
         super();
 
-        this.formName = formName;
 
         CategoriesTable categoriesTable = CategoriesTable.getInstance();
         AccountsTable accountsTable = AccountsTable.getInstance();
@@ -69,7 +60,7 @@ public class CreateForm extends Form {
         // creating nodes
         GridPane formGrid = new GridPane();
 
-        Label formNameLabel = new Label(this.formName);
+        Label formNameLabel = formName;
 
         Label dateLabel = new Label("Date:");
         DatePicker datePicker = new DatePicker(LocalDate.now());
@@ -126,6 +117,8 @@ public class CreateForm extends Form {
         Button confirmButton = new Button("Confirm");
         Button cancelButton = new Button("Cancel");
 
+        formGrid.add(formName, 0, 0);
+        GridPane.setColumnSpan(formName, 5);
         formGrid.add(dateLabel, 0, 1);
         formGrid.add(datePicker, 1, 1);
         formGrid.add(amountLabel, 0, 2);
@@ -231,21 +224,26 @@ public class CreateForm extends Form {
         });
 
         // styling (˶◕‿◕˶)
-        formGrid.setBorder(new Border(new BorderStroke( Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
-        formGrid.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-        formGrid.setPadding(new Insets(20));
-        formGrid.setVgap(20);
-        formGrid.setHgap(10);
-        formGrid.setAlignment(Pos.CENTER);
-        formNameLabel.setBorder(new Border(new BorderStroke(
-                Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
-                new BorderWidths(2, 2, 0, 2)
-        )));
-        formNameLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-        formNameLabel.setPadding(new Insets(5));
-        transactionTypeRadioBox.setSpacing(20);
+        formGrid.getStyleClass().add("form-grid");
 
+        // Apply styles for the form name label
+        formNameLabel.getStyleClass().add("form-name-label");
+        dateLabel.getStyleClass().add("form-label");
+        amountLabel.getStyleClass().add("form-label");
+        categoryLabel.getStyleClass().add("form-label");
+        recurringLabel.getStyleClass().add("form-label");
+        accountLabel.getStyleClass().add("form-label");
+        transactionTypeLabel.getStyleClass().add("form-label");
+        descriptionLabel.getStyleClass().add("form-label");
+        confirmButton.getStyleClass().add("confirm-button");
+        cancelButton.getStyleClass().add("clear-button");
 
-        this.getChildren().addAll(formNameLabel, formGrid, getErrorText());
+        // Apply styles for the transaction type radio box
+        transactionTypeRadioBox.getStyleClass().add("transaction-type-radio-box");
+
+        // Load the CSS file
+        formGrid.getStylesheets().add(getClass().getClassLoader().getResource("css/updateForm.css").toExternalForm());
+
+        this.getChildren().addAll( formGrid, getErrorText());
     }
 }

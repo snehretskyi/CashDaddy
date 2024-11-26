@@ -1,0 +1,58 @@
+/* Style for the TabPane */
+.dashboard-tab-pane {
+    -fx-background-color: #f5f5ef;
+    -fx-tab-max-width: 200px;
+}
+
+/* General Tab Style */
+.tab-add-transaction,
+.tab-all-transactions,
+.tab-update-transaction,
+.tab-summary-report {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3e3e28;
+    -fx-background-color: #f5f5ef;
+    -fx-border-color: #6d6d46;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px 5px 0 0;
+    -fx-alignment: center;
+    -fx-border-width: 3 3 0 3;
+}
+
+/* Hover Effect for Tabs */
+.tab-add-transaction:hover,
+.tab-all-transactions:hover,
+.tab-update-transaction:hover,
+.tab-summary-report:hover {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #d1d1ad;
+    -fx-border-color: #8e8e50;
+}
+
+/* Selected Tab Style */
+.tab-add-transaction:focused,
+.tab-all-transactions:focused,
+.tab-update-transaction:focused,
+.tab-summary-report:focused {
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #a5a573;
+    -fx-border-color: #8e8e50;
+}
+
+.tab-add-transaction .tab-label,
+.tab-all-transactions .tab-label,
+.tab-update-transaction .tab-label,
+.tab-summary-report .tab-label {
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+.tab-add-transaction:selected,
+.tab-all-transactions:selected,
+.tab-update-transaction:selected,
+.tab-summary-report:selected {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-border-width: 3 3 0 3;
+}

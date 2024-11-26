@@ -14,6 +14,8 @@ public class DisplayTransaction {
     private String date;
     private String category;
     private String description;
+    private String recurringStatus;
+    private String intervalDays;
 
     /**
      * Constructs a DisplayTransaction with specified values.
@@ -25,7 +27,7 @@ public class DisplayTransaction {
      * @param description additional details about the transaction
      */
 
-    public DisplayTransaction(int id, String account_name, String type, String category, String amount, String date, String description) {
+    public DisplayTransaction(int id, String account_name, String type, String category, String amount, String date, String description, String recurringStatus, String intervalDays ) {
         this.id = id;
         this.account_name = account_name;
         this.type = type;
@@ -33,6 +35,24 @@ public class DisplayTransaction {
         this.amount = amount;
         this.date = date;
         this.description = description;
+        this.recurringStatus= recurringStatus;
+        this.intervalDays = intervalDays;
+    }
+
+    public String getRecurringStatus() {
+        return recurringStatus;
+    }
+
+    public void setRecurringStatus(String recurringStatus) {
+        this.recurringStatus = recurringStatus;
+    }
+
+    public String getIntervalDays() {
+        return intervalDays;
+    }
+
+    public void setIntervalDays(String intervalDays) {
+        this.intervalDays = intervalDays;
     }
 
     /**

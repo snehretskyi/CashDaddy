@@ -58,6 +58,7 @@ public class Transaction_typeTable implements Transaction_typeDAO {
                 transaction_type.add(new Transaction_typePOJO(
                         data.getInt(TRANSACTION_TYPES_COLUMN_ID),
                         data.getString(TRANSACTION_TYPES_COLUMN_TYPE)));
+
             }
         } catch (SQLException e) {
             e.printStackTrace();

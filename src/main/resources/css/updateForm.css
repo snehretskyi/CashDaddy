@@ -1,0 +1,62 @@
+/* Grid styling for the form layout */
+.form-grid {
+    -fx-border-color: black;
+    -fx-border-width: 0 3 3 3;
+    -fx-background-color: #f5f5ef;
+    -fx-padding: 60 10 10 60;
+    -fx-vgap: 20;
+    -fx-hgap: 5;
+    -fx-alignment: center;
+}
+.form-name-label{
+    -fx-alignment: center;
+     -fx-font-size: 24px;
+     -fx-text-fill: #5e5e3b;
+
+}
+
+/* Styling for form labels */
+.form-label {
+    -fx-font-size: 15px;
+}
+
+/* Spacing between radio buttons */
+.transaction-type-radio-box {
+    -fx-spacing: 10;
+}
+
+/* Styling for instructional text */
+.instruction-text {
+    -fx-font-size: 24px;
+    -fx-fill: red;
+}
+
+/* Styling for the confirm button */
+.confirm-button {
+    -fx-padding: 10 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: #a7a772;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+/* Hover effect for the confirm button */
+.confirm-button:hover {
+    -fx-background-color: #8d8d58;
+}
+
+/* Styling for the clear button */
+.clear-button {
+    -fx-padding: 10 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: #ff8a80;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+/* Hover effect for the clear button */
+.clear-button:hover {
+    -fx-background-color: #ff5252;
+}

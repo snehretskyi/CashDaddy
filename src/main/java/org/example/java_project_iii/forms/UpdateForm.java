@@ -1,13 +1,12 @@
 package org.example.java_project_iii.forms;
 
 import javafx.collections.FXCollections;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import pojo.*;
 import tables.*;
+import tabs.AllTransactions;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -61,12 +60,20 @@ public class UpdateForm extends Form {
         Label formNameLabel = new Label(this.formName);
 
         Label dateLabel = new Label("Date:");
-        DatePicker datePicker = new DatePicker(transactionsPOJO.getTransaction_date().toLocalDate());
+        //DatePicker datePicker = new DatePicker(transactionsPOJO.getTransaction_date().toLocalDate());
+
+        DatePicker datePicker = new DatePicker(
+                transactionsPOJO.getTransaction_date() != null ? transactionsPOJO.getTransaction_date().toLocalDate() : null
+        );
+
 
         // unfortunately I had to turn off text input for date
         // exception handling doesn't work as expected if user inputs invalid date (・へ・)
         datePicker.setEditable(false);
 
+
+        //When form has no amount
+        Text instructionText = new Text("Please select transaction to update");
 
         Label amountLabel = new Label("Amount:");
         TextField amountField = new TextField();
@@ -75,8 +82,8 @@ public class UpdateForm extends Form {
         Label categoryLabel = new Label("Category:");
         ComboBox<CategoriesPOJO> categoryBox = new ComboBox<>();
         categoryBox.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
-        categoryBox.getSelectionModel().select(find(allCategories, transactionsPOJO.getId()));
-
+        categoryBox.getSelectionModel().select(find(allCategories, transactionsPOJO.getTransaction_category_id()));
+        System.out.println(transactionsPOJO.getId());
 
         Label recurringLabel = new Label("Recurring?");
         CheckBox recurringCheckBox = new CheckBox();
@@ -102,7 +109,7 @@ public class UpdateForm extends Form {
         Label accountLabel = new Label("Account:");
         ComboBox<AccountPOJO> accountComboBox = new ComboBox<>();
         accountComboBox.setItems(FXCollections.observableArrayList(allAccounts));
-        accountComboBox.getSelectionModel().select(find(allAccounts, transactionsPOJO.getId()));
+        accountComboBox.getSelectionModel().select(find(allAccounts, transactionsPOJO.getTransaction_account_id()));
 
         Label transactionTypeLabel = new Label("Transaction Type:");
 
@@ -128,6 +135,14 @@ public class UpdateForm extends Form {
         Button confirmButton = new Button("Confirm");
         Button clearButton = new Button("Clear");
 
+        if(transactionsPOJO.getAmount()==0){
+               formGrid.add(instructionText, 0, 0);
+               GridPane.setColumnSpan(instructionText, 5);
+        }else{
+            formGrid.add(formNameLabel, 0,0);
+            GridPane.setColumnSpan(formNameLabel, 5);
+        }
+
         formGrid.add(dateLabel, 0, 1);
         formGrid.add(datePicker, 1, 1);
         formGrid.add(amountLabel, 0, 2);
@@ -145,7 +160,7 @@ public class UpdateForm extends Form {
         formGrid.add(descriptionArea, 1, 9);
 
         formGrid.add(confirmButton, 4, 10);
-        formGrid.add(clearButton, 5, 10);
+        formGrid.add(clearButton, 5,10);
         // logic for buttons
         confirmButton.setOnAction((event) -> {
             try {
@@ -186,6 +201,7 @@ public class UpdateForm extends Form {
                     } else if (recurringCheckBox.isSelected() && recurringTransaction != null) {
                         recurringTransactionsTable.updateRecurringTransaction(recurringTransaction);
                     }
+                    AllTransactions.getInstance().refreshTable();
                 }
 
             } catch (DateTimeParseException e) {
@@ -221,21 +237,32 @@ public class UpdateForm extends Form {
         });
 
         // styling (˶◕‿◕˶)
-        formGrid.setBorder(new Border(new BorderStroke( Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(2))));
-        formGrid.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-        formGrid.setPadding(new Insets(20));
-        formGrid.setVgap(20);
-        formGrid.setHgap(10);
-        formGrid.setAlignment(Pos.CENTER);
-        formNameLabel.setBorder(new Border(new BorderStroke(
-                Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
-                new BorderWidths(2, 2, 0, 2)
-        )));
-        formNameLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, null, null)));
-        formNameLabel.setPadding(new Insets(5));
-        transactionTypeRadioBox.setSpacing(20);
+
+        // Apply styles for the GridPane
+        formGrid.getStyleClass().add("form-grid");
+
+        // Apply styles for the form name label
+        formNameLabel.getStyleClass().add("form-name-label");
+        dateLabel.getStyleClass().add("form-label");
+        amountLabel.getStyleClass().add("form-label");
+        categoryLabel.getStyleClass().add("form-label");
+        recurringLabel.getStyleClass().add("form-label");
+        accountLabel.getStyleClass().add("form-label");
+        transactionTypeLabel.getStyleClass().add("form-label");
+        descriptionLabel.getStyleClass().add("form-label");
+        instructionText.getStyleClass().add("instruction-text");
+
+        confirmButton.getStyleClass().add("confirm-button");
+        clearButton.getStyleClass().add("clear-button");
+
+        // Apply styles for the transaction type radio box
+        transactionTypeRadioBox.getStyleClass().add("transaction-type-radio-box");
+
+        // Load the CSS file
+        formGrid.getStylesheets().add(this.getClass().getResource("/css/updateForm.css").toExternalForm());
 
 
-        this.getChildren().addAll(formNameLabel, formGrid, getErrorText());
+        this.getChildren().addAll( formGrid, getErrorText());
     }
+
 }
