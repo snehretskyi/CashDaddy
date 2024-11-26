@@ -204,6 +204,7 @@ public class CreateForm extends Form {
                 amountField.clear();
                 categoryBox.getSelectionModel().clearSelection();
                 recurringCheckBox.setSelected(false);
+                recurringIntervalSpinner.setVisible(false);
                 accountComboBox.getSelectionModel().clearSelection();
                 transactionTypeGroup.getSelectedToggle().setSelected(false);
                 descriptionArea.clear();
@@ -236,7 +237,6 @@ public class CreateForm extends Form {
         // Load the CSS file
         formGrid.getStylesheets().add(getClass().getClassLoader().getResource("css/forms.css").toExternalForm());
 
-        System.out.println(datePicker.getClassCssMetaData());
         this.getChildren().addAll(formGrid, getErrorText());
     }
 }

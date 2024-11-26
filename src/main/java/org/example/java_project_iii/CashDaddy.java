@@ -26,6 +26,7 @@ public class CashDaddy extends Application {
             // if unsuccessful, either there is no credentials file, or they're wrong
         } catch (Exception e) {
             primaryStage.setScene(loginScene);
+            e.printStackTrace();
         }
 
 

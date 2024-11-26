@@ -2,13 +2,21 @@ package tabs;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import org.example.java_project_iii.forms.UpdateForm;
 import pojo.DisplayTransaction;
 import pojo.TransactionsPOJO;
 import tables.TransactionsTable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AllTransactions extends Tab {
 
@@ -26,10 +34,14 @@ public class AllTransactions extends Tab {
         TransactionsTable transactionsTable = TransactionsTable.getInstance();
 
         BorderPane borderPane = new BorderPane();
+
         Text instructionText = new Text("Double click to modify any transaction");
+        VBox instructionBox = new VBox(instructionText);
+        instructionText.setTextAlignment(TextAlignment.CENTER);
+        instructionBox.setAlignment(Pos.CENTER);
 
         tableView = new TableView();
-
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         /**
          * Column1 for displaying account name
@@ -119,7 +131,7 @@ public class AllTransactions extends Tab {
         /**
          * Add tableView to the center of borderpane
          */
-        borderPane.setTop(instructionText);
+        borderPane.setTop(instructionBox);
         borderPane.setCenter(tableView);
 
         /**
@@ -135,10 +147,14 @@ public class AllTransactions extends Tab {
         /**
          * Button responsible to remove transaction
          */
-        Button removeTransaction = new Button("Remove Transaction");
+        HBox buttonBox = new HBox();
+        Button removeTransaction = new Button("Remove");
         removeTransaction.setOnAction(e-> {
-            DisplayTransaction remove = (DisplayTransaction) tableView.getSelectionModel().getSelectedItem();
-            transactionsTable.deleteTransaction(remove.getId());
+            List<DisplayTransaction> remove = tableView.getSelectionModel().getSelectedItems();
+            remove.forEach((DisplayTransaction transaction) -> {
+                transactionsTable.deleteTransaction(transaction.getId());
+            });
+
             try {
                 refreshTable();
             } catch (Exception ex) {
@@ -147,9 +163,12 @@ public class AllTransactions extends Tab {
             tableView.getItems().clear();;
             tableView.getItems().addAll(transactionsTable.getDetailedTransaction());
         });
+        buttonBox.getChildren().add(removeTransaction);
+        buttonBox.setAlignment(Pos.CENTER);
+        HBox.setMargin(removeTransaction, new Insets(10));
 
         //set remove transaction button at the bottom of the borderpane
-        borderPane.setBottom(removeTransaction);
+        borderPane.setBottom(buttonBox);
         this.setContent(borderPane);
 
 

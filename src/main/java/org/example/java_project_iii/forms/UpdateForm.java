@@ -57,8 +57,6 @@ public class UpdateForm extends Form {
     public UpdateForm(TransactionsPOJO transactionsPOJO) throws Exception {
         super();
 
-        System.out.println(transactionsPOJO);
-
         CategoriesTable categoriesTable = CategoriesTable.getInstance();
         BudgetTable budgetTable = BudgetTable.getInstance();
         AccountsTable accountsTable = AccountsTable.getInstance();
