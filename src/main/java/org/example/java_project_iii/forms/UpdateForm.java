@@ -134,6 +134,7 @@ public class UpdateForm extends Form {
         if(transactionsPOJO.getAmount()==0){
                formGrid.add(instructionText, 0, 0);
                GridPane.setColumnSpan(instructionText, 5);
+                confirmButton.setDisable(true);
         }
 
         formGrid.add(dateLabel, 0, 1);

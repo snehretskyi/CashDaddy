@@ -40,6 +40,10 @@
     -fx-background-color: #93ce31;
 }
 
+.confirm-button:disabled {
+    -fx-background-color: #a9cc33;
+}
+
 /* Styling for the clear button */
 .clear-button {
     -fx-padding: 10 20;
