@@ -63,6 +63,9 @@ public class Dashboard {
         // Create a TabPane
 
         TabPane tabPane = new TabPane();
+        // Load the CSS file
+        tabPane.getStylesheets().add(this.getClass().getResource("/css/style.css").toExternalForm());
+
 
         //create tabs
         AddTransaction addTransaction = new AddTransaction();
@@ -71,7 +74,7 @@ public class Dashboard {
         SummaryReport summaryReport = new SummaryReport();
 
         //add CurdForm to AddTransaction tab
-        CreateForm createForm = new CreateForm("Add Transaction");
+        CreateForm createForm = new CreateForm();
         // set tab to redirect to
         createForm.setTabPane(tabPane);
         createForm.setDisplayTab(allTransactions);
@@ -79,39 +82,8 @@ public class Dashboard {
         addTransaction.setContent(createForm);
         TransactionsPOJO transactionsPOJO = new TransactionsPOJO();
 
-        UpdateForm updateForm = new UpdateForm("Modify Your Transaction ", transactionsPOJO);
+        UpdateForm updateForm = new UpdateForm(transactionsPOJO);
         updateTransaction.setContent(updateForm);
-
-        //TabsContainer.initialize(tabPane);
-
-// --------------------------------------------------------------------------------------------------
-
-        // UNCOMMENT AND INSERT THE ID TO TEST
-//
-//        VBox updateItem = new VBox();
-//        Button buttonTest = new Button("Test update form");
-//        buttonTest.setOnAction((event) -> {
-//            TransactionsTable testTransactionsTable = null;
-//            try {
-//                testTransactionsTable = new TransactionsTable();
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//            TransactionsPOJO testTransaction = testTransactionsTable.getTransaction(16);
-//            UpdateForm updateForm = null;
-//            try {
-//                updateForm = new UpdateForm("Update Transaction", testTransaction);
-//                updateItem.getChildren().add(updateForm);
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//
-//        });
-//        updateItem.getChildren().add(buttonTest);
-//        updateTransaction.setContent(updateItem);
-
- //-----------------------------------------------------------------------------------------------
-
 
         // Add tabs to the TabPane
 

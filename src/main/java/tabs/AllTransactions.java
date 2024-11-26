@@ -160,7 +160,7 @@ public class AllTransactions extends Tab {
                         TransactionsPOJO transactionsPOJO = TransactionsTable.getInstance().getTransactionById(selectedTransaction.getId());
                         UpdateTransaction updateTransaction = UpdateTransaction.getInstance();
                         // Create a new UpdateForm
-                        UpdateForm updateForm = new UpdateForm("Update transaction details", transactionsPOJO);
+                        UpdateForm updateForm = new UpdateForm(transactionsPOJO);
                         updateTransaction.setContent(updateForm);
 
                         // Add the new tab to the tab pane and activate it

@@ -1,0 +1,113 @@
+/* Grid styling for the form layout */
+.form-grid {
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-background-color: #f5f5ef;
+    -fx-padding: 10 10 10 50;
+    -fx-vgap: 25;
+    -fx-hgap: 5;
+    -fx-alignment: center;
+}
+
+/* Styling for form labels */
+.form-label {
+    -fx-font-size: 15px;
+}
+
+/* Spacing between radio buttons */
+.transaction-type-radio-box {
+    -fx-spacing: 10;
+}
+
+/* Styling for instructional text */
+.instruction-text {
+    -fx-font-size: 24px;
+    -fx-fill: red;
+}
+
+/* Styling for the confirm button */
+.confirm-button {
+    -fx-padding: 10 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: #7DCE32;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+/* Hover effect for the confirm button */
+.confirm-button:hover {
+    -fx-background-color: #8d8d58;
+}
+
+/* Styling for the clear button */
+.clear-button {
+    -fx-padding: 10 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: #ff8a80;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+/* Hover effect for the clear button */
+.clear-button:hover {
+    -fx-background-color: #ff5252;
+}
+
+.combo-box {
+    -fx-background-color: #F1F1F0;
+    -fx-border-color: #949494;
+    -fx-border-radius: 3px, 3px, 3px, 3px;
+}
+
+.radio-button .radio {
+    -fx-background-color: #F1F1F0;
+    -fx-border-color: #949494;
+    -fx-border-radius: 100px, 100px, 100px, 100px;
+}
+
+.check-box .box {
+    -fx-background-color: #F1F1F0;
+    -fx-border-color: #949494;
+    -fx-border-radius: 2px, 2px, 2px, 2px;
+}
+
+.date-picker .arrow-button{
+    -fx-background-color: #F1F1F0;
+    -fx-border-color: #949494;
+    -fx-border-radius: 2px, 2px, 2px, 2px;
+}
+
+.spinner .increment-arrow-button, .spinner .decrement-arrow-button {
+    -fx-background-color: #F1F1F0;
+    -fx-border-color: #949494;
+    -fx-border-radius: 2px, 2px, 2px, 2px;
+}
+
+.combo-box:hover {
+    -fx-background-color: #E2E2E2;
+}
+
+.radio-button:hover .radio {
+    -fx-background-color: #E2E2E2;
+}
+
+.check-box:hover .box {
+    -fx-background-color: #E2E2E2;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #E2E2E2;
+}
+
+.spinner .increment-arrow-button:hover, .spinner .decrement-arrow-button:hover {
+    -fx-background-color: #E2E2E2;
+}
+
+.tab-pane .tab {
+        -fx-background-color: #F1F1EE;
+        -fx-border-color: #949494;
+        -fx-border-radius: 2px, 2px, 2px, 2px;
+        outline: 0;
+}

@@ -1,6 +1,7 @@
 package org.example.java_project_iii.forms;
 
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
@@ -19,7 +20,6 @@ import java.util.ArrayList;
  * @author Stan
  */
 public class UpdateForm extends Form {
-    private String formName;
 
     public int find(ArrayList<?> arrayList, int id){
         ArrayList<DatabaseItemPojo> searchList = (ArrayList<DatabaseItemPojo>) ((ArrayList<?>) arrayList);
@@ -33,12 +33,10 @@ public class UpdateForm extends Form {
 
     /**
      * Constructor
-     * @param formName name of the form, e.g. Update
      */
-    public UpdateForm(String formName, TransactionsPOJO transactionsPOJO) throws Exception {
+    public UpdateForm(TransactionsPOJO transactionsPOJO) throws Exception {
         super();
 
-        this.formName = formName;
         System.out.println(transactionsPOJO);
 
         CategoriesTable categoriesTable = CategoriesTable.getInstance();
@@ -56,8 +54,6 @@ public class UpdateForm extends Form {
 
         // creating nodes
         GridPane formGrid = new GridPane();
-
-        Label formNameLabel = new Label(this.formName);
 
         Label dateLabel = new Label("Date:");
         //DatePicker datePicker = new DatePicker(transactionsPOJO.getTransaction_date().toLocalDate());
@@ -239,7 +235,6 @@ public class UpdateForm extends Form {
         formGrid.getStyleClass().add("form-grid");
 
         // Apply styles for the form name label
-        formNameLabel.getStyleClass().add("form-name-label");
         dateLabel.getStyleClass().add("form-label");
         amountLabel.getStyleClass().add("form-label");
         categoryLabel.getStyleClass().add("form-label");
@@ -254,12 +249,9 @@ public class UpdateForm extends Form {
 
         // Apply styles for the transaction type radio box
         transactionTypeRadioBox.getStyleClass().add("transaction-type-radio-box");
+        VBox.setMargin(formGrid, new Insets(25));
 
-        // Load the CSS file
-        formGrid.getStylesheets().add(this.getClass().getResource("/css/updateForm.css").toExternalForm());
-
-
-        this.getChildren().addAll(formNameLabel, formGrid, getErrorText());
+        this.getChildren().addAll(formGrid, getErrorText());
     }
 
 }

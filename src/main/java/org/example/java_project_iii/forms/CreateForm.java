@@ -2,10 +2,8 @@ package org.example.java_project_iii.forms;
 
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import pojo.*;
 import tables.*;
 import tabs.AllTransactions;
@@ -21,7 +19,6 @@ import java.sql.Date;
  * @author Stan
  */
 public class CreateForm extends Form {
-    private String formName;
 
     private Tab displayTab;
 
@@ -43,22 +40,11 @@ public class CreateForm extends Form {
         this.displayTab = displayTab;
     }
 
-    public String getFormName() {
-        return formName;
-    }
-
-    public void setFormName(String formName) {
-        this.formName = formName;
-    }
-
     /**
      * Constructor
-     * @param formName name of the form, e.g. Update
      */
-    public CreateForm(String formName) throws Exception {
+    public CreateForm() throws Exception {
         super();
-
-        this.formName = formName;
 
         CategoriesTable categoriesTable = CategoriesTable.getInstance();
         AccountsTable accountsTable = AccountsTable.getInstance();
@@ -68,8 +54,6 @@ public class CreateForm extends Form {
 
         // creating nodes
         GridPane formGrid = new GridPane();
-
-        Label formNameLabel = new Label(this.formName);
 
         Label dateLabel = new Label("Date:");
         DatePicker datePicker = new DatePicker(LocalDate.now());
@@ -234,7 +218,6 @@ public class CreateForm extends Form {
         formGrid.getStyleClass().add("form-grid");
 
         // Apply styles for the form name label
-        formNameLabel.getStyleClass().add("form-name-label");
         dateLabel.getStyleClass().add("form-label");
         amountLabel.getStyleClass().add("form-label");
         categoryLabel.getStyleClass().add("form-label");
@@ -245,12 +228,16 @@ public class CreateForm extends Form {
         confirmButton.getStyleClass().add("confirm-button");
         cancelButton.getStyleClass().add("clear-button");
 
+        VBox.setMargin(formGrid, new Insets(25));
+
         // Apply styles for the transaction type radio box
         transactionTypeRadioBox.getStyleClass().add("transaction-type-radio-box");
 
         // Load the CSS file
-        formGrid.getStylesheets().add(getClass().getClassLoader().getResource("css/updateForm.css").toExternalForm());
+        formGrid.getStylesheets().add(getClass().getClassLoader().getResource("css/style.css").toExternalForm());
 
-        this.getChildren().addAll(formNameLabel, formGrid, getErrorText());
+        System.out.println(datePicker.getClassCssMetaData());
+        this.getChildren().addAll(formGrid, getErrorText());
+
     }
 }

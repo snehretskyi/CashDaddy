@@ -16,6 +16,7 @@ public class CashDaddy extends Application {
         // set stage for login form
         Login.getLoginForm().setStage(primaryStage);
 
+
         // try connecting to db
         Scene dashboard = null;
         try {
