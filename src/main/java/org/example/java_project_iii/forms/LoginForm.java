@@ -56,8 +56,6 @@ public class LoginForm extends Form {
     public LoginForm() {
         super();
 
-        this.stage = stage;
-
         // creating nodes
         Text welcomeText = new Text("Welcome To CashDaddy!!...");
         Text greetingText = new Text("Glad to see you again!");
@@ -99,7 +97,7 @@ public class LoginForm extends Form {
         headingVbox.setPrefWidth(1200);
         headingVbox.setPadding(new Insets(80, 0, 0, 0));
         headingHBox.setPadding(new Insets(0 ,80, 0,180));
-        headingHBox.setStyle("-fx-background-color: #d1d1ad;");
+        headingHBox.getStyleClass().add("heading-box");
 
         //Setting animation
         greetingText.setVisible(false);
@@ -125,43 +123,13 @@ public class LoginForm extends Form {
         //Submit button styles
         submitButton.setPrefSize(160 ,20);
         submitButton.getStyleClass().add("submit-button");
-        submitButton.setStyle("-fx-padding: 10 20; " +
-                "-fx-font-weight: bold; " +
-                "-fx-text-fill: white; " +
-                "-fx-background-color: #a0e51a; " +
-                "-fx-border-radius: 5; " +
-                "-fx-background-radius: 5;");
-
-        submitButton.setStyle("-fx-padding: 10 20; " +
-                "-fx-font-weight: bold; " +
-                "-fx-text-fill: white; " +
-                "-fx-background-color: #a0e51a; " +
-                "-fx-border-radius: 5; " +
-                "-fx-background-radius: 5;");
-
-        submitButton.setOnMouseEntered(event ->
-                submitButton.setStyle("-fx-padding: 10 20; " +
-                        "-fx-font-weight: bold; " +
-                        "-fx-text-fill: white; " +
-                        "-fx-background-color: #93ce31; " +
-                        "-fx-border-radius: 5; " +
-                        "-fx-background-radius: 5;"));
-
-        submitButton.setOnMouseExited(event ->
-                submitButton.setStyle("-fx-padding: 10 20; " +
-                        "-fx-font-weight: bold; " +
-                        "-fx-text-fill: white; " +
-                        "-fx-background-color: #a0e51a; " +
-                        "-fx-border-radius: 5; " +
-                        "-fx-background-radius: 5;"));
 
 
 
         this.setSpacing(5);
         this.setAlignment(Pos.TOP_CENTER);
         this.setWidth(1280);
-        this.setStyle("-fx-background-color:  #f5f5ef;-fx-border-color: #929254; -fx-border-width: 3; -fx-border-style: solid;");
-        this.getStyleClass().add(this.getClass().getResource("/css/logIn.css").toExternalForm());
+        this.getStylesheets().add(getClass().getResource("/css/logIn.css").toExternalForm());
 
         // logic
         EventHandler submitEvent = event -> {

@@ -1,0 +1,30 @@
+/* the background styles */
+.vbox {
+    -fx-background-color:  #f5f5ef;
+    -fx-border-color: #929254;
+     -fx-border-width: 3;
+     -fx-border-style: solid;
+}
+
+.heading-box {
+    -fx-background-color: #d1d1ad;
+}
+
+/* button styles */
+.submit-button {
+    -fx-padding: 10 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: #a0e51a;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.submit-button:hover {
+    -fx-padding: 10 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: #93ce31;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
