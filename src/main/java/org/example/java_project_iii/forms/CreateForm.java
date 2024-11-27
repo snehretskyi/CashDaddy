@@ -218,7 +218,7 @@ public class CreateForm extends Form {
         // styling (˶◕‿◕˶)
         formGrid.getStyleClass().add("form-grid");
 
-        // Apply styles for the form name label
+        //Setting form elements to css class names
         dateLabel.getStyleClass().add("form-label");
         amountLabel.getStyleClass().add("form-label");
         categoryLabel.getStyleClass().add("form-label");

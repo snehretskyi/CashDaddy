@@ -93,6 +93,7 @@ public class Dashboard {
         AllTransactions allTransactions = AllTransactions.getInstance();
         UpdateTransaction updateTransaction = UpdateTransaction.getInstance();
         SummaryReport summaryReport = new SummaryReport();
+        BudgetGoalTracker budgetGoalTracker = new BudgetGoalTracker();
 
         Label transactionTablabel = new Label("Add Transaction");
         //add CurdForm to AddTransaction tab

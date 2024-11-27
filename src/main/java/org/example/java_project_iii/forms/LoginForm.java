@@ -99,7 +99,7 @@ public class LoginForm extends Form {
         headingVbox.setPrefWidth(1200);
         headingVbox.setPadding(new Insets(80, 0, 0, 0));
         headingHBox.setPadding(new Insets(0 ,80, 0,180));
-        headingHBox.setStyle("-fx-background-color: #c3eafa;");
+        headingHBox.setStyle("-fx-background-color: #d1d1ad;");
 
         //Setting animation
         greetingText.setVisible(false);
@@ -120,17 +120,48 @@ public class LoginForm extends Form {
         //Credintial styles
         credentialVBox.setMaxWidth(1100);
         credentialVBox.setSpacing(20);
-        VBox.setMargin(credentialVBox, new Insets(0,200,0,200));
+        VBox.setMargin(credentialVBox, new Insets(0,200,20,200));
 
         //Submit button styles
         submitButton.setPrefSize(160 ,20);
-        VBox.setMargin(submitButton, new Insets(40, 0, 0,0));
+        submitButton.getStyleClass().add("submit-button");
+        submitButton.setStyle("-fx-padding: 10 20; " +
+                "-fx-font-weight: bold; " +
+                "-fx-text-fill: white; " +
+                "-fx-background-color: #a0e51a; " +
+                "-fx-border-radius: 5; " +
+                "-fx-background-radius: 5;");
+
+        submitButton.setStyle("-fx-padding: 10 20; " +
+                "-fx-font-weight: bold; " +
+                "-fx-text-fill: white; " +
+                "-fx-background-color: #a0e51a; " +
+                "-fx-border-radius: 5; " +
+                "-fx-background-radius: 5;");
+
+        submitButton.setOnMouseEntered(event ->
+                submitButton.setStyle("-fx-padding: 10 20; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-text-fill: white; " +
+                        "-fx-background-color: #93ce31; " +
+                        "-fx-border-radius: 5; " +
+                        "-fx-background-radius: 5;"));
+
+        submitButton.setOnMouseExited(event ->
+                submitButton.setStyle("-fx-padding: 10 20; " +
+                        "-fx-font-weight: bold; " +
+                        "-fx-text-fill: white; " +
+                        "-fx-background-color: #a0e51a; " +
+                        "-fx-border-radius: 5; " +
+                        "-fx-background-radius: 5;"));
+
+
 
         this.setSpacing(5);
         this.setAlignment(Pos.TOP_CENTER);
         this.setWidth(1280);
-        this.setStyle("-fx-background-color: #f0f9fc;-fx-border-color: #000000; -fx-border-width: 2; -fx-border-style: solid;");
-
+        this.setStyle("-fx-background-color:  #f5f5ef;-fx-border-color: #929254; -fx-border-width: 3; -fx-border-style: solid;");
+        this.getStyleClass().add(this.getClass().getResource("/css/logIn.css").toExternalForm());
 
         // logic
         EventHandler submitEvent = event -> {

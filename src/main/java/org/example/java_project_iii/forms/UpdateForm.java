@@ -252,7 +252,7 @@ public class UpdateForm extends Form {
         // Apply styles for the GridPane
         formGrid.getStyleClass().add("form-grid");
 
-        // Apply styles for the form name label
+        //Setting form elements to css class names
         dateLabel.getStyleClass().add("form-label");
         amountLabel.getStyleClass().add("form-label");
         categoryLabel.getStyleClass().add("form-label");
@@ -267,7 +267,6 @@ public class UpdateForm extends Form {
         // Apply styles for the transaction type radio box
         transactionTypeRadioBox.getStyleClass().add("transaction-type-radio-box");
         VBox.setMargin(formGrid, new Insets(0, 25, 25, 25));
-
 
         // Load the CSS file
         formGrid.getStylesheets().add(this.getClass().getResource("/css/forms.css").toExternalForm());
