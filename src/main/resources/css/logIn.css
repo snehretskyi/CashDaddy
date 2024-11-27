@@ -1,7 +1,7 @@
 /* the background styles */
-.vbox {
+.root {
     -fx-background-color:  #f5f5ef;
-    -fx-border-color: #929254;
+    -fx-border-color: #939353;
      -fx-border-width: 3;
      -fx-border-style: solid;
 }
@@ -15,7 +15,7 @@
     -fx-padding: 10 20;
     -fx-font-weight: bold;
     -fx-text-fill: white;
-    -fx-background-color: #a0e51a;
+    -fx-background-color:  #b6b67c;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
 }

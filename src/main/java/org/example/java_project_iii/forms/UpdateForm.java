@@ -10,7 +10,6 @@ import org.example.java_project_iii.scenes.Dashboard;
 import pojo.*;
 import tables.*;
 import tabs.AllTransactions;
-
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -266,7 +265,7 @@ public class UpdateForm extends Form {
 
         // Apply styles for the transaction type radio box
         transactionTypeRadioBox.getStyleClass().add("transaction-type-radio-box");
-        VBox.setMargin(formGrid, new Insets(0, 25, 25, 25));
+        VBox.setMargin(formGrid, new Insets(-10, 25, 25, 25));
 
         // Load the CSS file
         formGrid.getStylesheets().add(this.getClass().getResource("/css/forms.css").toExternalForm());

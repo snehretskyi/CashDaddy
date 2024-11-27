@@ -118,18 +118,18 @@ public class LoginForm extends Form {
         //Credintial styles
         credentialVBox.setMaxWidth(1100);
         credentialVBox.setSpacing(20);
+        credentialVBox.getStyleClass().add("credentialVBox");
         VBox.setMargin(credentialVBox, new Insets(0,200,20,200));
 
         //Submit button styles
         submitButton.setPrefSize(160 ,20);
         submitButton.getStyleClass().add("submit-button");
 
-
-
         this.setSpacing(5);
         this.setAlignment(Pos.TOP_CENTER);
         this.setWidth(1280);
-        this.getStylesheets().add(getClass().getResource("/css/logIn.css").toExternalForm());
+        this.getStyleClass().add("root");
+        this.getStylesheets().add(this.getClass().getResource("/css/logIn.css").toExternalForm());
 
         // logic
         EventHandler submitEvent = event -> {

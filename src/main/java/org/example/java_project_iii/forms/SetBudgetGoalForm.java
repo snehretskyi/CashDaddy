@@ -33,8 +33,6 @@ public class SetBudgetGoalForm {
         categoryComboBox.setPromptText("Select Category");
         categoryBox.getChildren().addAll(categoryLabel, categoryComboBox);
 
-
-
         goalAmountField = new TextField();
         startDatePicker = new DatePicker();
         endDatePicker = new DatePicker();
