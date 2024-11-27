@@ -79,6 +79,10 @@ public class DBHelper {
             if (countResultSet.next() && countResultSet.getInt(1) > 0) {
                 System.out.println("Default values already inserted into the " + tableName + " table.");
             } else {
+                // Reset AUTO_INCREMENT to 1
+                String resetAutoIncrementQuery = "ALTER TABLE " + tableName + " AUTO_INCREMENT = 1";
+                statement.execute(resetAutoIncrementQuery);
+                System.out.println("AUTO_INCREMENT reset to 1 for table: " + tableName);
                 // Execute the insert query if values are missing
                 statement.execute(insertQuery);
                 System.out.println("Default values have been inserted into the " + tableName + " table.");
@@ -87,6 +91,7 @@ public class DBHelper {
             System.out.println(tableName + " table does not exist.");
         }
     }
+
 
 
 
