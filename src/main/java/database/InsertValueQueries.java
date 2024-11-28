@@ -9,7 +9,7 @@ public class InsertValueQueries {
      */
     public static final String INSERT_TRANSACTION_TYPES =
             "INSERT INTO " + TABLE_TRANSACTION_TYPES + " (" + TRANSACTION_TYPES_COLUMN_TYPE + ") " +
-                    "VALUES ('Income'), ('Expense'), ('Recurring');";
+                    "VALUES ('Income'), ('Expense');";
 
     /**
      * Insert categories.

@@ -240,4 +240,6 @@ public class TransactionsTable implements TransactionsDAO {
     }
 
 
+    public void addTransactionListener(Object o) {
+    }
 }

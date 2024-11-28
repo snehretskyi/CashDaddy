@@ -4,8 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import org.example.java_project_iii.scenes.Dashboard;
 import pojo.*;
 import tables.*;

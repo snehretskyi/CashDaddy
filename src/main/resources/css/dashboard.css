@@ -8,7 +8,8 @@
 .tab-add-transaction,
 .tab-all-transactions,
 .tab-update-transaction,
-.tab-summary-report {
+.tab-summary-report,
+.tab-budget-tracker {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-text-fill: #3e3e28;
@@ -24,7 +25,8 @@
 .tab-add-transaction:hover,
 .tab-all-transactions:hover,
 .tab-update-transaction:hover,
-.tab-summary-report:hover {
+.tab-summary-report:hover,
+.tab-budget-tracker:hover {
     -fx-text-fill: #ffffff;
     -fx-background-color: #d1d1ad;
     -fx-border-color: #8e8e50;
@@ -34,7 +36,8 @@
 .tab-add-transaction:focused,
 .tab-all-transactions:focused,
 .tab-update-transaction:focused,
-.tab-summary-report:focused {
+.tab-summary-report:focused,
+.tab-budget-tracker:focused {
     -fx-text-fill: #ffffff;
     -fx-background-color: #a5a573;
     -fx-border-color: #8e8e50;
@@ -43,7 +46,8 @@
 .tab-add-transaction .tab-label,
 .tab-all-transactions .tab-label,
 .tab-update-transaction .tab-label,
-.tab-summary-report .tab-label {
+.tab-summary-report .tab-label,
+.tab-budget-tracker .tab-label {
     -fx-border-color: transparent;
     -fx-focus-color: transparent;
 }
@@ -51,7 +55,8 @@
 .tab-add-transaction:selected,
 .tab-all-transactions:selected,
 .tab-update-transaction:selected,
-.tab-summary-report:selected {
+.tab-summary-report:selected,
+.tab-budget-tracker:selected {
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
     -fx-border-width: 3 3 0 3;

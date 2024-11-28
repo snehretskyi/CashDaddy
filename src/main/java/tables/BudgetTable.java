@@ -93,4 +93,9 @@ public class BudgetTable implements BudgetDAO {
     }
 
 
+    public void insertBudget(BudgetPOJO budget) {
+    }
+
+    public void addBudget(BudgetPOJO newBudget) {
+    }
 }
