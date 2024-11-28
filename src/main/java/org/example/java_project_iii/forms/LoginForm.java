@@ -1,10 +1,8 @@
 package org.example.java_project_iii.forms;
 
-import database.Database;
-import javafx.animation.PauseTransition;
+import org.example.java_project_iii.database.Database;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,29 +11,25 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import org.example.java_project_iii.scenes.Dashboard;
-import services.ImageCreator;
-import services.AnimationHelper;
-import javax.swing.*;
+import org.example.java_project_iii.services.ImageCreator;
+import org.example.java_project_iii.services.AnimationHelper;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
 
 /**
- * Class Description: a login form for entering database credentials.
- * This form includes fields for the host, database name, username, and password.
+ * Class Description: a login form for entering org.example.java_project_iii.database credentials.
+ * This form includes fields for the host, org.example.java_project_iii.database name, username, and password.
  * Validates input, saves result to a file.
  * @author Stan
  */
@@ -170,11 +164,11 @@ public class LoginForm extends Form {
     }
 
     /**
-     * Saves the provided database credentials to a file.
-     * @param host the database host.
-     * @param dbName the name of the database.
-     * @param userName the username for the database.
-     * @param password the password for the database.
+     * Saves the provided org.example.java_project_iii.database credentials to a file.
+     * @param host the org.example.java_project_iii.database host.
+     * @param dbName the name of the org.example.java_project_iii.database.
+     * @param userName the username for the org.example.java_project_iii.database.
+     * @param password the password for the org.example.java_project_iii.database.
      */
     public void saveCredentials(String host, String dbName, String userName, String password) throws IOException {
         try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter("src/main/resources/db_credentials.txt"))) {
