@@ -1,0 +1,30 @@
+/* the background styles */
+.root {
+    -fx-background-color:  #f5f5ef;
+    -fx-border-color: #939353;
+     -fx-border-width: 3;
+     -fx-border-style: solid;
+}
+
+.heading-box {
+    -fx-background-color: #d1d1ad;
+}
+
+/* button styles */
+.submit-button {
+    -fx-padding: 10 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color:  #b6b67c;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.submit-button:hover {
+    -fx-padding: 10 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: #93ce31;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}

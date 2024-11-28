@@ -60,4 +60,21 @@ public class InsertValueQueries {
                     "(3, 50.00, 2, 1, '2024-11-18', 'Coffee shop'), " +
                     "(1, 400.00, 1, 8, '2024-11-19', 'Side hustle income'), " +
                     "(2, 120.00, 2, 2, '2024-11-20', 'Gym membership');";
+
+    /**
+     * Insert recurring transactions.
+     */
+    public static final String INSERT_RECURRING_TRANSACTIONS =
+            "INSERT INTO " + TABLE_RECURRING_TRANSACTION + " (" +
+                    RECURRING_TRANSACTION_COLUMN_TRANSACTION_ID + ", " +
+                    RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS + ", " +
+                    RECURRING_TRANSACTION_NEXT_DATE + ") " +
+                    "VALUES " +
+                    "(1, 30, '2024-12-01'), " +
+                    "(2, 30, '2024-12-02'), " +
+                    "(5, 30, '2024-12-05'), " +
+                    "(9, 30, '2024-12-07'), " +
+                    "(16, 30, '2024-12-08');";
+
 }
+

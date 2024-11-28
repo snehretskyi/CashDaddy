@@ -8,7 +8,7 @@ import static org.example.java_project_iii.database.DBHelper.*;
 
 /**
  * This class is using the Singleton Design Pattern so that the entire application shares one connection
- * to the org.example.java_project_iii.database;
+ * to the database;
  * We do this through the use of:
  *  - public static instance variable
  *  - private constructor
@@ -47,7 +47,7 @@ public class Database {
         insertDefaultValues(DBConst.TABLE_ACCOUNTS, InsertValueQueries.INSERT_ACCOUNTS, connection);
 
         insertDefaultValuesForTransactions(DBConst.TABLE_TRANSACTIONS, InsertValueQueries.INSERT_TRANSACTIONS, connection);
-       // insertDefaultValuesForTransactions(DBConst.TABLE_RECURRING_TRANSACTION, InsertValueQueries.INSERT_RECURRING_TRANSACTIONS, connection);
+        insertDefaultValuesForTransactions(DBConst.TABLE_RECURRING_TRANSACTION, InsertValueQueries.INSERT_RECURRING_TRANSACTIONS, connection);
 
 
     }
