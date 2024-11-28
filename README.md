@@ -16,7 +16,11 @@ To launch the application, please select Amazon Coretto Java 20.
 On your first launch of the application, you will be asked to provide credentials to the database you wish to use. Please fill out all of the fields. Once the connection is established, the app will not ask you to login again, unless it cannot connect to the database.
 
 ## Mockup
-insert mockup here
+![image](https://github.com/user-attachments/assets/9a7e3d11-92ac-4fb3-940c-2537b2fa5fcd)
+![image](https://github.com/user-attachments/assets/1fe6c246-9f7a-44df-a1dd-aab29b341b01)
+![image](https://github.com/user-attachments/assets/9c3aed21-cda1-4a6b-afe9-023e02c7e01c)
+
+
 
 ## Authors
 
@@ -31,6 +35,8 @@ insert mockup here
 ## Acknowledgements
 
 Beautiful image by Triangle Squad retrieved from [iconscout.com/lottie-animation/piggy-bank-8833143](https://iconscout.com/lottie-animation/piggy-bank-8833143)
+License:
+https://iconscout.com/licenses#iconscout
 
 ## License
 
