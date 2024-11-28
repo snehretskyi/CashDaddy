@@ -4,14 +4,11 @@ import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import org.example.java_project_iii.forms.CreateForm;
 import org.example.java_project_iii.forms.UpdateForm;
-import pojo.TransactionsPOJO;
-import services.RecurringTransactionService;
-import tables.TransactionsTable;
-import tabs.*;
+import org.example.java_project_iii.pojo.TransactionsPOJO;
+import org.example.java_project_iii.services.RecurringTransactionService;
+import org.example.java_project_iii.tabs.*;
 
 
 /**
@@ -88,7 +85,7 @@ public class Dashboard {
         BorderPane root = new BorderPane();
 
 
-        //create tabs
+        //create org.example.java_project_iii.tabs
         AddTransaction addTransaction = new AddTransaction();
         AllTransactions allTransactions = AllTransactions.getInstance();
         UpdateTransaction updateTransaction = UpdateTransaction.getInstance();
@@ -108,7 +105,7 @@ public class Dashboard {
         UpdateForm updateForm = new UpdateForm(transactionsPOJO);
         updateTransaction.setContent(updateForm);
 
-        // Add tabs to the TabPane
+        // Add org.example.java_project_iii.tabs to the TabPane
 
         //addTransaction.getContent().setRotate(90);
 
