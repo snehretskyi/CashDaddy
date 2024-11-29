@@ -80,7 +80,7 @@ public class DBConst {
                         BUDGETS_COLUMN_START_DATE + " DATE, " +
                         BUDGETS_COLUMN_END_DATE + " DATE, " +
                         "PRIMARY KEY (" + BUDGETS_COLUMN_ID + "), " +
-                        "FOREIGN KEY (" + BUDGETS_COLUMN_TRANSACTION_ID + ") REFERENCES " + TABLE_CATEGORIES + "(" + CATEGORIES_COLUMN_ID + ") );";
+                        "FOREIGN KEY (" + BUDGETS_COLUMN_TRANSACTION_ID + ") REFERENCES " + TABLE_TRANSACTIONS + "(" + TRANSACTIONS_COLUMN_ID + ") );";
 
         // TRANSACTIONS TABLE
         public static final String CREATE_TABLE_TRANSACTIONS =

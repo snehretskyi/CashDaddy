@@ -94,6 +94,23 @@ public class BudgetTable implements BudgetDAO {
 
 
     public void insertBudget(BudgetPOJO budget) {
+        String query = "INSERT INTO " + TABLE_BUDGETS +
+                "(" + BUDGETS_COLUMN_TRANSACTION_ID + ", " +
+                BUDGETS_COLUMN_GOAL_AMOUNT + ", " +
+                BUDGETS_COLUMN_START_DATE + ", " +
+                BUDGETS_COLUMN_END_DATE + ") VALUES ('" +
+                budget.getTransaction_id() + "', '" +
+                budget.getGoal_amount() + "', '" +
+                budget.getStart_date() + "', '" +
+                budget.getEnd_date() + "')";
+        try {
+            db.getConnection().createStatement().execute(query);
+            System.out.println("Budget added successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error while adding budget.");
+        }
+
     }
 
     public void addBudget(BudgetPOJO newBudget) {
