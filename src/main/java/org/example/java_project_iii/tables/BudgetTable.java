@@ -56,7 +56,7 @@ public class BudgetTable implements BudgetDAO {
             while (data.next()) {
                 budgets.add(new BudgetPOJO(
                         data.getInt(BUDGETS_COLUMN_ID),
-                        data.getInt(BUDGETS_COLUMN_CATEGORY_ID),
+                        data.getInt(BUDGETS_COLUMN_TRANSACTION_ID),
                         data.getDouble(BUDGETS_COLUMN_GOAL_AMOUNT),
                         data.getDate(BUDGETS_COLUMN_START_DATE),
                         data.getDate(BUDGETS_COLUMN_END_DATE)));
@@ -79,7 +79,7 @@ public class BudgetTable implements BudgetDAO {
             if(data.next()){
                 BudgetPOJO budget = new BudgetPOJO(
                         data.getInt(BUDGETS_COLUMN_ID),
-                        data.getInt(BUDGETS_COLUMN_CATEGORY_ID),
+                        data.getInt(BUDGETS_COLUMN_TRANSACTION_ID),
                         data.getDouble(BUDGETS_COLUMN_GOAL_AMOUNT),
                         data.getDate(BUDGETS_COLUMN_START_DATE),
                         data.getDate(BUDGETS_COLUMN_END_DATE)
