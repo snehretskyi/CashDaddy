@@ -18,7 +18,7 @@ public class DBConst {
 
         public static final String TABLE_BUDGETS = "budgets";
         public static final String BUDGETS_COLUMN_ID = "budget_id";
-        public static final String BUDGETS_COLUMN_CATEGORY_ID = "category_id";
+        public static final String BUDGETS_COLUMN_TRANSACTION_ID = "transaction_id";
         public static final String BUDGETS_COLUMN_GOAL_AMOUNT = "goal_amount";
         public static final String BUDGETS_COLUMN_START_DATE = "start_date";
         public static final String BUDGETS_COLUMN_END_DATE = "end_date";
@@ -75,12 +75,12 @@ public class DBConst {
         public static final String CREATE_TABLE_BUDGETS =
                 "CREATE TABLE " + TABLE_BUDGETS + " (" +
                         BUDGETS_COLUMN_ID + " INT NOT NULL AUTO_INCREMENT, " +
-                        BUDGETS_COLUMN_CATEGORY_ID + " INT, " +
+                        BUDGETS_COLUMN_TRANSACTION_ID + " INT, " +
                         BUDGETS_COLUMN_GOAL_AMOUNT + " DECIMAL(10, 2), " +
                         BUDGETS_COLUMN_START_DATE + " DATE, " +
                         BUDGETS_COLUMN_END_DATE + " DATE, " +
                         "PRIMARY KEY (" + BUDGETS_COLUMN_ID + "), " +
-                        "FOREIGN KEY (" + BUDGETS_COLUMN_CATEGORY_ID + ") REFERENCES " + TABLE_CATEGORIES + "(" + CATEGORIES_COLUMN_ID + ") );";
+                        "FOREIGN KEY (" + BUDGETS_COLUMN_TRANSACTION_ID + ") REFERENCES " + TABLE_CATEGORIES + "(" + CATEGORIES_COLUMN_ID + ") );";
 
         // TRANSACTIONS TABLE
         public static final String CREATE_TABLE_TRANSACTIONS =
