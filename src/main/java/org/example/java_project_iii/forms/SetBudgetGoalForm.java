@@ -1,30 +1,41 @@
 package org.example.java_project_iii.forms;
 
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import org.example.java_project_iii.pojo.BudgetPOJO;
+import org.example.java_project_iii.pojo.CategoriesPOJO;
 import org.example.java_project_iii.pojo.TransactionTypePOJO;
 import org.example.java_project_iii.tables.BudgetTable;
+import org.example.java_project_iii.tables.CategoriesTable;
 import org.example.java_project_iii.tables.TransactionTypeTable;
+import org.w3c.dom.Text;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class SetBudgetGoalForm extends VBox {
+public class SetBudgetGoalForm extends Form {
     private static SetBudgetGoalForm instance;
 
     private TextField amountField;
     private ArrayList<CheckBox> transactionTypeCheckBoxes;
+    private ComboBox<CategoriesPOJO> categoryBox;
     private DatePicker startDatePicker;
     private DatePicker endDatePicker;
 
     private SetBudgetGoalForm() throws Exception {
 
+
+        TransactionTypeTable transactionTypeTable = TransactionTypeTable.getInstance();
+        CategoriesTable categoriesTable = CategoriesTable.getInstance();
+
+        Label instructionLabel  = new Label("Choose your goal");
+
         // Create VBox for form
         VBox formVBox = new VBox(15);
         formVBox.setPadding(new Insets(20));
-
         // Start Date
         Label startDateLabel = new Label("Start Date:");
         startDatePicker = new DatePicker(LocalDate.now());
@@ -38,9 +49,13 @@ public class SetBudgetGoalForm extends VBox {
         amountField = new TextField();
         amountField.setPromptText("Enter budget goal amount");
 
+        // Categories
+        categoryBox = new ComboBox<>();
+        Label categoryLabel = new Label("Category");
+        categoryBox.setItems(FXCollections.observableArrayList(categoriesTable.getAllCategories()));
+
         // Transaction Types
         Label transactionTypeLabel = new Label("Transaction Types:");
-        TransactionTypeTable transactionTypeTable = TransactionTypeTable.getInstance();
         ArrayList<TransactionTypePOJO> allTransactionTypes = transactionTypeTable.getAllTransaction_types();
 
         VBox transactionTypeCheckBoxGroup = new VBox(5);
@@ -61,10 +76,16 @@ public class SetBudgetGoalForm extends VBox {
         // Add event handling
         confirmButton.setOnAction(event -> {
             try {
+                // Validate fields
                 if (startDatePicker.getValue() == null || endDatePicker.getValue() == null || amountField.getText().isEmpty()) {
-                    showError("All fields are required!");
+                    getErrorText().setText("All fields are required!");
+                    animateErrorText(getErrorText());
                 } else if (Double.parseDouble(amountField.getText()) <= 0) {
-                    showError("Amount must be greater than zero!");
+                    getErrorText().setText("Amount must be greater than zero!");
+                    animateErrorText(getErrorText());
+                } else if (categoryBox.getValue() == null) {
+                    getErrorText().setText("Please select a category!");
+                    animateErrorText(getErrorText());
                 } else {
                     ArrayList<String> selectedTypes = new ArrayList<>();
                     for (CheckBox checkBox : transactionTypeCheckBoxes) {
@@ -73,17 +94,19 @@ public class SetBudgetGoalForm extends VBox {
                         }
                     }
                     if (selectedTypes.isEmpty()) {
-                        showError("At least one transaction type must be selected!");
+                        getErrorText().setText("At least one transaction type must be selected!");
+                        animateErrorText(getErrorText());
                     } else {
-                        // Save the budget goal
-                        saveBudgetGoal();
+                        //TODO add method when submit
                         clearForm();
                     }
                 }
             } catch (NumberFormatException e) {
-                showError("Invalid amount entered!");
+                getErrorText().setText("Invalid amount entered!");
+                animateErrorText(getErrorText());
             } catch (Exception e) {
-                showError("An unexpected error occurred!");
+                getErrorText().setText("An unexpected error occurred!");
+                animateErrorText(getErrorText());
                 e.printStackTrace();
             }
         });
@@ -92,29 +115,30 @@ public class SetBudgetGoalForm extends VBox {
 
         // Add nodes to form VBox
         formVBox.getChildren().addAll(
+                instructionLabel,
                 startDateLabel, startDatePicker,
                 endDateLabel, endDatePicker,
                 amountLabel, amountField,
+                categoryLabel, categoryBox,
                 transactionTypeLabel, transactionTypeCheckBoxGroup,
-                buttonHBox
+                buttonHBox,
+                getErrorText()
         );
 
         this.getChildren().add(formVBox);
+        this.setAlignment(Pos.TOP_CENTER);
     }
 
-    private void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 
     private void clearForm() {
         startDatePicker.setValue(LocalDate.now());
         endDatePicker.setValue(LocalDate.now().plusMonths(1));
         amountField.clear();
+        categoryBox.setValue(null);
         for (CheckBox checkBox : transactionTypeCheckBoxes) {
             checkBox.setSelected(false);
         }
+        getErrorText().setText("");
     }
 
     private void saveBudgetGoal() throws Exception {
