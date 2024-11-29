@@ -10,10 +10,9 @@ import javafx.scene.control.*;
         import javafx.scene.layout.*;
         import javafx.beans.property.SimpleDoubleProperty;
 import org.example.java_project_iii.forms.SetBudgetGoalForm;
-import pojo.BudgetPOJO;
-import pojo.TransactionsPOJO;
-import tables.BudgetTable;
-import tables.TransactionsTable;
+import org.example.java_project_iii.pojo.BudgetPOJO;
+import org.example.java_project_iii.tables.BudgetTable;
+import org.example.java_project_iii.tables.TransactionsTable;
 
 import java.util.ArrayList;
 

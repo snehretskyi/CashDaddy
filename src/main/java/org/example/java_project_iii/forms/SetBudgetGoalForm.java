@@ -3,10 +3,10 @@ package org.example.java_project_iii.forms;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import pojo.Transaction_typePOJO;
-import tables.Transaction_typeTable;
-import pojo.BudgetPOJO;
-import tables.BudgetTable;
+import org.example.java_project_iii.pojo.BudgetPOJO;
+import org.example.java_project_iii.pojo.TransactionTypePOJO;
+import org.example.java_project_iii.tables.BudgetTable;
+import org.example.java_project_iii.tables.TransactionTypeTable;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -40,12 +40,12 @@ public class SetBudgetGoalForm extends VBox {
 
         // Transaction Types
         Label transactionTypeLabel = new Label("Transaction Types:");
-        Transaction_typeTable transactionTypeTable = Transaction_typeTable.getInstance();
-        ArrayList<Transaction_typePOJO> allTransactionTypes = transactionTypeTable.getAllTransaction_types();
+        TransactionTypeTable transactionTypeTable = TransactionTypeTable.getInstance();
+        ArrayList<TransactionTypePOJO> allTransactionTypes = transactionTypeTable.getAllTransaction_types();
 
         VBox transactionTypeCheckBoxGroup = new VBox(5);
         transactionTypeCheckBoxes = new ArrayList<>();
-        for (Transaction_typePOJO type : allTransactionTypes) {
+        for (TransactionTypePOJO type : allTransactionTypes) {
             CheckBox checkBox = new CheckBox(type.toString());
             transactionTypeCheckBoxes.add(checkBox);
             transactionTypeCheckBoxGroup.getChildren().add(checkBox);

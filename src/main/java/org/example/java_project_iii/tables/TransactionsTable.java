@@ -108,8 +108,14 @@ public class TransactionsTable implements TransactionsDAO {
                 transactions.getAmount() + "','" + transactions.getTransaction_account_id() + "','" + transactions.getTransaction_type_id() + "','" +
                 + transactions.getTransaction_category_id() + "','" + transactions.getTransaction_date() + "','" + transactions.getTransaction_description() +
                 "')";
+
+                String updateBalanceQuery = "UPDATE " + TABLE_ACCOUNTS + " SET " + ACCOUNTS_COLUMN_BALANCE +
+                        " = " + ACCOUNTS_COLUMN_BALANCE + " + " + transactions.getAmount() +
+                        " WHERE " + ACCOUNTS_COLUMN_ID + " = " + transactions.getTransaction_account_id();
+
         try {
             getDb().getConnection().createStatement().execute(query);
+            getDb().getConnection().createStatement().executeUpdate(updateBalanceQuery);
 
             // get automatically generated id, update org.example.java_project_iii.pojo with it
             Statement getAutoId = getDb().getConnection().createStatement();
@@ -137,8 +143,21 @@ public class TransactionsTable implements TransactionsDAO {
                 TRANSACTIONS_COLUMN_DESCRIPTION + " = '" + transactions.getTransaction_description() + "'" + "," +
                 TRANSACTIONS_COLUMN_TRANSACTION_DATE + " = '" + transactions.getTransaction_date() + "'" +
                 " WHERE " + TRANSACTIONS_COLUMN_ID + " = " + transactions.getId();
+
+        String reverseOldAmountQuery = "UPDATE " + TABLE_ACCOUNTS + " SET " + ACCOUNTS_COLUMN_BALANCE +
+                " = " + ACCOUNTS_COLUMN_BALANCE + " - (SELECT " + TRANSACTIONS_COLUMN_AMOUNT +
+                " FROM " + TABLE_TRANSACTIONS + " WHERE " + TRANSACTIONS_COLUMN_ID + " = " + transactions.getId() + ")" +
+                " WHERE " + ACCOUNTS_COLUMN_ID + " = " + transactions.getTransaction_account_id();
+
+        String applyNewAmountQuery = "UPDATE " + TABLE_ACCOUNTS + " SET " + ACCOUNTS_COLUMN_BALANCE +
+                " = " + ACCOUNTS_COLUMN_BALANCE + " + " + transactions.getAmount() +
+                " WHERE " + ACCOUNTS_COLUMN_ID + " = " + transactions.getTransaction_account_id();
+
         try {
             Statement updateItem = getDb().getConnection().createStatement();
+            getDb().getConnection().createStatement().executeUpdate(reverseOldAmountQuery);
+            getDb().getConnection().createStatement().executeUpdate(applyNewAmountQuery);
+
             System.out.println("Updated Transaction!");
             updateItem.executeUpdate(query);
         } catch (SQLException e) {
@@ -161,7 +180,14 @@ public class TransactionsTable implements TransactionsDAO {
         String deleteFromTransaction = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " +
                 TRANSACTIONS_COLUMN_ID + " = ?";
 
+        String adjustBalanceQuery = "UPDATE " + TABLE_ACCOUNTS + " SET " + ACCOUNTS_COLUMN_BALANCE +
+                " = " + ACCOUNTS_COLUMN_BALANCE + " - (SELECT " + TRANSACTIONS_COLUMN_AMOUNT +
+                " FROM " + TABLE_TRANSACTIONS + " WHERE " + TRANSACTIONS_COLUMN_ID + " = " + id + ")" +
+                " WHERE " + ACCOUNTS_COLUMN_ID + " = (SELECT " + TRANSACTIONS_COLUMN_ACCOUNT_ID +
+                " FROM " + TABLE_TRANSACTIONS + " WHERE " + TRANSACTIONS_COLUMN_ID + " = " + id + ")";
+
         try {
+            getDb().getConnection().createStatement().executeUpdate(adjustBalanceQuery);
             PreparedStatement stmt1 = getDb().getConnection().prepareStatement(deleteFromRecurringTransaction);
             stmt1.setInt(1, id);
             stmt1.executeUpdate();

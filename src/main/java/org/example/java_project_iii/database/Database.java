@@ -49,7 +49,6 @@ public class Database {
         insertDefaultValuesForTransactions(DBConst.TABLE_TRANSACTIONS, InsertValueQueries.INSERT_TRANSACTIONS, connection);
         insertDefaultValuesForTransactions(DBConst.TABLE_RECURRING_TRANSACTION, InsertValueQueries.INSERT_RECURRING_TRANSACTIONS, connection);
 
-
     }
 
     public static Database getInstance() throws Exception {
