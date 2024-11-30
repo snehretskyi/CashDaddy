@@ -1,20 +1,11 @@
 package org.example.java_project_iii.tabs;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.chart.*;
 import javafx.scene.control.Tab;
-import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.beans.property.SimpleDoubleProperty;
 import org.example.java_project_iii.forms.SetBudgetGoalForm;
-import org.example.java_project_iii.pojo.BudgetPOJO;
+import org.example.java_project_iii.services.BarChartGenerator;
 import org.example.java_project_iii.services.BudgetView;
-import org.example.java_project_iii.services.LineChartGenerator;
-import org.example.java_project_iii.tables.BudgetTable;
-import org.example.java_project_iii.tables.TransactionsTable;
-
-import java.util.ArrayList;
 
 public class BudgetGoalTracker extends Tab{
 
@@ -29,16 +20,14 @@ public class BudgetGoalTracker extends Tab{
        VBox vBoxFormTable = new VBox();
        vBoxFormTable.getChildren().addAll(SetBudgetGoalForm.getInstance(),BudgetView.getInstance().BudgetView() );
 
-        LineChartGenerator chartGenerator = LineChartGenerator.getInstance();
+        BarChartGenerator chartGenerator = BarChartGenerator.getInstance();
 
         // Assuming budgetId is the ID of the budget you want to generate the chart for
-        int budgetId = 3; // Replace with actual budget ID
+        int budgetId = 8; // Replace with the actual budget ID
 
-        // Generate the chart using the LineChartGenerator
-        goalProgressChart = chartGenerator.createGoalProgressChart(budgetId);
+        // Generate the bar chart using the BarChartGenerator
+        BarChart<String, Number> goalProgressChart = chartGenerator.createGoalProgressBarChart(budgetId);
 
-        // Add the generated chart to the center of the BorderPane
-        root.setCenter(goalProgressChart);
         // Set the form VBox to the left and the chart to the center
         root.setLeft(vBoxFormTable);
         root.setCenter(goalProgressChart);

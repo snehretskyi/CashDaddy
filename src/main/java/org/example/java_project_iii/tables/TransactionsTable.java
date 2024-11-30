@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.example.java_project_iii.database.DBConst.*;
 
@@ -267,4 +268,5 @@ public class TransactionsTable implements TransactionsDAO {
 
     public void addTransactionListener(Object o) {
     }
+
 }

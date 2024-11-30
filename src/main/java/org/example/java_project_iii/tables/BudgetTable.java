@@ -3,11 +3,13 @@ package org.example.java_project_iii.tables;
 import org.example.java_project_iii.dao.BudgetDAO;
 import org.example.java_project_iii.database.Database;
 import org.example.java_project_iii.pojo.BudgetPOJO;
+import org.example.java_project_iii.pojo.TransactionsPOJO;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.example.java_project_iii.database.DBConst.*;
 
@@ -125,4 +127,6 @@ public class BudgetTable implements BudgetDAO {
         }
     }
 
+//    public List<TransactionsPOJO> getTransactionsForBudget(int budgetId) {
+//    }
 }
