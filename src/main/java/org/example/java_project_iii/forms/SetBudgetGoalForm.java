@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import org.example.java_project_iii.pojo.BudgetPOJO;
 import org.example.java_project_iii.pojo.TransactionTypePOJO;
+import org.example.java_project_iii.services.BudgetView;
 import org.example.java_project_iii.tables.BudgetTable;
 import org.example.java_project_iii.tables.TransactionTypeTable;
 import java.sql.Date;
@@ -18,7 +19,8 @@ public class SetBudgetGoalForm extends Form {
     private DatePicker startDatePicker;
     private DatePicker endDatePicker;
     private ToggleGroup transactionTypeGroup;
-    private VBox transactionTypeRadioBox;
+    private HBox transactionTypeRadioBox;
+    private HBox dateBox;
 
     private SetBudgetGoalForm() throws Exception {
 
@@ -42,6 +44,11 @@ public class SetBudgetGoalForm extends Form {
         Label endDateLabel = new Label("End Date:");
         endDatePicker = new DatePicker(LocalDate.now().plusMonths(1));
 
+        //Dates side by side
+        VBox startDateVbox = new VBox(startDateLabel, startDatePicker);
+        VBox endDateVbox = new VBox(endDateLabel, endDatePicker);
+        dateBox = new HBox(20, startDateVbox, endDateVbox);
+
         // Amount
         Label amountLabel = new Label("Goal Amount:");
         amountField = new TextField();
@@ -50,7 +57,14 @@ public class SetBudgetGoalForm extends Form {
         // Transaction Types
         Label transactionTypeLabel = new Label("Transaction Type:");
         transactionTypeGroup = new ToggleGroup();
-        transactionTypeRadioBox = new VBox(10);
+        transactionTypeRadioBox = new HBox(10);
+
+        //Amount and transactions side by side
+        VBox amountVbox = new VBox(10,amountLabel, amountField);
+        VBox transactionTypeVbox = new VBox(10,transactionTypeLabel, transactionTypeRadioBox);
+        HBox amountTransactionHbox = new HBox(60,amountVbox, transactionTypeVbox);
+
+
 
         transactionTypes.forEach(transactionType -> {
             RadioButton transactionTypeRadio = new RadioButton(transactionType.toString());
@@ -88,6 +102,10 @@ public class SetBudgetGoalForm extends Form {
                             Date.valueOf(endDatePicker.getValue())
                     );
                         budgetTable.insertBudget(budget);
+
+                        BudgetView budgetView = BudgetView.getInstance();
+                        budgetView.refreshTable(BudgetTable.getInstance());
+
                         clearForm();
                 }
             } catch (NumberFormatException e) {
@@ -102,13 +120,13 @@ public class SetBudgetGoalForm extends Form {
 
         clearButton.setOnAction(event -> clearForm());
 
+        this.getChildren().clear();
+
         // Add nodes to form VBox
         formVBox.getChildren().addAll(
                 instructionLabel,
-                startDateLabel, startDatePicker,
-                endDateLabel, endDatePicker,
-                amountLabel, amountField,
-                transactionTypeLabel, transactionTypeRadioBox,
+                dateBox,
+                amountTransactionHbox,
                 buttonHBox,
                 getErrorText()
         );

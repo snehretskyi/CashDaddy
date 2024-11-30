@@ -80,7 +80,7 @@ public class TransactionTypeTable implements Transaction_typeDAO {
                         data.getInt(TRANSACTION_TYPES_COLUMN_ID),
                         data.getString(TRANSACTION_TYPES_COLUMN_TYPE)
                 );
-                return null;
+                return category;
             }
         } catch(Exception e){
             e.printStackTrace();

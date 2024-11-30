@@ -84,7 +84,7 @@ public class BudgetTable implements BudgetDAO {
                         data.getDate(BUDGETS_COLUMN_START_DATE),
                         data.getDate(BUDGETS_COLUMN_END_DATE)
                 );
-                return null;
+                return budget;
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -113,6 +113,16 @@ public class BudgetTable implements BudgetDAO {
 
     }
 
-    public void addBudget(BudgetPOJO newBudget) {
+    //TODO need to write logic
+    public void removeBudget(int id) {
+        String query = "DELETE FROM " + TABLE_BUDGETS + " WHERE " + BUDGETS_COLUMN_ID + " = " + id;
+        try {
+            db.getConnection().createStatement().execute(query);
+            System.out.println("Budget record deleted successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Error while deleting budget record.");
+        }
     }
+
 }

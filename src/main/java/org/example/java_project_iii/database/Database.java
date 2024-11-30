@@ -1,6 +1,9 @@
 package org.example.java_project_iii.database;
 
 
+import org.example.java_project_iii.pojo.BudgetPOJO;
+import org.example.java_project_iii.tables.BudgetTable;
+
 import java.sql.*;
 
 import static org.example.java_project_iii.database.Const.*;
