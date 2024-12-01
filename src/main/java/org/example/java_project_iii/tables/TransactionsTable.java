@@ -265,8 +265,4 @@ public class TransactionsTable implements TransactionsDAO {
         throw new Exception("Transaction not found for ID: " + transactionId);
     }
 
-
-    public void addTransactionListener(Object o) {
-    }
-
 }

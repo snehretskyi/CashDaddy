@@ -71,16 +71,6 @@ public class DBConst {
                         ACCOUNTS_COLUMN_INFORMATION + " VARCHAR(255), " +
                         "PRIMARY KEY (" + ACCOUNTS_COLUMN_ID + ") );";
 
-        // BUDGETS TABLE
-        public static final String CREATE_TABLE_BUDGETS =
-                "CREATE TABLE " + TABLE_BUDGETS + " (" +
-                        BUDGETS_COLUMN_ID + " INT NOT NULL AUTO_INCREMENT, " +
-                        BUDGETS_COLUMN_TRANSACTION_ID + " INT, " +
-                        BUDGETS_COLUMN_GOAL_AMOUNT + " DECIMAL(10, 2), " +
-                        BUDGETS_COLUMN_START_DATE + " DATE, " +
-                        BUDGETS_COLUMN_END_DATE + " DATE, " +
-                        "PRIMARY KEY (" + BUDGETS_COLUMN_ID + "), " +
-                        "FOREIGN KEY (" + BUDGETS_COLUMN_TRANSACTION_ID + ") REFERENCES " + TABLE_TRANSACTIONS + "(" + TRANSACTIONS_COLUMN_ID + ") );";
 
         // TRANSACTIONS TABLE
         public static final String CREATE_TABLE_TRANSACTIONS =
@@ -96,6 +86,18 @@ public class DBConst {
                         "FOREIGN KEY (" + TRANSACTIONS_COLUMN_ACCOUNT_ID + ") REFERENCES " + TABLE_ACCOUNTS + "(" + ACCOUNTS_COLUMN_ID + "), " +
                         "FOREIGN KEY (" + TRANSACTIONS_COLUMN_TRANSACTION_TYPE_ID + ") REFERENCES " + TABLE_TRANSACTION_TYPES + "(" + TRANSACTION_TYPES_COLUMN_ID + "), " +
                         "FOREIGN KEY (" + TRANSACTIONS_COLUMN_CATEGORY_ID + ") REFERENCES " + TABLE_CATEGORIES + "(" + CATEGORIES_COLUMN_ID + ") );";
+
+        // BUDGETS TABLE
+        public static final String CREATE_TABLE_BUDGETS =
+                "CREATE TABLE " + TABLE_BUDGETS + " (" +
+                        BUDGETS_COLUMN_ID + " INT NOT NULL AUTO_INCREMENT, " +
+                        BUDGETS_COLUMN_TRANSACTION_ID + " INT, " +
+                        BUDGETS_COLUMN_GOAL_AMOUNT + " DECIMAL(10, 2), " +
+                        BUDGETS_COLUMN_START_DATE + " DATE, " +
+                        BUDGETS_COLUMN_END_DATE + " DATE, " +
+                        "PRIMARY KEY (" + BUDGETS_COLUMN_ID + "), " +
+                        "FOREIGN KEY (" + BUDGETS_COLUMN_TRANSACTION_ID + ") REFERENCES " + TABLE_TRANSACTIONS + "(" + TRANSACTIONS_COLUMN_ID + ") );";
+
 
         // CATEGORIES TABLE
         public static final String CREATE_TABLE_CATEGORIES =

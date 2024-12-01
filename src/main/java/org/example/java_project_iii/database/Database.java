@@ -41,8 +41,8 @@ public class Database {
         createTable(DBConst.TABLE_TRANSACTION_TYPES, DBConst.CREATE_TABLE_TRANSACTION_TYPES, connection);
         createTable(DBConst.TABLE_ACCOUNTS, DBConst.CREATE_TABLE_ACCOUNTS, connection);
         createTable(DBConst.TABLE_CATEGORIES, DBConst.CREATE_TABLE_CATEGORIES, connection);
-        createTable(DBConst.TABLE_BUDGETS, DBConst.CREATE_TABLE_BUDGETS, connection);
         createTable(DBConst.TABLE_TRANSACTIONS, DBConst.CREATE_TABLE_TRANSACTIONS, connection);
+        createTable(DBConst.TABLE_BUDGETS, DBConst.CREATE_TABLE_BUDGETS, connection);
         createTable(DBConst.TABLE_RECURRING_TRANSACTION, DBConst.CREATE_TABLE_RECURRING_TRANSACTION, connection);
 
         insertDefaultValues(DBConst.TABLE_TRANSACTION_TYPES, InsertValueQueries.INSERT_TRANSACTION_TYPES, connection);

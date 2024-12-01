@@ -5,14 +5,18 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.example.java_project_iii.database.Database;
 import org.example.java_project_iii.pojo.BudgetPOJO;
 import org.example.java_project_iii.pojo.TransactionTypePOJO;
 import org.example.java_project_iii.pojo.TransactionsPOJO;
@@ -20,19 +24,29 @@ import org.example.java_project_iii.tables.BudgetTable;
 import org.example.java_project_iii.tables.TransactionTypeTable;
 import org.example.java_project_iii.tables.TransactionsTable;
 
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
+
+import static org.example.java_project_iii.database.DBConst.TABLE_BUDGETS;
 
 public class BudgetView {
     private static BudgetView instance;
     private VBox budgetViewVBox;
     private TableView<BudgetPOJO> tableView;
     private LineChart<Number, Number> goalProgressChart;
+    private BorderPane parentLayout;
+    Database db;
 
     private BudgetView() throws Exception {
+
+
         // Initialize TableView
         tableView = new TableView<>();
         BudgetTable budgetTable = BudgetTable.getInstance();
         TransactionTypeTable transactionTypeTable = TransactionTypeTable.getInstance();
+
 
         // Columns
         TableColumn<BudgetPOJO, String> transactionTypeColumn = new TableColumn<>("Transaction Type");
@@ -62,6 +76,7 @@ public class BudgetView {
 
         // Add columns to tableView
         tableView.getColumns().addAll(transactionTypeColumn, goalAmountColumn, startDateColumn, endDateColumn);
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
         // Populate TableView
         refreshTable(budgetTable);
@@ -78,27 +93,28 @@ public class BudgetView {
             }
         });
 
-        //See Your progress button
-        Button seeYourProgress = new Button("Track Progress");
-        seeYourProgress.setOnAction(event -> {
-            BudgetPOJO selectedBudget = tableView.getSelectionModel().getSelectedItem();
-            if (selectedBudget != null) {
-                try {
-                    // Update the chart data based on the selected budget ID
-                    //updateChartData(selectedBudget.getId());
-                } catch (Exception e) {
-                    e.printStackTrace();
+        tableView.setRowFactory(tv -> {
+            TableRow<BudgetPOJO> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                    BudgetPOJO selectedBudget = row.getItem();
+                    try {
+                        if (selectedBudget != null) {
+                            // Pass the selected budget ID to update the chart
+                            int budgetId = selectedBudget.getId();
+                            updateChart(budgetId);
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                 }
-            } else {
-                System.out.println("No budget selected.");
-            }
+            });
+            return row;
         });
-
-
 
         // Layout
 
-        HBox buttonBox = new HBox(10, seeYourProgress, removeButton);
+        HBox buttonBox = new HBox(removeButton);
         buttonBox.setPadding(new Insets(10));
         buttonBox.setAlignment(Pos.CENTER);
 
@@ -106,42 +122,27 @@ public class BudgetView {
         budgetViewVBox.setPadding(new Insets(20));
     }
 
-//    private void updateChartData(int budgetId) throws Exception {
-//        BudgetPOJO selectedBudget = BudgetTable.getInstance().getBudget(budgetId);
-//        List<TransactionsPOJO> transactions = TransactionsTable.getInstance().getTransactionsForBudget(budgetId);
-//
-//        double totalSpent = 0.0;
-//        for (TransactionsPOJO transaction : transactions) {
-//            if (transaction.getTransaction_date().after(selectedBudget.getStart_date()) && transaction.getTransaction_date().before(selectedBudget.getEnd_date())) {
-//                totalSpent += transaction.getAmount();
-//            }
-//        }
-//
-//        double goalAmount = selectedBudget.getGoal_amount();
-//        double percentageAchieved = (totalSpent / goalAmount) * 100;
-//
-//        if (goalProgressChart != null) {
-//            goalProgressChart.getData().clear();
-//        }
-//
-//        XYChart.Series<Number, Number> progressSeries = new XYChart.Series<>();
-//        progressSeries.setName("Goal Progress");
-//        progressSeries.getData().add(new XYChart.Data<>(0, 0));
-//        progressSeries.getData().add(new XYChart.Data<>(1, percentageAchieved));
-//
-//        if (goalProgressChart == null) {
-//            goalProgressChart = new LineChart<>(new NumberAxis(), new NumberAxis());
-//            goalProgressChart.getData().add(progressSeries);
-//        } else {
-//            goalProgressChart.getData().add(progressSeries);
-//        }
-//    }
+    public void setParentLayout(BorderPane parentLayout) {
+        this.parentLayout = parentLayout;
+    }
+
+    public void updateChart(int budgetId) throws Exception {
+        // Get the instance of BarChartGenerator
+            BarChartGenerator chartGenerator = BarChartGenerator.getInstance();
+
+            // Generate the new chart with the selected budget ID
+            BarChart<String, Number> updatedChart = chartGenerator.createGoalProgressBarChart(budgetId);
+
+            parentLayout.setCenter(updatedChart);
+        }
 
 
     public void refreshTable(BudgetTable budgetTable) throws Exception {
         tableView.getItems().clear();
         tableView.getItems().addAll(budgetTable.getAllBudgets());
     }
+
+
 
     public static BudgetView getInstance() throws Exception {
         if (instance == null) {
