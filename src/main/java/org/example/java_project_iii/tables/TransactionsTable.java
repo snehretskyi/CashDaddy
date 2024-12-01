@@ -119,6 +119,7 @@ public class TransactionsTable implements TransactionsDAO {
         try {
             getDb().getConnection().createStatement().execute(query);
             getDb().getConnection().createStatement().executeUpdate(updateBalanceQuery);
+            budgetView.updateChart(BudgetView.getSelectedID());
             budgetView.refreshTable(budgetTable);
 
             // get automatically generated id, update org.example.java_project_iii.pojo with it
