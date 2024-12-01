@@ -7,10 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -42,7 +39,8 @@ public class BudgetView {
 
 
         // Initialize TableView
-        tableView = new TableView<>();
+        tableView = new TableView();
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         BudgetTable budgetTable = BudgetTable.getInstance();
         TransactionTypeTable transactionTypeTable = TransactionTypeTable.getInstance();
 
@@ -64,14 +62,14 @@ public class BudgetView {
             }
         });
 
-        TableColumn<BudgetPOJO, Double> goalAmountColumn = new TableColumn<>("Goal Amount");
+        TableColumn<BudgetPOJO, Double> goalAmountColumn = new TableColumn("Goal Amount");
         goalAmountColumn.setCellValueFactory(e -> new SimpleDoubleProperty(e.getValue().getGoal_amount()).asObject());
 
-        TableColumn<BudgetPOJO, String> startDateColumn = new TableColumn<>("Start Date");
-        startDateColumn.setCellValueFactory(e -> new SimpleObjectProperty<>(e.getValue().getStart_date().toString()));
+        TableColumn<BudgetPOJO, String> startDateColumn = new TableColumn("Start Date");
+        startDateColumn.setCellValueFactory(e -> new SimpleObjectProperty(e.getValue().getStart_date().toString()));
 
-        TableColumn<BudgetPOJO, String> endDateColumn = new TableColumn<>("End Date");
-        endDateColumn.setCellValueFactory(e -> new SimpleObjectProperty<>(e.getValue().getEnd_date().toString()));
+        TableColumn<BudgetPOJO, String> endDateColumn = new TableColumn("End Date");
+        endDateColumn.setCellValueFactory(e -> new SimpleObjectProperty(e.getValue().getEnd_date().toString()));
 
         // Add columns to tableView
         tableView.getColumns().addAll(transactionTypeColumn, goalAmountColumn, startDateColumn, endDateColumn);
@@ -86,6 +84,7 @@ public class BudgetView {
             List<BudgetPOJO> selectedItems = tableView.getSelectionModel().getSelectedItems();
             selectedItems.forEach(item -> budgetTable.removeBudget(item.getId())); // Add removeBudget method in BudgetTable
             try {
+                updateChart(selectedID);
                 refreshTable(budgetTable);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -93,7 +92,7 @@ public class BudgetView {
         });
 
         tableView.setRowFactory(tv -> {
-            TableRow<BudgetPOJO> row = new TableRow<>();
+            TableRow<BudgetPOJO> row = new TableRow();
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !row.isEmpty()) {
                     BudgetPOJO selectedBudget = row.getItem();
@@ -119,6 +118,13 @@ public class BudgetView {
 
         budgetViewVBox = new VBox(10, tableView, buttonBox);
         budgetViewVBox.setPadding(new Insets(20));
+
+        //Apply styles to nodes, load the stylesheet
+        tableView.getStyleClass().add("table-view");
+        removeButton.getStyleClass().add("button");
+
+        budgetViewVBox.getStylesheets().add(this.getClass().getResource("/css/displayTransactions.css").toExternalForm());
+
     }
 
     public void setParentLayout(BorderPane parentLayout) {
