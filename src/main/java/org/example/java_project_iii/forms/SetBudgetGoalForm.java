@@ -54,8 +54,8 @@ public class SetBudgetGoalForm extends Form {
         endDatePicker = new DatePicker(LocalDate.now().plusMonths(1));
 
         //Dates side by side
-        VBox startDateVbox = new VBox(startDateLabel, startDatePicker);
-        VBox endDateVbox = new VBox(endDateLabel, endDatePicker);
+        VBox startDateVbox = new VBox(10,startDateLabel, startDatePicker);
+        VBox endDateVbox = new VBox(10,endDateLabel, endDatePicker);
         dateBox = new HBox(20, startDateVbox, endDateVbox);
 
         // Amount
@@ -143,6 +143,18 @@ public class SetBudgetGoalForm extends Form {
 
         this.getChildren().add(formVBox);
         this.setAlignment(Pos.TOP_CENTER);
+
+        // Apply CSS style classes in the form
+        instructionLabel.getStyleClass().add("instruction-text");
+        startDateLabel.getStyleClass().add("form-label");
+        endDateLabel.getStyleClass().add("form-label");
+        amountLabel.getStyleClass().add("form-label");
+        transactionTypeRadioBox.getStyleClass().add("transaction-type-radio-box");
+        confirmButton.getStyleClass().add("confirm-button");
+        clearButton.getStyleClass().add("clear-button");
+
+        this.getStylesheets().add(getClass().getClassLoader().getResource("css/forms.css").toExternalForm());
+
     }
 
     /**

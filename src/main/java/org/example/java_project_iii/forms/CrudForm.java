@@ -177,7 +177,7 @@ public abstract class CrudForm extends Form {
         // styling (˶◕‿◕˶)
         formGrid.getStyleClass().add("form-grid");
 
-        // Apply styles for the form name label
+        // // Apply CSS style classes in the form
         dateLabel.getStyleClass().add("form-label");
         amountLabel.getStyleClass().add("form-label");
         categoryLabel.getStyleClass().add("form-label");
