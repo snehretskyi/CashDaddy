@@ -44,15 +44,20 @@ public class DBHelper {
         ResultSet resultSet = md.getTables(DB_NAME, null, tableName, null);
 
         if (resultSet.next()) {
-            // Check if the table exists and has data
+
             String checkQuery = "SELECT COUNT(*) FROM " + tableName;
             statement = connection.createStatement();
             ResultSet countResultSet = statement.executeQuery(checkQuery);
 
-            // Assuming there's a specific way to check if data is missing (e.g., counting rows)
             if (countResultSet.next() && countResultSet.getInt(1) > 0) {
                 System.out.println("Default values already inserted into the " + tableName + " table.");
             } else {
+
+                // Reset AUTO_INCREMENT and insert default values
+                String resetAutoIncrementQuery = "ALTER TABLE " + tableName + " AUTO_INCREMENT = 1";
+                statement.execute(resetAutoIncrementQuery);
+                System.out.println("AUTO_INCREMENT reset to 1 for table: " + tableName);
+
                 // Insert default values
                 statement.execute(insertQuery);
                 System.out.println("Default values have been inserted into the " + tableName + " table.");

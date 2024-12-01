@@ -56,7 +56,8 @@ public class BarChartGenerator {
         // Fetch budget details (goal amount, start date, end date)
         BudgetPOJO budget = BudgetTable.getInstance().getBudget(budgetId);
         if (budget == null) {
-            throw new Exception("Budget not found.");
+            System.out.println("Budget not found.");
+            return createPlaceholderChart("Please set/select your budget goal.");
         }
 
         double goalAmount = budget.getGoal_amount();
@@ -120,7 +121,27 @@ public class BarChartGenerator {
         barChart.getData().add(series);
 
         return barChart;
+
     }
+
+    /**
+     * Create a placeholder bar chart to display a message when no data is available
+     * @param message the message to display on the chart
+     * @return a bar chart with the message as its title
+     */
+    private BarChart<String, Number> createPlaceholderChart(String message) {
+        // Create axes
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+
+        // Create the bar chart
+        BarChart<String, Number> placeholderChart = new BarChart<>(xAxis, yAxis);
+        placeholderChart.setTitle(message); // Set the message as the title
+        placeholderChart.setLegendVisible(false); // Hide legend since no data exists
+
+        return placeholderChart;
+    }
+
 
     private List<TransactionsPOJO> fetchTransactionsForBudget(int budgetId, Date startDate, Date endDate) throws SQLException {
         List<TransactionsPOJO> transactions = new ArrayList<>();
