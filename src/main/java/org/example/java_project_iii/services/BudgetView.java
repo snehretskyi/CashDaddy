@@ -11,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.example.java_project_iii.database.Database;
 import org.example.java_project_iii.pojo.BudgetPOJO;
 import org.example.java_project_iii.pojo.TransactionTypePOJO;
 import org.example.java_project_iii.pojo.TransactionsPOJO;
@@ -37,13 +36,11 @@ public class BudgetView {
 
     private BudgetView() throws Exception {
 
-
         // Initialize TableView
         tableView = new TableView();
         tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         BudgetTable budgetTable = BudgetTable.getInstance();
         TransactionTypeTable transactionTypeTable = TransactionTypeTable.getInstance();
-
 
         // Columns
         TableColumn<BudgetPOJO, String> transactionTypeColumn = new TableColumn<>("Transaction Type");

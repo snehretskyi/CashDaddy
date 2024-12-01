@@ -2,8 +2,8 @@
 .root {
     -fx-background-color:  #f5f5ef;
     -fx-border-color: #939353;
-     -fx-border-width: 3;
-     -fx-border-style: solid;
+    -fx-border-width: 3;
+    -fx-border-style: solid;
 }
 
 .heading-box {

@@ -121,7 +121,6 @@ public class BarChartGenerator {
         barChart.getData().add(series);
 
         return barChart;
-
     }
 
     /**
