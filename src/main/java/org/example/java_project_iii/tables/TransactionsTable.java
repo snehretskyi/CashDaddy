@@ -4,12 +4,12 @@ import org.example.java_project_iii.dao.TransactionsDAO;
 import org.example.java_project_iii.database.Database;
 import org.example.java_project_iii.pojo.DisplayTransaction;
 import org.example.java_project_iii.pojo.TransactionsPOJO;
+import org.example.java_project_iii.services.BudgetView;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.example.java_project_iii.database.DBConst.*;
 
@@ -21,6 +21,8 @@ public class TransactionsTable implements TransactionsDAO {
      */
     private static TransactionsTable instance;
     Database db=Database.getInstance();
+    BudgetView budgetView = BudgetView.getInstance();
+    BudgetTable budgetTable = BudgetTable.getInstance();
 
     private TransactionsTable() throws Exception {
         db = Database.getInstance();
@@ -117,6 +119,7 @@ public class TransactionsTable implements TransactionsDAO {
         try {
             getDb().getConnection().createStatement().execute(query);
             getDb().getConnection().createStatement().executeUpdate(updateBalanceQuery);
+            budgetView.refreshTable(budgetTable);
 
             // get automatically generated id, update org.example.java_project_iii.pojo with it
             Statement getAutoId = getDb().getConnection().createStatement();
@@ -158,6 +161,8 @@ public class TransactionsTable implements TransactionsDAO {
             Statement updateItem = getDb().getConnection().createStatement();
             getDb().getConnection().createStatement().executeUpdate(reverseOldAmountQuery);
             getDb().getConnection().createStatement().executeUpdate(applyNewAmountQuery);
+            budgetView.updateChart(BudgetView.getSelectedID());
+            budgetView.refreshTable(budgetTable);
 
             System.out.println("Updated Transaction!");
             updateItem.executeUpdate(query);
@@ -197,6 +202,8 @@ public class TransactionsTable implements TransactionsDAO {
             PreparedStatement stmt2 = getDb().getConnection().prepareStatement(deleteFromTransaction);
             stmt2.setInt(1, id);
             stmt2.executeUpdate();
+            budgetView.updateChart(BudgetView.getSelectedID());
+            budgetView.refreshTable(budgetTable);
             System.out.println("Deleted record from transactions");
 
         } catch (SQLException e) {

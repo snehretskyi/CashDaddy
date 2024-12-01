@@ -5,38 +5,42 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.*;
 import org.example.java_project_iii.database.Database;
 import org.example.java_project_iii.forms.SetBudgetGoalForm;
-import org.example.java_project_iii.pojo.BudgetPOJO;
-import org.example.java_project_iii.services.BarChartGenerator;
 import org.example.java_project_iii.services.BudgetView;
 import org.example.java_project_iii.tables.BudgetTable;
-
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 import static org.example.java_project_iii.database.DBConst.TABLE_BUDGETS;
 
-public class BudgetGoalTracker extends Tab{
+/**
+ * Tab for tracking budget goals
+ */
+public class BudgetGoalTracker extends Tab {
 
     private BarChart<String, Number> progressChart;
     private LineChart<Number, Number> goalProgressChart;
     Database db;
 
+    /**
+     * Constructor
+     * Sets up the tab with a form, table and chart
+     * @throws Exception is any error occur
+     */
     public BudgetGoalTracker() throws Exception {
         // Set the title of the tab
         this.setText("Budget Goal Tracker");
         db = Database.getInstance();
-       BorderPane root = new BorderPane();
+        BorderPane root = new BorderPane();
 
-       VBox vBoxFormTable = new VBox();
-       vBoxFormTable.getChildren().addAll(SetBudgetGoalForm.getInstance(),BudgetView.getInstance().BudgetView() );
+        VBox vBoxFormTable = new VBox();
+        vBoxFormTable.getChildren().addAll(SetBudgetGoalForm.getInstance(), BudgetView.getInstance().BudgetView());
 
-       BudgetView budgetView = BudgetView.getInstance();
-        // Set the form VBox to the left and the chart to the center
-        root.setLeft(vBoxFormTable);
+        BudgetView budgetView = BudgetView.getInstance();
 
         budgetView.setParentLayout(root);
+        root.setLeft(vBoxFormTable);
 
-        //select first id from budget table
+        //select first id from budget table to show the chart
         Database db = Database.getInstance();
 
         String query = "SELECT budget_id FROM " + TABLE_BUDGETS + " ORDER BY budget_id ASC LIMIT 1";
@@ -44,10 +48,10 @@ public class BudgetGoalTracker extends Tab{
         ResultSet resultSet = statement.executeQuery(query);
 
         if (resultSet.next()) {
-            int firstBudgetId = resultSet.getInt("budget_id");
-            System.out.println("First Budget ID: " + firstBudgetId);
+            BudgetView.setSelectedID(resultSet.getInt("budget_id"));
+            System.out.println("First Budget ID: " + BudgetView.getSelectedID());
 
-            budgetView.updateChart(firstBudgetId);
+            budgetView.updateChart(BudgetView.getSelectedID());
         }
 
         budgetView.refreshTable(BudgetTable.getInstance());

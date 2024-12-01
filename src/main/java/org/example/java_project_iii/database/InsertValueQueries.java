@@ -76,5 +76,18 @@ public class InsertValueQueries {
                     "(9, 30, '2024-12-07'), " +
                     "(16, 30, '2024-12-08');";
 
+    /**
+     * Insert values in Budget table
+     */
+    public static final String INSERT_BUDGETS =
+            "INSERT INTO " + TABLE_BUDGETS + " (" +
+                    BUDGETS_COLUMN_TRANSACTION_ID + ", " +
+                    BUDGETS_COLUMN_GOAL_AMOUNT + ", " +
+                    BUDGETS_COLUMN_START_DATE + ", " +
+                    BUDGETS_COLUMN_END_DATE + ") " +
+                    "VALUES " +
+                    "(2, 3000.00, '2024-11-01', '2024-12-30'), " +
+                    "(1, 2500.00, '2024-11-01', '2024-12-30');";
+
 }
 

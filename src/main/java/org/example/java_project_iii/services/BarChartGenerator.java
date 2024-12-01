@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 
+/**
+ * Singleton class for generating bar charts to track budget goals
+ */
 public class BarChartGenerator {
     private static BarChartGenerator instance;
     private Database db;
@@ -26,6 +29,11 @@ public class BarChartGenerator {
         this.db = Database.getInstance();
     }
 
+    /**
+     * Get the singleton instance of BarChartGenerator
+     * @return the single instance of this class
+     * @throws Exception if any error occur
+     */
     public static BarChartGenerator getInstance() throws Exception {
         if (instance == null) {
             synchronized (BarChartGenerator.class) {
@@ -37,7 +45,14 @@ public class BarChartGenerator {
         return instance;
     }
 
+    /**
+     * Create a bar chart
+     * @param budgetId unique id for each row
+     * @return barchart
+     * @throws Exception if there is any error
+     */
     public BarChart<String, Number> createGoalProgressBarChart(int budgetId) throws Exception {
+
         // Fetch budget details (goal amount, start date, end date)
         BudgetPOJO budget = BudgetTable.getInstance().getBudget(budgetId);
         if (budget == null) {
@@ -48,7 +63,7 @@ public class BarChartGenerator {
         Date startDate = (Date) budget.getStart_date();
         Date endDate = (Date) budget.getEnd_date();
 
-        // Convert start date and end date to LocalDate
+        // Convert start and end dates to LocalDate (date without time information)
         LocalDate startLocalDate = startDate.toLocalDate();
         LocalDate endLocalDate = endDate.toLocalDate();
 
@@ -58,6 +73,7 @@ public class BarChartGenerator {
         NumberAxis yAxis = new NumberAxis();
         yAxis.setLabel("Progress (%)");
 
+        // Disable auto-ranging, set the lower and upper bound for the y-axis
         yAxis.setAutoRanging(false);
         yAxis.setLowerBound(0);
         yAxis.setUpperBound(100);
@@ -66,8 +82,13 @@ public class BarChartGenerator {
         BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
         barChart.setTitle("Budget Goal Progress");
 
-        // Create a series to represent the progress over time
+        /**
+         * Create a series to represent the progress
+         * XYChart is a base class for all charts that use an XY coordinate system
+         * String as the x-axis values and Number as the y-axis values.
+         */
         XYChart.Series<String, Number> series = new XYChart.Series<>();
+        //displayed as a label on the chart
         series.setName("Progress");
 
         // Fetch transactions filtered by the budget ID, start date, and end date
@@ -82,7 +103,7 @@ public class BarChartGenerator {
         }
 
         for (TransactionsPOJO transaction : transactions) {
-            LocalDate transactionDate = transaction.getTransaction_date().toLocalDate(); // Convert java.sql.Date to LocalDate
+            LocalDate transactionDate = transaction.getTransaction_date().toLocalDate();
             cumulativeSpending += transaction.getAmount();
             double progressPercentage = (cumulativeSpending / goalAmount) * 100;
 

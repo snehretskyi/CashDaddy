@@ -1,4 +1,5 @@
 package org.example.java_project_iii.forms;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -12,7 +13,11 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * Form for setting a budget goal (Singleton)
+ */
 public class SetBudgetGoalForm extends Form {
+
     private static SetBudgetGoalForm instance;
 
     private TextField amountField;
@@ -22,6 +27,10 @@ public class SetBudgetGoalForm extends Form {
     private HBox transactionTypeRadioBox;
     private HBox dateBox;
 
+    /**
+     * Constructor for SetBudgetGoalForm
+     * @throws Exception if there is an error
+     */
     private SetBudgetGoalForm() throws Exception {
 
         // Database instances
@@ -29,12 +38,12 @@ public class SetBudgetGoalForm extends Form {
         TransactionTypeTable transactionTypeTable = TransactionTypeTable.getInstance();
         ArrayList<TransactionTypePOJO> transactionTypes = transactionTypeTable.getAllTransaction_types();
 
-        // Create VBox for form
+        // VBox for the form
         VBox formVBox = new VBox(15);
         formVBox.setPadding(new Insets(20));
 
-        //On Top
-        Label instructionLabel  = new Label("Choose your goal");
+        //Instruction On Top
+        Label instructionLabel = new Label("Choose your goal");
 
         // Start Date
         Label startDateLabel = new Label("Start Date:");
@@ -60,12 +69,11 @@ public class SetBudgetGoalForm extends Form {
         transactionTypeRadioBox = new HBox(10);
 
         //Amount and transactions side by side
-        VBox amountVbox = new VBox(10,amountLabel, amountField);
-        VBox transactionTypeVbox = new VBox(10,transactionTypeLabel, transactionTypeRadioBox);
-        HBox amountTransactionHbox = new HBox(60,amountVbox, transactionTypeVbox);
+        VBox amountVbox = new VBox(10, amountLabel, amountField);
+        VBox transactionTypeVbox = new VBox(10, transactionTypeLabel, transactionTypeRadioBox);
+        HBox amountTransactionHbox = new HBox(60, amountVbox, transactionTypeVbox);
 
-
-
+        //create radio buttons for each transactions type
         transactionTypes.forEach(transactionType -> {
             RadioButton transactionTypeRadio = new RadioButton(transactionType.toString());
             transactionTypeRadio.setToggleGroup(transactionTypeGroup);
@@ -91,7 +99,7 @@ public class SetBudgetGoalForm extends Form {
                     getErrorText().setText("The amount must be > 0");
                     animateErrorText(getErrorText());
                 } else {
-                        //TODO add method when submit
+                    // Create and insert a new budget
                     TransactionTypePOJO selectedTransactionType =
                             (TransactionTypePOJO) transactionTypeGroup.getSelectedToggle().getUserData();
                     BudgetPOJO budget = new BudgetPOJO(
@@ -101,12 +109,14 @@ public class SetBudgetGoalForm extends Form {
                             Date.valueOf(startDatePicker.getValue()),
                             Date.valueOf(endDatePicker.getValue())
                     );
-                        budgetTable.insertBudget(budget);
+                    budgetTable.insertBudget(budget);
 
-                        BudgetView budgetView = BudgetView.getInstance();
-                        budgetView.refreshTable(BudgetTable.getInstance());
+                    // Refresh budget view
+                    BudgetView budgetView = BudgetView.getInstance();
+                    budgetView.refreshTable(BudgetTable.getInstance());
 
-                        clearForm();
+                    // Clear the form
+                    clearForm();
                 }
             } catch (NumberFormatException e) {
                 getErrorText().setText("Invalid amount entered!");
@@ -135,6 +145,9 @@ public class SetBudgetGoalForm extends Form {
         this.setAlignment(Pos.TOP_CENTER);
     }
 
+    /**
+     *  Clear the form fields
+     */
     private void clearForm() {
         startDatePicker.setValue(LocalDate.now());
         endDatePicker.setValue(LocalDate.now().plusMonths(1));
@@ -143,6 +156,11 @@ public class SetBudgetGoalForm extends Form {
         getErrorText().setText("");
     }
 
+    /**
+     * Get the singleton instance of SetBudgetForm
+     * @return same single instance
+     * @throws Exception if any error
+     */
     public static SetBudgetGoalForm getInstance() throws Exception {
         if (instance == null) {
             instance = new SetBudgetGoalForm();

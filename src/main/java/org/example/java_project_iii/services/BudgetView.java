@@ -7,8 +7,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -22,22 +20,23 @@ import org.example.java_project_iii.pojo.TransactionTypePOJO;
 import org.example.java_project_iii.pojo.TransactionsPOJO;
 import org.example.java_project_iii.tables.BudgetTable;
 import org.example.java_project_iii.tables.TransactionTypeTable;
-import org.example.java_project_iii.tables.TransactionsTable;
-
-import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.List;
-
-import static org.example.java_project_iii.database.DBConst.TABLE_BUDGETS;
 
 public class BudgetView {
     private static BudgetView instance;
+    private static int selectedID;
     private VBox budgetViewVBox;
     private TableView<BudgetPOJO> tableView;
     private LineChart<Number, Number> goalProgressChart;
     private BorderPane parentLayout;
-    Database db;
+
+    public static int getSelectedID() {
+        return selectedID;
+    }
+
+    public static void setSelectedID(int selectedID) {
+        BudgetView.selectedID = selectedID;
+    }
 
     private BudgetView() throws Exception {
 
@@ -101,8 +100,8 @@ public class BudgetView {
                     try {
                         if (selectedBudget != null) {
                             // Pass the selected budget ID to update the chart
-                            int budgetId = selectedBudget.getId();
-                            updateChart(budgetId);
+                            selectedID = selectedBudget.getId();
+                            updateChart(selectedID);
                         }
                     } catch (Exception ex) {
                         ex.printStackTrace();
