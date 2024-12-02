@@ -1,11 +1,14 @@
 package org.example.java_project_iii.tabs;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.HBox;
 import org.example.java_project_iii.database.DBConst;
 import org.example.java_project_iii.pojo.TransactionsPOJO;
 import org.example.java_project_iii.tables.TransactionsTable;
@@ -33,14 +36,22 @@ public class BarChartTab extends Tab {
         barChart.setTitle("Transactions Summed by Date");
 
         // Button to refresh the chart - is it needed though?
+        HBox refreshBox = new HBox();
         Button refresh = new Button("Refresh");
         refresh.setOnAction(e -> generateChart());
+        refreshBox.setAlignment(Pos.CENTER);
+        HBox.setMargin(refresh, new Insets(20));
+        refreshBox.getChildren().add(refresh);
+
 
         BorderPane root = new BorderPane();
         root.setCenter(barChart);
-        root.setBottom(refresh);
+        root.setBottom(refreshBox);
 
         this.setContent(root);
+
+        root.getStylesheets().add(getClass().getClassLoader().getResource("css/forms.css").toExternalForm());
+        refresh.getStyleClass().add("confirm-button");
 
         generateChart();
     }

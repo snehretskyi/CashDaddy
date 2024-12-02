@@ -110,7 +110,7 @@ public class Dashboard {
 
         //addTransaction.getContent().setRotate(90);
 
-        tabPane.getTabs().addAll(addTransaction,allTransactions, updateTransaction, barChartTab, budgetGoalTracker);
+        tabPane.getTabs().addAll(addTransaction,allTransactions, budgetGoalTracker, barChartTab, updateTransaction);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.setSide(Side.TOP);
 
