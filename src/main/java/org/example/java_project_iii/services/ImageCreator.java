@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
- * Class description: Creates an ImageView with the specified width, height, and image path.
+ * Creates an ImageView with the specified width, height, and image path.
  */
 
 public class ImageCreator {
