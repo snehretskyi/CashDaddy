@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.sql.Date;
 
 /**
- * Class description: class designed to take responsibility for checking due transactions, and
+ * Class designed to take responsibility for checking due transactions, and
  * creating new instances of transactions.
  */
 public class RecurringTransactionService {

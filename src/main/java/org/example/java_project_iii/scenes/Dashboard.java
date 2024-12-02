@@ -93,7 +93,7 @@ public class Dashboard {
         BudgetGoalTracker budgetGoalTracker = new BudgetGoalTracker();
 
         Label transactionTablabel = new Label("Add Transaction");
-        //add CurdForm to AddTransaction tab
+        //add CrudForm to AddTransaction tab
         CreateForm createForm = new CreateForm();
 
         // set tab to redirect to
