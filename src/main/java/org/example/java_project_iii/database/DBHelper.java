@@ -56,7 +56,6 @@ public class DBHelper {
             if (countResultSet.next() && countResultSet.getInt(1) > 0) {
                 System.out.println("Default values already inserted into the " + tableName + " table.");
             } else {
-
                 // Reset AUTO_INCREMENT and insert default values
                 String resetAutoIncrementQuery = "ALTER TABLE " + tableName + " AUTO_INCREMENT = 1";
                 statement.execute(resetAutoIncrementQuery);

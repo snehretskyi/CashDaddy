@@ -85,7 +85,7 @@ public class InsertValueQueries {
      */
     public static final String INSERT_BUDGETS =
             "INSERT INTO " + TABLE_BUDGETS + " (" +
-                    BUDGETS_COLUMN_TRANSACTION_ID + ", " +
+                    BUDGETS_COLUMN_TRANSACTION_TYPE_ID + ", " +
                     BUDGETS_COLUMN_GOAL_AMOUNT + ", " +
                     BUDGETS_COLUMN_START_DATE + ", " +
                     BUDGETS_COLUMN_END_DATE + ") " +
