@@ -89,7 +89,7 @@ public class Dashboard {
         AddTransaction addTransaction = new AddTransaction();
         AllTransactions allTransactions = AllTransactions.getInstance();
         UpdateTransaction updateTransaction = UpdateTransaction.getInstance();
-        SummaryReport summaryReport = new SummaryReport();
+        BarChartTab barChartTab = BarChartTab.getInstance();
         BudgetGoalTracker budgetGoalTracker = new BudgetGoalTracker();
 
         Label transactionTablabel = new Label("Add Transaction");
@@ -110,7 +110,7 @@ public class Dashboard {
 
         //addTransaction.getContent().setRotate(90);
 
-        tabPane.getTabs().addAll(addTransaction,allTransactions, updateTransaction, summaryReport, budgetGoalTracker);
+        tabPane.getTabs().addAll(addTransaction,allTransactions, updateTransaction, barChartTab, budgetGoalTracker);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.setSide(Side.TOP);
 
@@ -126,7 +126,7 @@ public class Dashboard {
         addTransaction.getStyleClass().add("tab-add-transaction");
         allTransactions.getStyleClass().add("tab-all-transactions");
         updateTransaction.getStyleClass().add("tab-update-transaction");
-        summaryReport.getStyleClass().add("tab-summary-report");
+        barChartTab.getStyleClass().add("tab-summary-report");
         budgetGoalTracker.getStyleClass().add("tab-budget-tracker");
 
 

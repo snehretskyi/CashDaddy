@@ -60,6 +60,8 @@ public class BarChartTab extends Tab {
         BarChart.Series<String, Number> series = new BarChart.Series<>();
         series.setName("Transaction Sums");
 
+        // cleart the chart first
+        barChart.getData().clear();
         series.getData().addAll(chartData);
 
         barChart.getData().add(series);
