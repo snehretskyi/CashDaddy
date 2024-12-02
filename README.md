@@ -1,11 +1,13 @@
 
 # CashDaddy
 
-This application keeps track of expenses, bills, and other types of financial transactions while generating reports on the user’s current financial status. Users can filter transactions by date, category, or account name. The app provides users with useful charts to display their financial progress visually. The primary purpose of this app is to help users track their finances and promote financial responsibility.
+This application keeps track of expenses, bills, and other types of financial transactions while generating reports on the user’s current financial status. Users can filter transactions by date, transaction type, or account name. The app provides users with useful charts to display their financial progress visually. The primary purpose of this app is to help users track their finances and promote financial responsibility.
 
 
 ## Prerequisites
 - MariaDB database
+- IntelliJ Idea
+- Gradle
 - Amazon Coretto 20 Java version
 
 ## Getting Started
