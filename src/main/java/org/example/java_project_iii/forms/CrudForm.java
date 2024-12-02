@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Both create and update are almost the same forms. This abstract class provides members and functionality
  * that can be reused. <br> <br>
- *
+ * <p>
  * For simplicity's sake, members are protected. Would be rather tedious to refer to nodes via getters and setters. <br>
  * Validates input, won't let to break application.
  */
@@ -38,14 +38,22 @@ public abstract class CrudForm extends Form {
     protected ArrayList<TransactionTypePOJO> allTransactionTypes = transactionTypeTable.getAllTransaction_types();
 
     // some lovely labels
-    protected Label dateLabel = new Label("Date:");;
-    protected Label amountLabel = new Label("Amount:");;
-    protected Label categoryLabel = new Label("Category:");;
-    protected Label recurringLabel= new Label("Recurring?");;
-    protected Label recurringIntervalLabel = new Label("Interval (in days):");;
-    protected Label accountLabel = new Label("Account:");;
-    protected Label transactionTypeLabel = new Label("Transaction Type:");;
-    protected Label descriptionLabel = new Label("Description:");;
+    protected Label dateLabel = new Label("Date:");
+    ;
+    protected Label amountLabel = new Label("Amount:");
+    ;
+    protected Label categoryLabel = new Label("Category:");
+    ;
+    protected Label recurringLabel = new Label("Recurring?");
+    ;
+    protected Label recurringIntervalLabel = new Label("Interval (in days):");
+    ;
+    protected Label accountLabel = new Label("Account:");
+    ;
+    protected Label transactionTypeLabel = new Label("Transaction Type:");
+    ;
+    protected Label descriptionLabel = new Label("Description:");
+    ;
 
     // form nodes
     protected GridPane formGrid = new GridPane();
@@ -65,6 +73,7 @@ public abstract class CrudForm extends Form {
 
     /**
      * Constructor that initializes form behavior.
+     *
      * @throws Exception
      */
     public CrudForm() throws Exception {
@@ -126,7 +135,7 @@ public abstract class CrudForm extends Form {
                 if (amountField.getText().isEmpty()
                         || categoryBox.getSelectionModel().getSelectedItem() == null
                         || accountComboBox.getValue() == null
-                        ||  transactionTypeGroup.getSelectedToggle() == null
+                        || transactionTypeGroup.getSelectedToggle() == null
                         || descriptionArea.getText().isEmpty()) {
                     getErrorText().setText("All fields are required!");
                     animateErrorText(getErrorText());
@@ -137,8 +146,7 @@ public abstract class CrudForm extends Form {
                 } else if (Double.parseDouble(amountField.getText()) > 99999999.99) {
                     getErrorText().setText("We only support transactions with value up to $99,999,999.99");
                     animateErrorText(getErrorText());
-                }
-                else {
+                } else {
                     // using abstract methods
                     submit();
 
@@ -196,7 +204,7 @@ public abstract class CrudForm extends Form {
         // Load the CSS file
         formGrid.getStylesheets().add(getClass().getClassLoader().getResource("css/forms.css").toExternalForm());
 
-        this.getChildren().addAll(getErrorText(),formGrid);
+        this.getChildren().addAll(getErrorText(), formGrid);
 
     }
 
@@ -220,6 +228,7 @@ public abstract class CrudForm extends Form {
     /**
      * Abstract method that is called when user submits form.  <br>
      * Usually <i>should</i> perform some DB operations.
+     *
      * @throws Exception
      */
     public abstract void submit() throws Exception;

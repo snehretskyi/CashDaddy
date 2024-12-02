@@ -9,6 +9,7 @@ import org.example.java_project_iii.pojo.TransactionTypePOJO;
 import org.example.java_project_iii.services.BudgetView;
 import org.example.java_project_iii.tables.BudgetTable;
 import org.example.java_project_iii.tables.TransactionTypeTable;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class SetBudgetGoalForm extends Form {
 
     /**
      * Constructor for SetBudgetGoalForm
+     *
      * @throws Exception if there is an error
      */
     private SetBudgetGoalForm() throws Exception {
@@ -54,8 +56,8 @@ public class SetBudgetGoalForm extends Form {
         endDatePicker = new DatePicker(LocalDate.now().plusMonths(1));
 
         //Dates side by side
-        VBox startDateVbox = new VBox(10,startDateLabel, startDatePicker);
-        VBox endDateVbox = new VBox(10,endDateLabel, endDatePicker);
+        VBox startDateVbox = new VBox(10, startDateLabel, startDatePicker);
+        VBox endDateVbox = new VBox(10, endDateLabel, endDatePicker);
         dateBox = new HBox(20, startDateVbox, endDateVbox);
 
         // Amount
@@ -144,7 +146,7 @@ public class SetBudgetGoalForm extends Form {
         this.getChildren().add(formVBox);
         this.setAlignment(Pos.TOP_CENTER);
 
-        // Apply CSS style classes in the form
+        // Apply CSS class names to nodes
         instructionLabel.getStyleClass().add("instruction-text");
         startDateLabel.getStyleClass().add("form-label");
         endDateLabel.getStyleClass().add("form-label");
@@ -158,7 +160,7 @@ public class SetBudgetGoalForm extends Form {
     }
 
     /**
-     *  Clear the form fields
+     * Clear the form fields
      */
     private void clearForm() {
         startDatePicker.setValue(LocalDate.now());
@@ -170,6 +172,7 @@ public class SetBudgetGoalForm extends Form {
 
     /**
      * Get the singleton instance of SetBudgetForm
+     *
      * @return same single instance
      * @throws Exception if any error
      */

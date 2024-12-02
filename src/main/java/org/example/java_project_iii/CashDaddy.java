@@ -26,7 +26,7 @@ public class CashDaddy extends Application {
             primaryStage.setScene(loginScene);
         }
 
-
+        primaryStage.setTitle("CashDaddy");
         primaryStage.show();
 
     }

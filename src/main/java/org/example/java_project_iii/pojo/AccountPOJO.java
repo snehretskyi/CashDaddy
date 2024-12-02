@@ -1,10 +1,21 @@
 package org.example.java_project_iii.pojo;
 
+/**
+ * Represents an account with type, balance, and information
+ */
 public class AccountPOJO extends DatabaseItemPojo {
     private String type;
     private double balance;
     private String information;
 
+    /**
+     * AccountPOJO constructor
+     *
+     * @param id          account id
+     * @param type        account type
+     * @param balance     account balance
+     * @param information account info.
+     */
     public AccountPOJO(int id, String type, double balance, String information) {
         super(id);
         this.type = type;
@@ -36,5 +47,7 @@ public class AccountPOJO extends DatabaseItemPojo {
         this.type = type;
     }
 
-    public String toString() {return type;}
+    public String toString() {
+        return type;
+    }
 }

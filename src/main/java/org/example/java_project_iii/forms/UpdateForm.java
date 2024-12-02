@@ -36,6 +36,7 @@ public class UpdateForm extends CrudForm {
     /**
      * Updates both transaction and recurring transaction. <br>
      * Checks how exactly has user changed recurring transaction, reacts accordingly.
+     *
      * @throws Exception
      */
     @Override
@@ -93,14 +94,15 @@ public class UpdateForm extends CrudForm {
 
     /**
      * Method to find db item
+     *
      * @param arrayList of items
-     * @param id of item to find
+     * @param id        of item to find
      * @return id of an item you're looking for OR 0
      */
-    public int find(ArrayList<?> arrayList, int id){
+    public int find(ArrayList<?> arrayList, int id) {
         ArrayList<DatabaseItemPojo> searchList = (ArrayList<DatabaseItemPojo>) ((ArrayList<?>) arrayList);
-        for(int i = 0; i < searchList.size(); i++){
-            if(searchList.get(i).getId() == id){
+        for (int i = 0; i < searchList.size(); i++) {
+            if (searchList.get(i).getId() == id) {
                 return i;
             }
         }
@@ -140,9 +142,9 @@ public class UpdateForm extends CrudForm {
 
         descriptionArea.setText(transactionsPOJO.getTransaction_description());
 
-        if(transactionsPOJO.getAmount()==0){
+        if (transactionsPOJO.getAmount() == 0) {
             getErrorText().setText("Please Select Transaction To Update");
-                confirmButton.setDisable(true);
+            confirmButton.setDisable(true);
         }
 
         // change text to clear

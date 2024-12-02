@@ -60,7 +60,9 @@ public class DBConst {
         public static final String RECURRING_TRANSACTION_COLUMN_INTERVAL_DAYS = "interval_days";
         public static final String RECURRING_TRANSACTION_NEXT_DATE = "next_date";
 
-        // CREATE TABLES
+        /**
+         * CREATE TABLES
+         */
 
         // ACCOUNTS TABLE
         public static final String CREATE_TABLE_ACCOUNTS =

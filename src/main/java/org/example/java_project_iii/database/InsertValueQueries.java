@@ -2,6 +2,10 @@ package org.example.java_project_iii.database;
 
 import static org.example.java_project_iii.database.DBConst.*;
 
+/**
+ * Purpose of this class is to write SQL queries to insert mock data into tables
+ */
+
 public class InsertValueQueries {
 
     /**
