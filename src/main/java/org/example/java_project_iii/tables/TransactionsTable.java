@@ -1,6 +1,7 @@
 package org.example.java_project_iii.tables;
 
 import org.example.java_project_iii.dao.TransactionsDAO;
+import org.example.java_project_iii.database.DBConst;
 import org.example.java_project_iii.database.Database;
 import org.example.java_project_iii.pojo.DisplayTransaction;
 import org.example.java_project_iii.pojo.TransactionsPOJO;
@@ -216,6 +217,8 @@ public class TransactionsTable implements TransactionsDAO {
 
     @Override
     public void deleteTransaction(int id) {
+
+        // Queries for deleting dependent rows
         String deleteFromRecurringTransaction = "DELETE FROM recurring_transaction WHERE transaction_id = ?";
         String deleteFromTransaction = "DELETE FROM " + TABLE_TRANSACTIONS + " WHERE " +
                 TRANSACTIONS_COLUMN_ID + " = ?";
@@ -228,6 +231,7 @@ public class TransactionsTable implements TransactionsDAO {
 
         try {
             getDb().getConnection().createStatement().executeUpdate(adjustBalanceQuery);
+
             PreparedStatement stmt1 = getDb().getConnection().prepareStatement(deleteFromRecurringTransaction);
             stmt1.setInt(1, id);
             stmt1.executeUpdate();

@@ -132,7 +132,7 @@ public class BarChartGenerator {
      * @param message the message to display on the chart
      * @return a bar chart with the message as its title
      */
-    private BarChart<String, Number> createPlaceholderChart(String message) {
+    public BarChart<String, Number> createPlaceholderChart(String message) {
         // Create axes
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -153,10 +153,10 @@ public class BarChartGenerator {
         System.out.println("End Date: " + endDate);
 
         // SQL query to fetch transactions directly with the given parameters
-        String sql = "SELECT t.transaction_id, t.amount, t.transaction_date " +
+        String sql = "SELECT t.transaction_id, t.amount, t.transaction_date, t.description, tt.type " +
                 "FROM transactions t " +
                 "JOIN transaction_types tt ON t.transaction_type_id = tt.transaction_type_id " +
-                "JOIN budgets b ON b.transaction_id = tt.transaction_type_id " +
+                "JOIN budgets b ON b.transaction_type_id = tt.transaction_type_id " +
                 "WHERE b.budget_id = " + budgetId + " " +
                 "AND t.transaction_date BETWEEN '" + startDate + "' AND '" + endDate + "'";
 
