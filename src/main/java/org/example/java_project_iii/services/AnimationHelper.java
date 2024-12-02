@@ -8,7 +8,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 /**
- * Class description : Applies a different type of animation effect to the specified element
+ * Applies a different type of animation effect to the specified element
  */
 
 public class AnimationHelper {
