@@ -110,7 +110,7 @@ public class Dashboard {
 
         //addTransaction.getContent().setRotate(90);
 
-        tabPane.getTabs().addAll(addTransaction,allTransactions, updateTransaction, summaryReport);
+        tabPane.getTabs().addAll(addTransaction,allTransactions, updateTransaction, summaryReport, budgetGoalTracker);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.setSide(Side.TOP);
 
@@ -127,6 +127,7 @@ public class Dashboard {
         allTransactions.getStyleClass().add("tab-all-transactions");
         updateTransaction.getStyleClass().add("tab-update-transaction");
         summaryReport.getStyleClass().add("tab-summary-report");
+        budgetGoalTracker.getStyleClass().add("tab-budget-tracker");
 
 
         root.getStylesheets().add(getClass().getClassLoader().getResource("css/dashboard.css").toExternalForm());

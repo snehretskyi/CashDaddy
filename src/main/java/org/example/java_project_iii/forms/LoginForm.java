@@ -21,16 +21,15 @@ import javafx.stage.Stage;
 import org.example.java_project_iii.scenes.Dashboard;
 import org.example.java_project_iii.services.ImageCreator;
 import org.example.java_project_iii.services.AnimationHelper;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-
 
 /**
  * Class Description: a login form for entering org.example.java_project_iii.database credentials.
  * This form includes fields for the host, org.example.java_project_iii.database name, username, and password.
  * Validates input, saves result to a file.
+ *
  * @author Stan
  */
 public class LoginForm extends Form {
@@ -70,12 +69,12 @@ public class LoginForm extends Form {
         Button submitButton = new Button("Submit!");
 
         // Create an ImageView
-        ImageView iconImageView = ImageCreator.createImageView("/Images/piggybank1.gif", 270,230);
+        ImageView iconImageView = ImageCreator.createImageView("/Images/piggybank1.gif", 270, 230);
 
         //Layout
         VBox headingVbox = new VBox(welcomeText, greetingText);
         HBox headingHBox = new HBox(headingVbox, iconImageView);
-        VBox instructionVBox = new VBox(instructionsText,getErrorText());
+        VBox instructionVBox = new VBox(instructionsText, getErrorText());
         VBox hostWrapper = new VBox(hostLabel, hostField);
         VBox dbNameWrapper = new VBox(dbNameLabel, dbNameField);
         VBox usernameWrapper = new VBox(usernameLabel, usernameField);
@@ -90,14 +89,14 @@ public class LoginForm extends Form {
         headingHBox.setAlignment(Pos.TOP_CENTER);
         headingVbox.setPrefWidth(1200);
         headingVbox.setPadding(new Insets(80, 0, 0, 0));
-        headingHBox.setPadding(new Insets(0 ,80, 0,180));
+        headingHBox.setPadding(new Insets(0, 80, 0, 180));
         headingHBox.getStyleClass().add("heading-box");
 
         //Setting animation
         greetingText.setVisible(false);
         Timeline welcomeAnimation = AnimationHelper.typewriterAnimation(welcomeText, 100);
-        Timeline greetingAnimation =  AnimationHelper.typewriterAnimation(greetingText,150);
-        AnimationHelper.applySwingRotation( iconImageView, 2000);
+        Timeline greetingAnimation = AnimationHelper.typewriterAnimation(greetingText, 150);
+        AnimationHelper.applySwingRotation(iconImageView, 2000);
 
         //sequential transition
         SequentialTransition sequentialTransition = new SequentialTransition(welcomeAnimation, greetingAnimation);
@@ -107,16 +106,16 @@ public class LoginForm extends Form {
         instructionsText.setFont(Font.font("Helvetica", 24));
         instructionVBox.setAlignment(Pos.CENTER);
         instructionVBox.setSpacing(10);
-        VBox.setMargin(instructionVBox, new Insets(20,0,0,0));
+        VBox.setMargin(instructionVBox, new Insets(20, 0, 0, 0));
 
         //Credintial styles
         credentialVBox.setMaxWidth(1100);
         credentialVBox.setSpacing(20);
         credentialVBox.getStyleClass().add("credentialVBox");
-        VBox.setMargin(credentialVBox, new Insets(0,200,20,200));
+        VBox.setMargin(credentialVBox, new Insets(0, 200, 20, 200));
 
         //Submit button styles
-        submitButton.setPrefSize(160 ,20);
+        submitButton.setPrefSize(160, 20);
         submitButton.getStyleClass().add("submit-button");
 
         this.setSpacing(5);
@@ -165,8 +164,9 @@ public class LoginForm extends Form {
 
     /**
      * Saves the provided org.example.java_project_iii.database credentials to a file.
-     * @param host the org.example.java_project_iii.database host.
-     * @param dbName the name of the org.example.java_project_iii.database.
+     *
+     * @param host     the org.example.java_project_iii.database host.
+     * @param dbName   the name of the org.example.java_project_iii.database.
      * @param userName the username for the org.example.java_project_iii.database.
      * @param password the password for the org.example.java_project_iii.database.
      */

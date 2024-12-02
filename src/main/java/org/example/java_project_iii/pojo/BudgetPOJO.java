@@ -3,25 +3,25 @@ package org.example.java_project_iii.pojo;
 import java.util.Date;
 
 public class BudgetPOJO extends DatabaseItemPojo{
-    private int category_id;
+    private int transaction_id;
     private double goal_amount;
     private Date start_date;
     private Date end_date;
 
-    public BudgetPOJO(int budget_id, int category_id, double goal_amount, Date start_date, Date end_date) {
+    public BudgetPOJO(int budget_id, int transaction_id, double goal_amount, Date start_date, Date end_date) {
         super(budget_id);
-        this.category_id = category_id;
+        this.transaction_id = transaction_id;
         this.goal_amount = goal_amount;
         this.start_date = start_date;
         this.end_date = end_date;
     }
 
-    public int getCategory_id() {
-        return category_id;
+    public int getTransaction_id() {
+        return transaction_id;
     }
 
-    public void setCategory_id(int category_id) {
-        this.category_id = category_id;
+    public void setTransaction_id(int transaction_id) {
+        this.transaction_id = transaction_id;
     }
 
     public double getGoal_amount() {
@@ -48,7 +48,4 @@ public class BudgetPOJO extends DatabaseItemPojo{
         this.end_date = end_date;
     }
 
-
-
-    //TODO after Riddhi adds budget_name in Database public String toString() {return budget_name;}
 }

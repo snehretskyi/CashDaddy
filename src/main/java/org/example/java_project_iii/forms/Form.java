@@ -42,6 +42,7 @@ public abstract class Form extends VBox {
 
     /**
      * Method to add a cool animation to the errorText :)
+     *
      * @param errorText the error Text node
      */
     protected void animateErrorText(Text errorText) {

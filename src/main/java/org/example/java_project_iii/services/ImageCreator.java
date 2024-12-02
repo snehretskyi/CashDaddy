@@ -11,18 +11,19 @@ public class ImageCreator {
 
     /**
      * Method that creates an ImageView
-     * @param imagePath The path to the image file (relative to the resources folder)
-     * @param width width of the ImageView
-     * @param height height of the ImageView
+     *
+     * @param imagePath The path to the image file (relative to the resource's folder)
+     * @param width     width of the ImageView
+     * @param height    height of the ImageView
      * @return An ImageView containing the image with the specified size.
      */
 
-    public static ImageView createImageView(String imagePath, double width, double height){
+    public static ImageView createImageView(String imagePath, double width, double height) {
 
         //load image from the path
         Image image = new Image(ImageCreator.class.getResourceAsStream(imagePath));
 
-        //craete an imageView with the loaded image
+        //create an imageView with the loaded image
         ImageView imageView = new ImageView(image);
 
         //set width and height

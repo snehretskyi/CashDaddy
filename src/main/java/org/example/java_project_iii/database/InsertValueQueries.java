@@ -2,6 +2,10 @@ package org.example.java_project_iii.database;
 
 import static org.example.java_project_iii.database.DBConst.*;
 
+/**
+ * Purpose of this class is to write SQL queries to insert mock data into tables
+ */
+
 public class InsertValueQueries {
 
     /**
@@ -9,7 +13,7 @@ public class InsertValueQueries {
      */
     public static final String INSERT_TRANSACTION_TYPES =
             "INSERT INTO " + TABLE_TRANSACTION_TYPES + " (" + TRANSACTION_TYPES_COLUMN_TYPE + ") " +
-                    "VALUES ('Income'), ('Expense'), ('Recurring');";
+                    "VALUES ('Income'), ('Expense');";
 
     /**
      * Insert categories.
@@ -75,6 +79,19 @@ public class InsertValueQueries {
                     "(5, 30, '2024-12-05'), " +
                     "(9, 30, '2024-12-07'), " +
                     "(16, 30, '2024-12-08');";
+
+    /**
+     * Insert values in Budget table
+     */
+    public static final String INSERT_BUDGETS =
+            "INSERT INTO " + TABLE_BUDGETS + " (" +
+                    BUDGETS_COLUMN_TRANSACTION_ID + ", " +
+                    BUDGETS_COLUMN_GOAL_AMOUNT + ", " +
+                    BUDGETS_COLUMN_START_DATE + ", " +
+                    BUDGETS_COLUMN_END_DATE + ") " +
+                    "VALUES " +
+                    "(2, 3000.00, '2024-11-01', '2024-12-30'), " +
+                    "(1, 2500.00, '2024-11-01', '2024-12-30');";
 
 }
 

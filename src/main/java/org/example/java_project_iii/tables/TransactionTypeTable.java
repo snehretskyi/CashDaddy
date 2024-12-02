@@ -17,14 +17,14 @@ public class TransactionTypeTable implements Transaction_typeDAO {
      * Singleton class for managing org.example.java_project_iii.database operations on the TransactionTypeTable .
      */
     private static TransactionTypeTable instance;
-    Database db=Database.getInstance();
+    Database db = Database.getInstance();
 
     private TransactionTypeTable() throws Exception {
         db = Database.getInstance();
     }
 
     public static TransactionTypeTable getInstance() throws Exception {
-        if(instance == null){
+        if (instance == null) {
             instance = new TransactionTypeTable();
         }
         return instance;
@@ -35,7 +35,7 @@ public class TransactionTypeTable implements Transaction_typeDAO {
 
     public Database getDb() throws Exception {
         try {
-            if(db == null){
+            if (db == null) {
                 db = Database.getInstance();
             }
             return db;
@@ -72,17 +72,17 @@ public class TransactionTypeTable implements Transaction_typeDAO {
     public TransactionTypePOJO getTransaction_type(int id) {
         String query = "SELECT * FROM " + TABLE_TRANSACTION_TYPES +
                 " WHERE " + TRANSACTION_TYPES_COLUMN_ID + " = " + id;
-        try{
+        try {
             Statement getType = getDb().getConnection().createStatement();
             ResultSet data = getType.executeQuery(query);
-            if(data.next()){
+            if (data.next()) {
                 TransactionTypePOJO category = new TransactionTypePOJO(
                         data.getInt(TRANSACTION_TYPES_COLUMN_ID),
                         data.getString(TRANSACTION_TYPES_COLUMN_TYPE)
                 );
-                return null;
+                return category;
             }
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

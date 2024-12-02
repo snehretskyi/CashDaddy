@@ -21,15 +21,16 @@ public class DisplayTransaction {
 
     /**
      * Constructs a DisplayTransaction with specified values.
-     * @param id the unique identifier of the transaction
+     *
+     * @param id           the unique identifier of the transaction
      * @param account_name the type of the account associated with the transaction
-     * @param type the type of the transaction
-     * @param amount the amount for the transaction
-     * @param date the date the transaction occurred
-     * @param description additional details about the transaction
+     * @param type         the type of the transaction
+     * @param amount       the amount for the transaction
+     * @param date         the date the transaction occurred
+     * @param description  additional details about the transaction
      */
 
-    public DisplayTransaction(int id, String account_name, String type, String category, Double amount, Date date, String description, String recurringStatus, String intervalDays ) {
+    public DisplayTransaction(int id, String account_name, String type, String category, Double amount, Date date, String description, String recurringStatus, String intervalDays) {
         this.id = id;
         this.account_name = account_name;
         this.type = type;
@@ -37,7 +38,7 @@ public class DisplayTransaction {
         this.amount = amount;
         this.date = date;
         this.description = description;
-        this.recurringStatus= recurringStatus;
+        this.recurringStatus = recurringStatus;
         this.intervalDays = intervalDays;
     }
 
@@ -59,6 +60,7 @@ public class DisplayTransaction {
 
     /**
      * Gets the category associated with transaction
+     *
      * @return the category
      */
     public String getCategory() {
@@ -67,6 +69,7 @@ public class DisplayTransaction {
 
     /**
      * Gets the category associated with transaction
+     *
      * @param category set to the transaction
      */
     public void setCategory(String category) {
@@ -75,6 +78,7 @@ public class DisplayTransaction {
 
     /**
      * Gets the transaction ID
+     *
      * @return the transaction ID
      */
     public int getId() {
@@ -83,6 +87,7 @@ public class DisplayTransaction {
 
     /**
      * Sets the transaction ID
+     *
      * @param id the transaction ID to set
      */
     public void setId(int id) {
@@ -91,6 +96,7 @@ public class DisplayTransaction {
 
     /**
      * Gets the account name associated with the transaction
+     *
      * @return the account name
      */
     public String getAccount_name() {
@@ -99,6 +105,7 @@ public class DisplayTransaction {
 
     /**
      * Sets the account name associated with the transaction
+     *
      * @param account_name the account name to set
      */
     public void setAccount_name(String account_name) {
@@ -107,6 +114,7 @@ public class DisplayTransaction {
 
     /**
      * Gets the transaction type
+     *
      * @return the transaction type
      */
     public String getType() {
@@ -115,6 +123,7 @@ public class DisplayTransaction {
 
     /**
      * Sets the transaction type
+     *
      * @param type the transaction type to set
      */
     public void setType(String type) {
@@ -132,6 +141,7 @@ public class DisplayTransaction {
 
     /**
      * Sets the transaction amount
+     *
      * @param amount the transaction amount to set
      */
     public void setAmount(Double amount) {
@@ -140,6 +150,7 @@ public class DisplayTransaction {
 
     /**
      * Gets the transaction date
+     *
      * @return the transaction date
      */
     public Date getDate() {
@@ -148,6 +159,7 @@ public class DisplayTransaction {
 
     /**
      * Sets the transaction date
+     *
      * @param date the transaction date to set
      */
     public void setDate(Date date) {
@@ -156,6 +168,7 @@ public class DisplayTransaction {
 
     /**
      * Gets the transaction description
+     *
      * @return the transaction description
      */
     public String getDescription() {
@@ -164,6 +177,7 @@ public class DisplayTransaction {
 
     /**
      * Sets the transaction description
+     *
      * @param description the transaction description
      */
     public void setDescription(String description) {

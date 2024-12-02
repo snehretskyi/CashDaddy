@@ -19,6 +19,7 @@ public class CreateForm extends CrudForm {
 
     /**
      * Gets data from the fields, creates new pojos accordingly. Creates both new transaction, and recurring transaction
+     *
      * @throws Exception
      */
     public void submit() throws Exception {

@@ -1,6 +1,5 @@
 package org.example.java_project_iii.database;
 
-
 import java.sql.*;
 
 import static org.example.java_project_iii.database.Const.*;
@@ -10,9 +9,9 @@ import static org.example.java_project_iii.database.DBHelper.*;
  * This class is using the Singleton Design Pattern so that the entire application shares one connection
  * to the database;
  * We do this through the use of:
- *  - public static instance variable
- *  - private constructor
- *  - getInstance() method
+ * - public static instance variable
+ * - private constructor
+ * - getInstance() method
  */
 public class Database {
 
@@ -35,25 +34,26 @@ public class Database {
             throw new Exception("Couldn't connect!");
         }
 
+        //Create tables
         createTable(DBConst.TABLE_TRANSACTION_TYPES, DBConst.CREATE_TABLE_TRANSACTION_TYPES, connection);
         createTable(DBConst.TABLE_ACCOUNTS, DBConst.CREATE_TABLE_ACCOUNTS, connection);
         createTable(DBConst.TABLE_CATEGORIES, DBConst.CREATE_TABLE_CATEGORIES, connection);
-        createTable(DBConst.TABLE_BUDGETS, DBConst.CREATE_TABLE_BUDGETS, connection);
         createTable(DBConst.TABLE_TRANSACTIONS, DBConst.CREATE_TABLE_TRANSACTIONS, connection);
+        createTable(DBConst.TABLE_BUDGETS, DBConst.CREATE_TABLE_BUDGETS, connection);
         createTable(DBConst.TABLE_RECURRING_TRANSACTION, DBConst.CREATE_TABLE_RECURRING_TRANSACTION, connection);
 
+        //Insert default values
         insertDefaultValues(DBConst.TABLE_TRANSACTION_TYPES, InsertValueQueries.INSERT_TRANSACTION_TYPES, connection);
         insertDefaultValues(DBConst.TABLE_CATEGORIES, InsertValueQueries.INSERT_CATEGORIES, connection);
         insertDefaultValues(DBConst.TABLE_ACCOUNTS, InsertValueQueries.INSERT_ACCOUNTS, connection);
-
         insertDefaultValuesForTransactions(DBConst.TABLE_TRANSACTIONS, InsertValueQueries.INSERT_TRANSACTIONS, connection);
         insertDefaultValuesForTransactions(DBConst.TABLE_RECURRING_TRANSACTION, InsertValueQueries.INSERT_RECURRING_TRANSACTIONS, connection);
-
+        insertDefaultValues(DBConst.TABLE_BUDGETS, InsertValueQueries.INSERT_BUDGETS, connection);
 
     }
 
     public static Database getInstance() throws Exception {
-        if(instance == null){
+        if (instance == null) {
             instance = new Database();
         }
         return instance;
@@ -62,7 +62,5 @@ public class Database {
     public Connection getConnection() {
         return connection;
     }
-
-
 
 }

@@ -17,14 +17,14 @@ public class AccountsTable implements AccountDAO {
      * Singleton class for managing org.example.java_project_iii.database operations on the AccountsTable .
      */
     private static AccountsTable instance;
-    Database db=Database.getInstance();
+    Database db = Database.getInstance();
 
     private AccountsTable() throws Exception {
         db = Database.getInstance();
     }
 
     public static AccountsTable getInstance() throws Exception {
-        if(instance == null){
+        if (instance == null) {
             instance = new AccountsTable();
         }
         return instance;
@@ -34,12 +34,13 @@ public class AccountsTable implements AccountDAO {
 
     /**
      * Try to get db, if no credentials are entered the program won't crash.
+     *
      * @return
      * @throws Exception
-    */
+     */
     public Database getDb() throws Exception {
         try {
-            if(db == null){
+            if (db == null) {
                 db = Database.getInstance();
             }
             return db;
@@ -77,10 +78,10 @@ public class AccountsTable implements AccountDAO {
     public AccountPOJO getAccount(int id) {
         String query = "SELECT * FROM " + TABLE_ACCOUNTS +
                 " WHERE " + ACCOUNTS_COLUMN_ID + " = " + id;
-        try{
+        try {
             Statement getAccount = db.getConnection().createStatement();
             ResultSet data = getAccount.executeQuery(query);
-            if(data.next()){
+            if (data.next()) {
                 AccountPOJO account = new AccountPOJO(
                         data.getInt(ACCOUNTS_COLUMN_ID),
                         data.getString(ACCOUNTS_COLUMN_ACCOUNT_TYPE),
@@ -89,7 +90,7 @@ public class AccountsTable implements AccountDAO {
                 );
                 return null;
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
