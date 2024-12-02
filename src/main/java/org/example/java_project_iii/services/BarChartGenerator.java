@@ -8,6 +8,7 @@ import org.example.java_project_iii.database.Database;
 import org.example.java_project_iii.pojo.BudgetPOJO;
 import org.example.java_project_iii.pojo.TransactionsPOJO;
 import org.example.java_project_iii.tables.BudgetTable;
+
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,6 +32,7 @@ public class BarChartGenerator {
 
     /**
      * Get the singleton instance of BarChartGenerator
+     *
      * @return the single instance of this class
      * @throws Exception if any error occur
      */
@@ -47,6 +49,7 @@ public class BarChartGenerator {
 
     /**
      * Create a bar chart
+     *
      * @param budgetId unique id for each row
      * @return barchart
      * @throws Exception if there is any error
@@ -125,6 +128,7 @@ public class BarChartGenerator {
 
     /**
      * Create a placeholder bar chart to display a message when no data is available
+     *
      * @param message the message to display on the chart
      * @return a bar chart with the message as its title
      */

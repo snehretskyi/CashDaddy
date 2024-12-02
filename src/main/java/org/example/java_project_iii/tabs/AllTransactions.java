@@ -19,15 +19,24 @@ import org.example.java_project_iii.tables.TransactionsTable;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * Tab for viewing and managing all transactions
+ * Uses a singleton pattern
+ */
+
 public class AllTransactions extends Tab {
 
-    /**
-     * Singleton class AllTransactions .
-     */
-
+    // Singleton instance
     private static AllTransactions instance;
+
+    // Table to display transactions
     public TableView tableView;
 
+    /**
+     * Private constructor to initialize the tab.
+     *
+     * @throws Exception if data fetching fails
+     */
     private AllTransactions() throws Exception {
 
         this.setText("Transactions");
@@ -53,7 +62,7 @@ public class AllTransactions extends Tab {
                 new TableColumn<>("Account");
 
         column1.setCellValueFactory(
-                e-> new SimpleStringProperty(e.getValue().getAccount_name()));
+                e -> new SimpleStringProperty(e.getValue().getAccount_name()));
 
         /**
          * Column2 for displaying transaction amount
@@ -63,7 +72,7 @@ public class AllTransactions extends Tab {
                 new TableColumn<>("Amount");
 
         column2.setCellValueFactory(
-                e-> new SimpleDoubleProperty(e.getValue().getAmount()).asObject());
+                e -> new SimpleDoubleProperty(e.getValue().getAmount()).asObject());
 
         /**
          * Column3 for displaying transaction type
@@ -73,7 +82,7 @@ public class AllTransactions extends Tab {
                 new TableColumn<>("Type");
 
         column3.setCellValueFactory(
-                e-> new SimpleStringProperty(e.getValue().getType()));
+                e -> new SimpleStringProperty(e.getValue().getType()));
 
         /**
          * Column6 for displaying category type
@@ -82,7 +91,7 @@ public class AllTransactions extends Tab {
                 new TableColumn<>("Category");
 
         column6.setCellValueFactory(
-                e-> new SimpleStringProperty(e.getValue().getCategory()));
+                e -> new SimpleStringProperty(e.getValue().getCategory()));
 
 
         /**
@@ -101,7 +110,7 @@ public class AllTransactions extends Tab {
                 new TableColumn<>("Description");
 
         column5.setCellValueFactory(
-                e-> new SimpleStringProperty(e.getValue().getDescription()));
+                e -> new SimpleStringProperty(e.getValue().getDescription()));
 
         /**
          * Column7 for displaying recurring transaction status
@@ -122,7 +131,7 @@ public class AllTransactions extends Tab {
                 e -> new SimpleStringProperty(e.getValue().getIntervalDays()));
 
         /**
-         * added all columns to tableView
+         * Add all columns to tableView
          */
 
         tableView.getColumns().addAll(column1, column2, column3, column6, column4, column5, column7, column8);
@@ -135,11 +144,11 @@ public class AllTransactions extends Tab {
         borderPane.setCenter(tableView);
 
         /**
-         * Button responsible to remove transaction
+         * Button to remove transactions
          */
         HBox buttonBox = new HBox();
         Button removeTransaction = new Button("Remove");
-        removeTransaction.setOnAction(e-> {
+        removeTransaction.setOnAction(e -> {
             List<DisplayTransaction> remove = tableView.getSelectionModel().getSelectedItems();
             remove.forEach((DisplayTransaction transaction) -> {
                 transactionsTable.deleteTransaction(transaction.getId());
@@ -150,7 +159,8 @@ public class AllTransactions extends Tab {
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-            tableView.getItems().clear();;
+            tableView.getItems().clear();
+            ;
             tableView.getItems().addAll(transactionsTable.getDetailedTransaction());
         });
         buttonBox.getChildren().add(removeTransaction);
@@ -161,7 +171,7 @@ public class AllTransactions extends Tab {
         borderPane.setBottom(buttonBox);
         this.setContent(borderPane);
 
-
+        // Handle double-click to edit a transaction
         tableView.setRowFactory(tv -> {
             TableRow<DisplayTransaction> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -177,7 +187,6 @@ public class AllTransactions extends Tab {
 
                         // Add the new tab to the tab pane and activate it
                         // TabsContainer.getInstance().addOrActivateTab(updateTransaction);
-
                         getTabPane().getSelectionModel().select(updateTransaction);
 
                     } catch (Exception ex) {
@@ -190,7 +199,7 @@ public class AllTransactions extends Tab {
 
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
-        //Apply styles to nodes, load the stylesheet
+        //Add CSS style classes to nodes
         tableView.getStyleClass().add("table-view");
         instructionText.getStyleClass().add("instruction-text");
         removeTransaction.getStyleClass().add("button");
@@ -200,8 +209,9 @@ public class AllTransactions extends Tab {
     }
 
     /**
-     * Refreshes the table view by clearing current items and reloading transaction data.
-     * @throws Exception
+     * Refreshes the table with the latest transaction data
+     *
+     * @throws Exception if data loading fails
      */
     public void refreshTable() throws Exception {
         TransactionsTable table = TransactionsTable.getInstance();
@@ -210,9 +220,15 @@ public class AllTransactions extends Tab {
         System.out.println("Table refreshed");
     }
 
+    /**
+     * Returns the singleton instance of AllTransactions
+     *
+     * @return instance of this class
+     * @throws Exception if any error
+     */
 
     public static AllTransactions getInstance() throws Exception {
-        if(instance == null){
+        if (instance == null) {
             instance = new AllTransactions();
         }
         return instance;

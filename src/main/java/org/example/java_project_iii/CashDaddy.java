@@ -6,6 +6,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.java_project_iii.scenes.Login;
 
+/**
+ * Main application class for the CashDaddy app
+ * Initializes login scene and connects to the database
+ * After a successful connection, it redirects to the dashboard scene
+ */
 public class CashDaddy extends Application {
 
     @Override

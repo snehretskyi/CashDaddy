@@ -26,6 +26,7 @@ public class BudgetTable implements BudgetDAO {
 
     /**
      * Get the single instance of BudgetTable.
+     *
      * @return the single instance of BudgetTable.
      * @throws Exception if there is an error.
      */
@@ -40,6 +41,7 @@ public class BudgetTable implements BudgetDAO {
 
     /**
      * Get the database instance.
+     *
      * @return the database instance.
      * @throws Exception if there is an error.
      */
@@ -59,6 +61,7 @@ public class BudgetTable implements BudgetDAO {
 
     /**
      * Get all budget records
+     *
      * @return a list of all budget records
      */
 
@@ -88,6 +91,7 @@ public class BudgetTable implements BudgetDAO {
 
     /**
      * Get a budget record by its ID
+     *
      * @param id id the budget ID
      * @return the budget record
      */
@@ -116,9 +120,9 @@ public class BudgetTable implements BudgetDAO {
 
     /**
      * Insert a new budget record
+     *
      * @param budget budget the budget to insert
      */
-
     public void insertBudget(BudgetPOJO budget) {
         String query = "INSERT INTO " + TABLE_BUDGETS +
                 "(" + BUDGETS_COLUMN_TRANSACTION_ID + ", " +
@@ -141,9 +145,9 @@ public class BudgetTable implements BudgetDAO {
 
     /**
      * Remove a budget record by its ID
+     *
      * @param id id the budget ID
      */
-    //TODO need to write logic
     public void removeBudget(int id) {
         String query = "DELETE FROM " + TABLE_BUDGETS + " WHERE " + BUDGETS_COLUMN_ID + " = " + id;
         try {

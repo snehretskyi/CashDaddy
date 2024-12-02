@@ -5,6 +5,7 @@ import org.example.java_project_iii.database.Database;
 import org.example.java_project_iii.pojo.DisplayTransaction;
 import org.example.java_project_iii.pojo.TransactionsPOJO;
 import org.example.java_project_iii.services.BudgetView;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,33 +14,44 @@ import java.util.ArrayList;
 
 import static org.example.java_project_iii.database.DBConst.*;
 
+/**
+ * This class handles all database operations related to transactions.
+ */
 public class TransactionsTable implements TransactionsDAO {
 
-
-    /**
-     * Singleton class for managing org.example.java_project_iii.database operations on the TransactionsTable .
-     */
     private static TransactionsTable instance;
-    Database db=Database.getInstance();
+    Database db = Database.getInstance();
     BudgetView budgetView = BudgetView.getInstance();
     BudgetTable budgetTable = BudgetTable.getInstance();
+    ArrayList<TransactionsPOJO> transactions;
 
+    /**
+     * Private constructor (singleton design pattern)
+     *
+     * @throws Exception is an error occurs
+     */
     private TransactionsTable() throws Exception {
         db = Database.getInstance();
     }
 
+    /**
+     * @return single instance of TransactionsTable
+     * @throws Exception if an error occurs
+     */
     public static TransactionsTable getInstance() throws Exception {
-        if(instance == null){
+        if (instance == null) {
             instance = new TransactionsTable();
         }
         return instance;
     }
 
-    ArrayList<TransactionsPOJO> transactions;
-
+    /**
+     * @return the database instance
+     * @throws Exception if an error occurs
+     */
     public Database getDb() throws Exception {
         try {
-            if(db == null){
+            if (db == null) {
                 db = Database.getInstance();
             }
             return db;
@@ -50,6 +62,11 @@ public class TransactionsTable implements TransactionsDAO {
         return null;
     }
 
+    /**
+     * Retrieves all transactions from the database
+     *
+     * @return a list of all transactions
+     */
     @Override
     public ArrayList<TransactionsPOJO> getAllTransactions() {
         String query = "SELECT * FROM " + TABLE_TRANSACTIONS;
@@ -58,7 +75,7 @@ public class TransactionsTable implements TransactionsDAO {
             Statement getItems = getDb().getConnection().createStatement();
             ResultSet data = getItems.executeQuery(query);
             //data.next() makes data the first record, then the next record etc.
-            while(data.next()) {
+            while (data.next()) {
                 transactions.add(new TransactionsPOJO(data.getInt(TRANSACTIONS_COLUMN_ID),
                         data.getInt(TRANSACTIONS_COLUMN_ACCOUNT_ID),
                         data.getDouble(TRANSACTIONS_COLUMN_AMOUNT),
@@ -75,6 +92,12 @@ public class TransactionsTable implements TransactionsDAO {
         return transactions;
     }
 
+    /**
+     * Retrieves a specific transaction based on its id
+     *
+     * @param transaction_id the id of selected transaction
+     * @return the transaction with the given id
+     */
     @Override
     public TransactionsPOJO getTransaction(int transaction_id) {
         String query = "SELECT * FROM " + TABLE_TRANSACTIONS + " WHERE " +
@@ -99,6 +122,11 @@ public class TransactionsTable implements TransactionsDAO {
         return transaction;
     }
 
+    /**
+     * Adds a new transaction to the database
+     *
+     * @param transactions the transaction object
+     */
     @Override
     public void addTransaction(TransactionsPOJO transactions) {
         String query = "INSERT INTO " + TABLE_TRANSACTIONS +
@@ -109,12 +137,12 @@ public class TransactionsTable implements TransactionsDAO {
                 TRANSACTIONS_COLUMN_TRANSACTION_DATE + "," +
                 TRANSACTIONS_COLUMN_DESCRIPTION + ") VALUES ('" +
                 transactions.getAmount() + "','" + transactions.getTransaction_account_id() + "','" + transactions.getTransaction_type_id() + "','" +
-                + transactions.getTransaction_category_id() + "','" + transactions.getTransaction_date() + "','" + transactions.getTransaction_description() +
+                +transactions.getTransaction_category_id() + "','" + transactions.getTransaction_date() + "','" + transactions.getTransaction_description() +
                 "')";
 
-                String updateBalanceQuery = "UPDATE " + TABLE_ACCOUNTS + " SET " + ACCOUNTS_COLUMN_BALANCE +
-                        " = " + ACCOUNTS_COLUMN_BALANCE + " + " + transactions.getAmount() +
-                        " WHERE " + ACCOUNTS_COLUMN_ID + " = " + transactions.getTransaction_account_id();
+        String updateBalanceQuery = "UPDATE " + TABLE_ACCOUNTS + " SET " + ACCOUNTS_COLUMN_BALANCE +
+                " = " + ACCOUNTS_COLUMN_BALANCE + " + " + transactions.getAmount() +
+                " WHERE " + ACCOUNTS_COLUMN_ID + " = " + transactions.getTransaction_account_id();
 
         try {
             getDb().getConnection().createStatement().execute(query);
@@ -124,7 +152,7 @@ public class TransactionsTable implements TransactionsDAO {
 
             // get automatically generated id, update org.example.java_project_iii.pojo with it
             Statement getAutoId = getDb().getConnection().createStatement();
-            ResultSet resultSet =  getAutoId.executeQuery("SELECT LAST_INSERT_ID()");
+            ResultSet resultSet = getAutoId.executeQuery("SELECT LAST_INSERT_ID()");
             if (resultSet.next()) {
                 // get first result
                 int generatedId = resultSet.getInt(1);
@@ -138,6 +166,11 @@ public class TransactionsTable implements TransactionsDAO {
         }
     }
 
+    /**
+     * Updates an existing transaction
+     *
+     * @param transactions selected transaction object
+     */
     @Override
     public void updateTransaction(TransactionsPOJO transactions) {
         String query = "UPDATE " + TABLE_TRANSACTIONS + " SET " +
@@ -176,7 +209,7 @@ public class TransactionsTable implements TransactionsDAO {
 
 
     /**
-     * Deletes a transaction and its related records from the transaction_category table.
+     * Deletes a transaction and its related records from the transaction_category table
      *
      * @param id The ID of the transaction to be deleted.
      */
@@ -214,9 +247,28 @@ public class TransactionsTable implements TransactionsDAO {
         }
     }
 
+    /**
+     * Retrieves detailed transaction information.
+     * <p>
+     * Steps:
+     * - Initialize an ArrayList to hold the transactions
+     * - Construct SQL query to join transaction details from:
+     * - transactions
+     * - accounts
+     * - transaction_types
+     * - categories
+     * - recurring_transaction
+     * - Execute the query to fetch the transaction data
+     * - Process each row from the ResultSet:
+     * - Create a DisplayTransaction object for each row
+     * - Add the DisplayTransaction object to the ArrayList
+     * - Handle SQL exceptions by printing the stack trace
+     * - Return the list of DisplayTransaction objects
+     *
+     * @return List of DisplayTransaction objects
+     */
 
-
-    public ArrayList<DisplayTransaction> getDetailedTransaction(){
+    public ArrayList<DisplayTransaction> getDetailedTransaction() {
         ArrayList<DisplayTransaction> transactions = new ArrayList<DisplayTransaction>();
 
         String query = "SELECT " +
@@ -263,6 +315,13 @@ public class TransactionsTable implements TransactionsDAO {
 
     }
 
+    /**
+     * Fetches a transaction by its id
+     *
+     * @param transactionId id of particular transaction
+     * @return The TransactionsPOJO object for the specified id
+     * @throws Exception If the transaction with the given ID is not found
+     */
 
     public TransactionsPOJO getTransactionById(int transactionId) throws Exception {
         for (TransactionsPOJO transaction : getAllTransactions()) {

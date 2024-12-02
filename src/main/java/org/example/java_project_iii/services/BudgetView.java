@@ -13,12 +13,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.java_project_iii.pojo.BudgetPOJO;
 import org.example.java_project_iii.pojo.TransactionTypePOJO;
-import org.example.java_project_iii.pojo.TransactionsPOJO;
 import org.example.java_project_iii.tables.BudgetTable;
 import org.example.java_project_iii.tables.TransactionTypeTable;
+
 import java.util.List;
 
+/**
+ * Handles the budget view, including budgets table and progress chart
+ */
 public class BudgetView {
+
     private static BudgetView instance;
     private static int selectedID;
     private VBox budgetViewVBox;
@@ -26,6 +30,7 @@ public class BudgetView {
     private LineChart<Number, Number> goalProgressChart;
     private BorderPane parentLayout;
 
+    //Getters and setters for selectedId
     public static int getSelectedID() {
         return selectedID;
     }
@@ -34,6 +39,11 @@ public class BudgetView {
         BudgetView.selectedID = selectedID;
     }
 
+    /**
+     * Constructor to initialize budget view (Singleton pattern)
+     *
+     * @throws Exception
+     */
     private BudgetView() throws Exception {
 
         // Initialize TableView
@@ -88,6 +98,7 @@ public class BudgetView {
             }
         });
 
+        // Row double-click action for updating the chart
         tableView.setRowFactory(tv -> {
             TableRow<BudgetPOJO> row = new TableRow();
             row.setOnMouseClicked(event -> {
@@ -124,28 +135,46 @@ public class BudgetView {
 
     }
 
+    /**
+     * Sets the parent layout to update the chart
+     *
+     * @param parentLayout border pane
+     */
     public void setParentLayout(BorderPane parentLayout) {
         this.parentLayout = parentLayout;
     }
 
+    /**
+     * Updates the chart based on the selectedID
+     *
+     * @param budgetId budget id related to selected row
+     * @throws Exception if any error
+     */
     public void updateChart(int budgetId) throws Exception {
         // Get the instance of BarChartGenerator
-            BarChartGenerator chartGenerator = BarChartGenerator.getInstance();
+        BarChartGenerator chartGenerator = BarChartGenerator.getInstance();
 
-            // Generate the new chart with the selected budget ID
-            BarChart<String, Number> updatedChart = chartGenerator.createGoalProgressBarChart(budgetId);
+        // Generate the new chart with the selected budget ID
+        BarChart<String, Number> updatedChart = chartGenerator.createGoalProgressBarChart(budgetId);
 
-            parentLayout.setCenter(updatedChart);
-        }
+        parentLayout.setCenter(updatedChart);
+    }
 
-
+    /**
+     * Refresh budget table
+     *
+     * @param budgetTable
+     * @throws Exception if any error
+     */
     public void refreshTable(BudgetTable budgetTable) throws Exception {
         tableView.getItems().clear();
         tableView.getItems().addAll(budgetTable.getAllBudgets());
     }
 
-
-
+    /**
+     * @return single instance of BudgetView
+     * @throws Exception
+     */
     public static BudgetView getInstance() throws Exception {
         if (instance == null) {
             instance = new BudgetView();
@@ -153,6 +182,9 @@ public class BudgetView {
         return instance;
     }
 
+    /**
+     * @return VBox layout
+     */
     public VBox BudgetView() {
         return budgetViewVBox;
     }

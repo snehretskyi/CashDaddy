@@ -17,8 +17,9 @@ public class RecurringTransactionService {
 
     /**
      * Method to calculate next date for recurring transaction
+     *
      * @param transactionDate date of transaction
-     * @param intervalDays interval in days
+     * @param intervalDays    interval in days
      * @return new date
      */
     public static Date calculateNewDate(Date transactionDate, int intervalDays) {
@@ -27,6 +28,7 @@ public class RecurringTransactionService {
 
     /**
      * Method to copy existing recurring transaction, update the information about next one accordingly
+     *
      * @param oldRecurringTransaction recurring transaction that serves as a foundation
      * @return updated recurring transaction with new date and transaction id
      * @throws Exception
@@ -53,7 +55,7 @@ public class RecurringTransactionService {
                 oldRecurringTransaction.getIntervalDays());
         recurringTransactionTable.updateRecurringTransaction(newRecurringTransaction);
 
-        return  newRecurringTransaction;
+        return newRecurringTransaction;
     }
 
     /**
@@ -73,6 +75,7 @@ public class RecurringTransactionService {
      *         <li>Skip</li>
      *     </ol>
      * </ol>
+     *
      * @throws Exception
      */
     public static void processDueRecurringTransactions() throws Exception {

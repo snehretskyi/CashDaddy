@@ -14,9 +14,10 @@ import javafx.util.Duration;
 public class AnimationHelper {
 
     /**
-     * Method to apply a typewriter animation effect to the specified text element
-     * @param textElement The Text element whose content will be animated
-     * @param delayInMillis The delay between each character being displayed, in milliseconds
+     * Animates text with a typewriter effect
+     *
+     * @param textElement   The Text element to animate
+     * @param delayInMillis Delay between each character in milliseconds
      */
 
     public static Timeline typewriterAnimation(Text textElement, int delayInMillis) {
@@ -41,36 +42,35 @@ public class AnimationHelper {
         return timeline;
     }
 
-        /**
-         * Creates a swing-like rotation animation for an ImageView.
-         * The image will rotate back and forth around its center.
-         *
-         * @param imageView The ImageView that will be rotated.
-         * @param durationInMillis The duration of one full swing (back and forth) in milliseconds.
-         */
-        public static void applySwingRotation(ImageView imageView, int durationInMillis) {
-            // Create a RotateTransition
-            RotateTransition rotateTransition = new RotateTransition();
+    /**
+     * Rotates an ImageView back and forth.
+     *
+     * @param imageView        The ImageView to rotate.
+     * @param durationInMillis Duration of one full swing in milliseconds.
+     */
 
-            // Set the target image (the ImageView)
-            rotateTransition.setNode(imageView);
+    public static void applySwingRotation(ImageView imageView, int durationInMillis) {
+        // Create a RotateTransition
+        RotateTransition rotateTransition = new RotateTransition();
 
-            // Set the angle of rotation
-            //rotateTransition.setByAngle(30);
-            rotateTransition.setFromAngle(-3);
-            rotateTransition.setToAngle(3);
+        // Set the target image (the ImageView)
+        rotateTransition.setNode(imageView);
 
-            // Set the duration of one swing (back and forth)
-            // Infinite loop to keep swinging
-            rotateTransition.setCycleCount(RotateTransition.INDEFINITE);
-            rotateTransition.setInterpolator(javafx.animation.Interpolator.LINEAR);
-            rotateTransition.setAutoReverse(true);
+        // Set the angle of rotation
+        //rotateTransition.setByAngle(30);
+        rotateTransition.setFromAngle(-3);
+        rotateTransition.setToAngle(3);
 
-            // Set the time duration in total
-            rotateTransition.setDuration(Duration.millis(durationInMillis));
+        // Set the duration of one swing (back and forth)
+        // Infinite loop to keep swinging
+        rotateTransition.setCycleCount(RotateTransition.INDEFINITE);
+        rotateTransition.setInterpolator(javafx.animation.Interpolator.LINEAR);
+        rotateTransition.setAutoReverse(true);
 
-            rotateTransition.play();
-        }
+        // Set the time duration in total
+        rotateTransition.setDuration(Duration.millis(durationInMillis));
 
+        rotateTransition.play();
+    }
 
 }

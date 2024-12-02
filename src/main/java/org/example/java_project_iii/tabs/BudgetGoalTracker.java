@@ -7,6 +7,7 @@ import org.example.java_project_iii.database.Database;
 import org.example.java_project_iii.forms.SetBudgetGoalForm;
 import org.example.java_project_iii.services.BudgetView;
 import org.example.java_project_iii.tables.BudgetTable;
+
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -17,6 +18,7 @@ import static org.example.java_project_iii.database.DBConst.TABLE_BUDGETS;
  */
 public class BudgetGoalTracker extends Tab {
 
+    //class members
     private BarChart<String, Number> progressChart;
     private LineChart<Number, Number> goalProgressChart;
     Database db;
@@ -24,6 +26,7 @@ public class BudgetGoalTracker extends Tab {
     /**
      * Constructor
      * Sets up the tab with a form, table and chart
+     *
      * @throws Exception is any error occur
      */
     public BudgetGoalTracker() throws Exception {
@@ -41,8 +44,6 @@ public class BudgetGoalTracker extends Tab {
         root.setLeft(vBoxFormTable);
 
         //select first id from budget table to show the chart
-        Database db = Database.getInstance();
-
         String query = "SELECT budget_id FROM " + TABLE_BUDGETS + " ORDER BY budget_id ASC LIMIT 1";
         Statement statement = db.getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(query);
@@ -51,9 +52,11 @@ public class BudgetGoalTracker extends Tab {
             BudgetView.setSelectedID(resultSet.getInt("budget_id"));
             System.out.println("First Budget ID: " + BudgetView.getSelectedID());
 
+            // Update the chart with the selected ID
             budgetView.updateChart(BudgetView.getSelectedID());
         }
 
+        // Refresh the budget table
         budgetView.refreshTable(BudgetTable.getInstance());
 
         // Set the root BorderPane as the content of the Tab
