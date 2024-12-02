@@ -19,7 +19,9 @@ On your first launch of the application, you will be asked to provide credential
 ![image](https://github.com/user-attachments/assets/9a7e3d11-92ac-4fb3-940c-2537b2fa5fcd)
 ![image](https://github.com/user-attachments/assets/1fe6c246-9f7a-44df-a1dd-aab29b341b01)
 ![image](https://github.com/user-attachments/assets/9c3aed21-cda1-4a6b-afe9-023e02c7e01c)
-![image](https://github.com/user-attachments/assets/5f55e99e-c91a-46be-a244-09e35b4b5136)
+![image](https://github.com/user-attachments/assets/a80675b5-3472-4c8f-9282-42dc8bab749e)
+![image](https://github.com/user-attachments/assets/6b90a680-693e-44a6-924c-a0ac2502f05c)
+
 
 
 
@@ -31,7 +33,7 @@ On your first launch of the application, you will be asked to provide credential
 - [Stanislav Nehretskyi](https://github.com/snehretskyi)
 
 ## Database Schema
-![image](https://github.com/user-attachments/assets/f46ee13c-70ec-4bb6-811a-03894384eb33)
+![image](https://github.com/user-attachments/assets/ba7f0807-0c08-4fb0-8a26-6f206c710399)
 
   
 ## Acknowledgements
