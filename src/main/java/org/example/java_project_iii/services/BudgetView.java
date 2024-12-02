@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
@@ -58,7 +59,7 @@ public class BudgetView {
             try {
                 // Fetch the TransactionTypePOJO using the transaction ID
                 TransactionTypePOJO transactionType = TransactionTypeTable.getInstance()
-                        .getTransaction_type(e.getValue().getTransaction_id());
+                        .getTransaction_type(e.getValue().gettransaction_type_id());
 
                 // Return the transaction type as a SimpleStringProperty
                 return new SimpleStringProperty(transactionType != null ? transactionType.getTransactionType() : "Unknown");
@@ -89,7 +90,7 @@ public class BudgetView {
         Button removeButton = new Button("Remove");
         removeButton.setOnAction(event -> {
             List<BudgetPOJO> selectedItems = tableView.getSelectionModel().getSelectedItems();
-            selectedItems.forEach(item -> budgetTable.removeBudget(item.getId())); // Add removeBudget method in BudgetTable
+            selectedItems.forEach(item -> budgetTable.removeBudget(item.getId()));
             try {
                 updateChart(selectedID);
                 refreshTable(budgetTable);
@@ -151,6 +152,11 @@ public class BudgetView {
      * @throws Exception if any error
      */
     public void updateChart(int budgetId) throws Exception {
+        //TODO need to fix this
+        if (parentLayout == null) {
+            //System.out.println("Error: parentLayout is not initialized.");
+            return;
+        }
         // Get the instance of BarChartGenerator
         BarChartGenerator chartGenerator = BarChartGenerator.getInstance();
 
@@ -188,4 +194,6 @@ public class BudgetView {
     public VBox BudgetView() {
         return budgetViewVBox;
     }
+
+
 }

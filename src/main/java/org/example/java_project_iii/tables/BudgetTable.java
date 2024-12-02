@@ -76,7 +76,7 @@ public class BudgetTable implements BudgetDAO {
             while (data.next()) {
                 budgets.add(new BudgetPOJO(
                         data.getInt(BUDGETS_COLUMN_ID),
-                        data.getInt(BUDGETS_COLUMN_TRANSACTION_ID),
+                        data.getInt(BUDGETS_COLUMN_TRANSACTION_TYPE_ID),
                         data.getDouble(BUDGETS_COLUMN_GOAL_AMOUNT),
                         data.getDate(BUDGETS_COLUMN_START_DATE),
                         data.getDate(BUDGETS_COLUMN_END_DATE)));
@@ -105,7 +105,7 @@ public class BudgetTable implements BudgetDAO {
             if (data.next()) {
                 BudgetPOJO budget = new BudgetPOJO(
                         data.getInt(BUDGETS_COLUMN_ID),
-                        data.getInt(BUDGETS_COLUMN_TRANSACTION_ID),
+                        data.getInt(BUDGETS_COLUMN_TRANSACTION_TYPE_ID),
                         data.getDouble(BUDGETS_COLUMN_GOAL_AMOUNT),
                         data.getDate(BUDGETS_COLUMN_START_DATE),
                         data.getDate(BUDGETS_COLUMN_END_DATE)
@@ -125,11 +125,11 @@ public class BudgetTable implements BudgetDAO {
      */
     public void insertBudget(BudgetPOJO budget) {
         String query = "INSERT INTO " + TABLE_BUDGETS +
-                "(" + BUDGETS_COLUMN_TRANSACTION_ID + ", " +
+                "(" + BUDGETS_COLUMN_TRANSACTION_TYPE_ID + ", " +
                 BUDGETS_COLUMN_GOAL_AMOUNT + ", " +
                 BUDGETS_COLUMN_START_DATE + ", " +
                 BUDGETS_COLUMN_END_DATE + ") VALUES ('" +
-                budget.getTransaction_id() + "', '" +
+                budget.gettransaction_type_id() + "', '" +
                 budget.getGoal_amount() + "', '" +
                 budget.getStart_date() + "', '" +
                 budget.getEnd_date() + "')";
