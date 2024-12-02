@@ -3,25 +3,25 @@ package org.example.java_project_iii.pojo;
 import java.util.Date;
 
 public class BudgetPOJO extends DatabaseItemPojo{
-    private int transaction_id;
+    private int transaction_type_id;
     private double goal_amount;
     private Date start_date;
     private Date end_date;
 
-    public BudgetPOJO(int budget_id, int transaction_id, double goal_amount, Date start_date, Date end_date) {
+    public BudgetPOJO(int budget_id, int transaction_type_id, double goal_amount, Date start_date, Date end_date) {
         super(budget_id);
-        this.transaction_id = transaction_id;
+        this.transaction_type_id = transaction_type_id;
         this.goal_amount = goal_amount;
         this.start_date = start_date;
         this.end_date = end_date;
     }
 
-    public int getTransaction_id() {
-        return transaction_id;
+    public int gettransaction_type_id() {
+        return transaction_type_id;
     }
 
-    public void setTransaction_id(int transaction_id) {
-        this.transaction_id = transaction_id;
+    public void settransaction_type_id(int transaction_type_id) {
+        this.transaction_type_id = transaction_type_id;
     }
 
     public double getGoal_amount() {

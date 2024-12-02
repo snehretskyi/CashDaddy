@@ -3,6 +3,7 @@ package org.example.java_project_iii.forms;
 import javafx.scene.control.*;
 import org.example.java_project_iii.scenes.Dashboard;
 import org.example.java_project_iii.pojo.*;
+import org.example.java_project_iii.services.BudgetView;
 import org.example.java_project_iii.tabs.AllTransactions;
 
 import java.sql.Date;
@@ -71,6 +72,7 @@ public class UpdateForm extends CrudForm {
             recurringTransactionsTable.updateRecurringTransaction(recurringTransaction);
         }
 
+        BudgetView.getInstance().updateChart(BudgetView.getSelectedID());
         //Redirect to List of all transactions
         AllTransactions allTransactions = AllTransactions.getInstance();
         getTabPane().getSelectionModel().select(allTransactions);
