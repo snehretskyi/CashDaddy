@@ -1,13 +1,16 @@
 package org.example.java_project_iii;
 
-import database.Database;
+import org.example.java_project_iii.database.Database;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.example.java_project_iii.forms.LoginForm;
-import org.example.java_project_iii.scenes.Dashboard;
 import org.example.java_project_iii.scenes.Login;
 
+/**
+ * Main application class for the CashDaddy app
+ * Initializes login scene and connects to the database
+ * After a successful connection, it redirects to the dashboard scene
+ */
 public class CashDaddy extends Application {
 
     @Override
@@ -26,10 +29,9 @@ public class CashDaddy extends Application {
             // if unsuccessful, either there is no credentials file, or they're wrong
         } catch (Exception e) {
             primaryStage.setScene(loginScene);
-            e.printStackTrace();
         }
 
-
+        primaryStage.setTitle("CashDaddy");
         primaryStage.show();
 
     }

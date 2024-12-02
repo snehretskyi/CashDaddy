@@ -4,14 +4,11 @@ import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import org.example.java_project_iii.forms.CreateForm;
 import org.example.java_project_iii.forms.UpdateForm;
-import pojo.TransactionsPOJO;
-import services.RecurringTransactionService;
-import tables.TransactionsTable;
-import tabs.*;
+import org.example.java_project_iii.pojo.TransactionsPOJO;
+import org.example.java_project_iii.services.RecurringTransactionService;
+import org.example.java_project_iii.tabs.*;
 
 
 /**
@@ -88,14 +85,15 @@ public class Dashboard {
         BorderPane root = new BorderPane();
 
 
-        //create tabs
+        //create org.example.java_project_iii.tabs
         AddTransaction addTransaction = new AddTransaction();
         AllTransactions allTransactions = AllTransactions.getInstance();
         UpdateTransaction updateTransaction = UpdateTransaction.getInstance();
-        SummaryReport summaryReport = new SummaryReport();
+        BarChartTab barChartTab = BarChartTab.getInstance();
+        BudgetGoalTracker budgetGoalTracker = new BudgetGoalTracker();
 
         Label transactionTablabel = new Label("Add Transaction");
-        //add CurdForm to AddTransaction tab
+        //add CrudForm to AddTransaction tab
         CreateForm createForm = new CreateForm();
 
         // set tab to redirect to
@@ -108,11 +106,11 @@ public class Dashboard {
         UpdateForm updateForm = new UpdateForm(transactionsPOJO);
         updateTransaction.setContent(updateForm);
 
-        // Add tabs to the TabPane
+        // Add org.example.java_project_iii.tabs to the TabPane
 
         //addTransaction.getContent().setRotate(90);
 
-        tabPane.getTabs().addAll(addTransaction,allTransactions, updateTransaction, summaryReport);
+        tabPane.getTabs().addAll(addTransaction,allTransactions, updateTransaction, barChartTab, budgetGoalTracker);
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.setSide(Side.TOP);
 
@@ -128,7 +126,8 @@ public class Dashboard {
         addTransaction.getStyleClass().add("tab-add-transaction");
         allTransactions.getStyleClass().add("tab-all-transactions");
         updateTransaction.getStyleClass().add("tab-update-transaction");
-        summaryReport.getStyleClass().add("tab-summary-report");
+        barChartTab.getStyleClass().add("tab-summary-report");
+        budgetGoalTracker.getStyleClass().add("tab-budget-tracker");
 
 
         root.getStylesheets().add(getClass().getClassLoader().getResource("css/dashboard.css").toExternalForm());
