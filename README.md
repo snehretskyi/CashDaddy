@@ -31,13 +31,15 @@ On your first launch of the application, you will be asked to provide credential
 - [Stanislav Nehretskyi](https://github.com/snehretskyi)
 
 ## Database Schema
-<img width="1099" alt="Screenshot 2024-11-25 at 9 33 23 AM" src="https://github.com/user-attachments/assets/5793f49c-1040-4f3c-bc89-2e22cab9174d">
+![image](https://github.com/user-attachments/assets/f46ee13c-70ec-4bb6-811a-03894384eb33)
 
   
 ## Acknowledgements
 
 Beautiful image by Triangle Squad retrieved from [iconscout.com/lottie-animation/piggy-bank-8833143](https://iconscout.com/lottie-animation/piggy-bank-8833143)
+
 License:
+
 https://iconscout.com/licenses#iconscout
 
 ## License
