@@ -13,23 +13,22 @@ This application keeps track of expenses, bills, and other types of financial tr
 ## Getting Started
 To launch the application, please select Amazon Coretto Java 20.
 
-<img width="1099" alt="Screenshot 2024-11-25 at 8 26 09 AM" src="https://github.com/user-attachments/assets/c99a21ae-1c4b-4b4e-b781-542d1fae22b7">
+![image](https://github.com/user-attachments/assets/c64d20d7-0dcf-452e-8f6f-b14d57919d20)
+
 
 On your first launch of the application, you will be asked to provide credentials to the database you wish to use. Please fill out all of the fields. Once the connection is established, the app will not ask you to login again, unless it cannot connect to the database.
 
 ## Mockup
 ![image](https://github.com/user-attachments/assets/9a7e3d11-92ac-4fb3-940c-2537b2fa5fcd)
-![image](https://github.com/user-attachments/assets/1fe6c246-9f7a-44df-a1dd-aab29b341b01)
+![image](https://github.com/user-attachments/assets/8a94ec5c-46f4-4285-bda9-7198cc8c3d44)
 ![image](https://github.com/user-attachments/assets/9c3aed21-cda1-4a6b-afe9-023e02c7e01c)
-![image](https://github.com/user-attachments/assets/a80675b5-3472-4c8f-9282-42dc8bab749e)
-![image](https://github.com/user-attachments/assets/6b90a680-693e-44a6-924c-a0ac2502f05c)
-
+![image](https://github.com/user-attachments/assets/59dde8e0-62c3-45e3-8b21-563e9d1aef79)
+![image](https://github.com/user-attachments/assets/b95bb68d-b42b-4beb-9b9a-f7730474798b)
 
 
 
 
 ## Authors
-
 - [Riddhi Meet Savsani](https://github.com/RiddhiMeetSavsani)
 - [Matvii Lukavenko](https://github.com/MatviiLukavenko)
 - [Stanislav Nehretskyi](https://github.com/snehretskyi)
@@ -44,7 +43,7 @@ Beautiful image by Triangle Squad retrieved from [iconscout.com/lottie-animation
 
 License:
 
-https://iconscout.com/licenses#iconscout
+[https://iconscout.com/licenses#iconscout](https://iconscout.com/licenses#iconscout)
 
 ## License
 
